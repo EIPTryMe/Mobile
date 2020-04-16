@@ -6,7 +6,8 @@ class Queries {
   query {
     product {
       name,
-      id
+      id,
+      price
     }
   }
   ''';

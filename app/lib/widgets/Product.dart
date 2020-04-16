@@ -82,8 +82,7 @@ class ProductCard extends StatelessWidget {
                             child: Align(
                               alignment: Alignment.bottomRight,
                               child: Text(
-                                product['price'] == null ? "" : product['price'],
-                                //product.price.toString() + '€/Mois',
+                                product['price'] == null ? "" : product['price'].toString() + '€/Mois',
                                 style: TextStyle(
                                     fontSize: 18.0,
                                     fontWeight: FontWeight.bold),
