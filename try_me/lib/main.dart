@@ -6,6 +6,7 @@ import 'package:tryme/views/LoginView.dart';
 import 'package:tryme/views/RegisterView.dart';
 import 'package:tryme/views/ProductView.dart';
 import 'package:tryme/views/PersonalInformationView.dart';
+import 'package:tryme/views/ShoppingBasketView.dart';
 
 GraphQLConfiguration graphQLConfiguration = GraphQLConfiguration();
 
@@ -22,6 +23,7 @@ void main() {
           '/register': (context) => RegisterView(),
           '/product': (context) => ProductView(),
           '/personalInformations': (context) => PersonalInformationView(),
+          '/ShoppingBasket' : (context) => ShoppingBasketView(),
         },
       ),
     ),
