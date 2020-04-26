@@ -130,8 +130,7 @@ class _PersonalInformationViewState extends State<PersonalInformationView> {
                         ),
                         keyboardType: TextInputType.text,
                         validator: (value) {
-                          _infoValid =
-                              RegExp(r"^[a-zA-Z-]{2,16}$").hasMatch(value);
+                          _infoValid = RegExp(r"^[a-zA-Z-]{2,16}$").hasMatch(value);
                           if (value.isEmpty) {
                             return "You didn\'t write your first name";
                           } else if (!_infoValid) {
@@ -232,8 +231,7 @@ class _PersonalInformationViewState extends State<PersonalInformationView> {
                         ),
                         keyboardType: TextInputType.text,
                         validator: (value) {
-                          _infoValid =
-                              RegExp(r"^[a-zA-Z-' ]{2,20}$").hasMatch(value);
+                          _infoValid = RegExp(r"^[a-zA-Z-' ]{2,20}$").hasMatch(value);
                           if (value.isEmpty) {
                             return "You didn\'t write your last name";
                           } else if (!_infoValid) {
@@ -330,8 +328,7 @@ class _PersonalInformationViewState extends State<PersonalInformationView> {
                         ),
                         keyboardType: TextInputType.text,
                         validator: (value) {
-                          _infoValid = RegExp(r"^[a-zA-Z0-9-', ]{2,100}$")
-                              .hasMatch(value);
+                          _infoValid = RegExp(r"^[a-zA-Z0-9-', ]{2,100}$").hasMatch(value);
                           if (value.isEmpty) {
                             return "You didn\'t write your address";
                           } else if (!_infoValid) {
@@ -428,8 +425,7 @@ class _PersonalInformationViewState extends State<PersonalInformationView> {
                         ),
                         keyboardType: TextInputType.phone,
                         validator: (value) {
-                          _infoValid =
-                              RegExp(r"^[0-9 ]{10,10}$").hasMatch(value);
+                          _infoValid = RegExp(r"^[0-9 ]{10,10}$").hasMatch(value);
                           if (value.isEmpty) {
                             return "You didn\'t write your phone number";
                           } else if (!_infoValid) {
@@ -527,9 +523,7 @@ class _PersonalInformationViewState extends State<PersonalInformationView> {
                         ),
                         keyboardType: TextInputType.emailAddress,
                         validator: (value) {
-                          _infoValid = RegExp(
-                              r"^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$")
-                              .hasMatch(value);
+                          _infoValid = RegExp(r"^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$").hasMatch(value);
                           if (value.isEmpty) {
                             return "You didn\'t write your email";
                           } else if (!_infoValid) {
@@ -626,9 +620,7 @@ class _PersonalInformationViewState extends State<PersonalInformationView> {
                         ),
                         keyboardType: TextInputType.datetime,
                         validator: (value) {
-                          _infoValid = RegExp(
-                              r"^([0-2][0-9]|(3)[0-1])(\/)(((0)[0-9])|((1)[0-2]))(\/)\d{4}$")
-                              .hasMatch(value);
+                          _infoValid = RegExp(r"^([0-2][0-9]|(3)[0-1])(\/)(((0)[0-9])|((1)[0-2]))(\/)\d{4}$").hasMatch(value);
                           if (value.isEmpty) {
                             return "You didn\'t write your birth date";
                           } else if (!_infoValid) {
@@ -698,8 +690,7 @@ class _PersonalInformationViewState extends State<PersonalInformationView> {
 
   Widget _myDivider() {
     return Container(
-      margin:
-      EdgeInsets.only(left: _widthScreen / 10, right: _widthScreen / 10),
+      margin: EdgeInsets.only(left: _widthScreen / 10, right: _widthScreen / 10),
       child: Divider(
         height: 1,
         color: Color(0xFF646679),

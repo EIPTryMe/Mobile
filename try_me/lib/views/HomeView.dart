@@ -93,24 +93,26 @@ class _HomeViewState extends State<HomeView> {
 
   void getData() async {
     QueryResult result;
-    Queries queries = Queries();
-    QueryOptions queryOption = QueryOptions(documentNode: gql(queries.products()));
+    QueryOptions queryOption = QueryOptions(documentNode: gql(Queries.products()));
     result = await graphQLConfiguration.clientToQuery.query(queryOption);
     setState(() {
       products = result.data['product'];
     });
   }
 
-  @override void initState() {
+  @override
+  void initState() {
     super.initState();
     getData();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: ProductList(products: products),
-      backgroundColor: Colors.grey[200],
+    return SafeArea(
+      child: Scaffold(
+        body: ProductList(products: products),
+        backgroundColor: Colors.grey[200],
+      ),
     );
   }
 }
