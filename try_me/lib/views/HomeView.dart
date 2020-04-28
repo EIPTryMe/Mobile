@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:tryme/main.dart';
 import 'package:tryme/views/AuthenticationView.dart';
 import 'package:tryme/views/PersonalInformationView.dart';
+import 'package:tryme/views/CompanyInformationView.dart';
 import 'package:tryme/views/ShoppingBasketView.dart';
 import 'package:tryme/widgets/Product.dart';
 import 'package:tryme/widgets/Queries.dart';
@@ -206,7 +207,7 @@ class _HomeViewState extends State<HomeView> {
           onTap: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => PersonalInformationView()),
+              MaterialPageRoute(builder: (context) => CompanyInformationView()),
             );
           },
         ),
