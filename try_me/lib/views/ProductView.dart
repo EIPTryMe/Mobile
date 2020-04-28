@@ -13,6 +13,7 @@ List images = [
   'https://media.ldlc.com/r1600/ld/products/00/05/44/01/LD0005440123_2_0005440199_0005440284.jpg'
 ];
 
+
 class ProductView extends StatefulWidget {
   ProductView({this.id});
 
