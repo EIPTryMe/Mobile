@@ -8,6 +8,7 @@ import 'package:tryme/views/SignInView.dart';
 import 'package:tryme/views/ProductView.dart';
 import 'package:tryme/views/PersonalInformationView.dart';
 import 'package:tryme/views/ShoppingBasketView.dart';
+import 'package:tryme/views/CompanySignInView.dart';
 
 GraphQLConfiguration graphQLConfiguration = GraphQLConfiguration();
 
@@ -23,6 +24,7 @@ void main() {
           '/authentication': (context) => AuthenticationView(),
           '/signup': (context) => SignUpView(),
           '/signin': (context) => SignInView(),
+          '/companysignin': (context) => CompanySignInView(),
           '/product': (context) => ProductView(),
           '/ShoppingBasket' : (context) => ShoppingBasketView(),
           '/personalInformation': (context) => PersonalInformationView(),
