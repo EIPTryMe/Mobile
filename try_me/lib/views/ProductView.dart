@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:tryme/widgets/Product.dart';
 
 class ProductView extends StatefulWidget {
   ProductView({this.id});
