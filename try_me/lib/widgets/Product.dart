@@ -27,11 +27,6 @@ class ProductCard extends StatelessWidget {
             borderRadius: BorderRadius.circular(borderRadius),
             boxShadow: [
               BoxShadow(
-                color: Colors.grey[800],
-                spreadRadius: 1.0,
-                blurRadius: 100.0,
-              ),
-              BoxShadow(
                 offset: Offset(1.0, 2.0),
                 spreadRadius: 0.0,
                 blurRadius: 1.0,
@@ -50,7 +45,7 @@ class ProductCard extends StatelessWidget {
                     flex: 3,
                     child: Container(
                       color: Colors.white,
-                      //child: Image.network(product.image),
+                      child: Image.network('https://i.redd.it/ugaauduw5ks31.png', fit: BoxFit.cover,),
                     ),
                   ),
                   Expanded(
@@ -64,28 +59,18 @@ class ProductCard extends StatelessWidget {
                             child: Align(
                               alignment: Alignment.topCenter,
                               child: Text(
-                                product['name'] == null ? "" : product['name'],
+                                product['name'] == null ? '' : product['name'],
                                 //product.title,
-                                style: TextStyle(
-                                    fontSize: 18.0,
-                                    fontWeight: FontWeight.bold),
+                                style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
                               ),
                             ),
                           ),
-                          /*Expanded(
-                            child: Text(
-                              product.description,
-                              style: TextStyle(fontSize: 14.0),
-                            ),
-                          ),*/
                           Expanded(
                             child: Align(
                               alignment: Alignment.bottomRight,
                               child: Text(
-                                product['price'] == null ? "" : product['price'].toString() + '€/Mois',
-                                style: TextStyle(
-                                    fontSize: 18.0,
-                                    fontWeight: FontWeight.bold),
+                                product['price_per_month'] == null ? '' : product['price_per_month'].toString() + '€/Mois',
+                                style: TextStyle(color: Colors.green, fontSize: 18.0, fontWeight: FontWeight.bold),
                               ),
                             ),
                           ),
@@ -105,8 +90,7 @@ class ProductCard extends StatelessWidget {
               color: Colors.transparent,
               child: InkWell(
                 splashColor: Colors.white10,
-                onTap: () =>
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => ProductView(id: product['id']))),
+                onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => ProductView(id: product['id']))),
               ),
             ),
           ),
@@ -131,11 +115,11 @@ class _ProductListState extends State<ProductList> {
     return ListView(
       children: widget.products
           .map((product) => Padding(
-        padding: const EdgeInsets.all(3.0),
-        child: ProductCard(
-          product: product,
-        ),
-      ))
+                padding: const EdgeInsets.all(3.0),
+                child: ProductCard(
+                  product: product,
+                ),
+              ))
           .toList(),
     );
   }
