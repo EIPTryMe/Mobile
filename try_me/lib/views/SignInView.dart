@@ -160,7 +160,10 @@ class _SignInViewState extends State<SignInView> {
         if (_formKeyEmail.currentState.validate() &&
             _formKeyPassword.currentState.validate()) {
           globals.isLoggedIn = true;
-          Navigator.popUntil(context, ModalRoute.withName('/'));
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => HomeView()),
+          );
           print(_email);
           print(_password);
         }
