@@ -23,7 +23,7 @@ class ProductCard extends StatelessWidget {
     return Stack(
       children: <Widget>[
         Container(
-          decoration: BoxDecoration(
+          /*decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(borderRadius),
             boxShadow: [
               BoxShadow(
@@ -32,19 +32,18 @@ class ProductCard extends StatelessWidget {
                 blurRadius: 1.0,
               ),
             ],
-          ),
+          ),*/
           child: ClipRRect(
             borderRadius: BorderRadius.circular(borderRadius),
             child: (Container(
               height: 160,
-              color: Colors.lightBlue[200],
+              color: Colors.grey[100],
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
                   Expanded(
                     flex: 3,
                     child: Container(
-                      color: Colors.white,
                       child: Image.network('https://i.redd.it/ugaauduw5ks31.png', fit: BoxFit.cover,),
                     ),
                   ),
@@ -115,7 +114,7 @@ class _ProductListState extends State<ProductList> {
     return ListView(
       children: widget.products
           .map((product) => Padding(
-                padding: const EdgeInsets.all(3.0),
+                padding: const EdgeInsets.fromLTRB(8, 4, 8, 4),
                 child: ProductCard(
                   product: product,
                 ),

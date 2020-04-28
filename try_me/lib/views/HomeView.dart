@@ -23,9 +23,11 @@ class _HomeViewState extends State<HomeView> {
     Queries queries = Queries();
     QueryOptions queryOption = QueryOptions(documentNode: gql(Queries.products()));
     result = await graphQLConfiguration.clientToQuery.query(queryOption);
-    setState(() {
-      products = result.data['product'];
-    });
+    if (this.mounted) {
+      setState(() {
+        products = result.data['product'];
+      });
+    }
   }
 
   @override
@@ -134,7 +136,7 @@ class _HomeViewState extends State<HomeView> {
                 ],
               )),
           body: ProductList(products: products),
-          backgroundColor: Colors.grey[200],
+          backgroundColor: Colors.grey[300],
         );
       }
     else
@@ -229,7 +231,7 @@ class _HomeViewState extends State<HomeView> {
                 ],
               )),
           body: ProductList(products: products),
-          backgroundColor: Colors.grey[200],
+          backgroundColor: Colors.grey[300],
         );
       }
   }

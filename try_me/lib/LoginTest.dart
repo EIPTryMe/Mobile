@@ -29,7 +29,7 @@ class _LoginTestState extends State<LoginTest> {
   void register() async {
     try {
       var response =
-          await auth0.auth.createUser({'email': 'testtest@auth0.com', 'password': '&Azerty1234', 'connection': 'Username-Password-Authentication'});
+          await auth0.auth.createUser({'email': 'oui@auth0.com', 'password': '&Azerty1234', 'connection': 'Username-Password-Authentication'});
       showInfo('''
     \nid: ${response['_id']}
     \nusername/email: ${response['email']}
@@ -42,7 +42,7 @@ class _LoginTestState extends State<LoginTest> {
   void login() async {
     try {
       var response =
-          await auth0.auth.passwordRealm({'username': 'testtest@auth0.com', 'password': '&Azerty1234', 'realm': 'Username-Password-Authentication'});
+          await auth0.auth.passwordRealm({'username': 'oui@auth0.com', 'password': '&Azerty1234', 'realm': 'Username-Password-Authentication'});
       showInfo('''
     \nAccess Token: ${response['access_token']}
     ''');
