@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:tryme/main.dart';
-import 'package:tryme/views/LoginView.dart';
+import 'package:tryme/views/AuthenticationView.dart';
 import 'package:tryme/views/PersonalInformationView.dart';
 import 'package:tryme/views/ShoppingBasketView.dart';
 import 'package:tryme/widgets/Product.dart';
 import 'package:tryme/widgets/Queries.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
+import 'package:tryme/Dialogs.dart';
+import 'package:tryme/Globals.dart' as globals;
+
 
 class HomeView extends StatefulWidget {
   @override
@@ -31,108 +34,203 @@ class _HomeViewState extends State<HomeView> {
     getData();
   }
 
+  void disconnect(bool _yes) {
+    if (_yes) {
+      setState(() {
+        globals.isLoggedIn = false;
+      });
+    }
+  }
+
+
   Icon customIcon = Icon(Icons.search);
   Widget customSearchBar = Text('TryMe');
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        actions: <Widget>[
-          IconButton(
-            onPressed: () {
-              setState(() {
-                if (this.customIcon.icon == Icons.search) {
-                  this.customIcon = Icon(Icons.cancel);
-                  this.customSearchBar = TextField(
-                    textInputAction: TextInputAction.go,
-                    decoration: InputDecoration(
-                      border: InputBorder.none,
-                      hintText: "Search articles",
-                      hintStyle: TextStyle(
-                        color: Colors.white,
+    if (!globals.isLoggedIn)
+      {
+        return Scaffold(
+          appBar: AppBar(
+            actions: <Widget>[
+              IconButton(
+                onPressed: () {
+                  setState(() {
+                    if (this.customIcon.icon == Icons.search) {
+                      this.customIcon = Icon(Icons.cancel);
+                      this.customSearchBar = TextField(
+                        textInputAction: TextInputAction.go,
+                        decoration: InputDecoration(
+                          border: InputBorder.none,
+                          hintText: "Search articles",
+                          hintStyle: TextStyle(
+                            color: Colors.white,
+                          ),
+                        ),
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 16.0,
+                        ),
+                      );
+                    }
+                    else {
+                      this.customIcon = Icon(Icons.search);
+                      this.customSearchBar = Text('TryMe');
+                    }
+                  });
+                },
+                icon: customIcon,
+              ),
+              IconButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => ShoppingBasketView()),
+                  );
+                },
+                icon: Icon(Icons.shopping_cart),
+              ),
+            ],
+            title: customSearchBar,
+            centerTitle: true,
+            backgroundColor: Colors.grey[800],
+          ),
+          drawer: Drawer(
+              child: ListView(
+                padding: EdgeInsets.zero,
+                children: <Widget>[
+                  Container(
+                    height: 70.0,
+                    child: DrawerHeader(
+                      child: Text(
+                        'Menu',
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
+                      ),
+                      decoration: BoxDecoration(
+                        color: Colors.black,
                       ),
                     ),
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 16.0,
-                    ),
-                  );
-                }
-                else {
-                  this.customIcon = Icon(Icons.search);
-                  this.customSearchBar = Text('TryMe');
-                }
-              });
-            },
-            icon: customIcon,
-          ),
-          IconButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => ShoppingBasketView()),
-              );
-            },
-            icon: Icon(Icons.shopping_cart),
-          ),
-        ],
-        title: customSearchBar,
-        centerTitle: true,
-        backgroundColor: Colors.grey[800],
-      ),
-      drawer: Drawer(
-          child: ListView(
-            padding: EdgeInsets.zero,
-            children: <Widget>[
-              Container(
-                height: 70.0,
-                child: DrawerHeader(
-                  child: Text(
-                    'Menu',
-                    style: TextStyle(
-                      color: Colors.white,
-                    ),
                   ),
-                  decoration: BoxDecoration(
-                    color: Colors.black,
+                  ListTile(
+                    title: Text('Authentification'),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => AuthenticationView()),
+                      );
+                    },
                   ),
-                ),
+                  Divider(
+                    height: 1,
+                    color: Colors.grey[800],
+                  ),
+                  ListTile(
+                    title: Text('Entreprise'),
+                    onTap: () {
+                   },
+                  ),
+                ],
+              )),
+          body: ProductList(products: products),
+          backgroundColor: Colors.grey[200],
+        );
+      }
+    else
+      {
+        return Scaffold(
+          appBar: AppBar(
+            actions: <Widget>[
+              IconButton(
+                onPressed: () {
+                  setState(() {
+                    if (this.customIcon.icon == Icons.search) {
+                      this.customIcon = Icon(Icons.cancel);
+                      this.customSearchBar = TextField(
+                        textInputAction: TextInputAction.go,
+                        decoration: InputDecoration(
+                          border: InputBorder.none,
+                          hintText: "Search articles",
+                          hintStyle: TextStyle(
+                            color: Colors.white,
+                          ),
+                        ),
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 16.0,
+                        ),
+                      );
+                    }
+                    else {
+                      this.customIcon = Icon(Icons.search);
+                      this.customSearchBar = Text('TryMe');
+                    }
+                  });
+                },
+                icon: customIcon,
               ),
-              ListTile(
-                title: Text('Inscription'),
-                onTap: () {
+              IconButton(
+                onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => LoginView()),
+                    MaterialPageRoute(builder: (context) => ShoppingBasketView()),
                   );
                 },
+                icon: Icon(Icons.shopping_cart),
               ),
-              Divider(
-                height: 1,
-                color: Colors.grey[800],
-              ),
-              ListTile(
-                title: Text('Connexion'),
-              ),
-              Divider(
-                height: 1,
-                color: Colors.grey[800],
-              ),
-              ListTile(
-                title: Text('Informations personnelles'),
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => PersonalInformationView()),
-                  );
-                },
-              )
             ],
-          )),
-      body: ProductList(products: products),
-      backgroundColor: Colors.grey[200],
-    );
+            title: customSearchBar,
+            centerTitle: true,
+            backgroundColor: Colors.grey[800],
+          ),
+          drawer: Drawer(
+              child: ListView(
+                padding: EdgeInsets.zero,
+                children: <Widget>[
+                  Container(
+                    height: 70.0,
+                    child: DrawerHeader(
+                      child: Text(
+                        'Menu',
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
+                      ),
+                      decoration: BoxDecoration(
+                        color: Colors.black,
+                      ),
+                    ),
+                  ),
+                  ListTile(
+                    title: Text('Informations personnelles'),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => PersonalInformationView()),
+                      );
+                    },
+                  ),
+                  Divider(
+                    height: 1,
+                    color: Colors.grey[800],
+                  ),
+                  ListTile(
+                    title: Text('Déconnexion'),
+                    onTap: () async {
+                      final bool _logout = await LogOut().Confirm(context);
+                      if (_logout != null) {
+                        disconnect(_logout);
+                      }
+                    },
+                  ),
+
+                ],
+              )),
+          body: ProductList(products: products),
+          backgroundColor: Colors.grey[200],
+        );
+      }
   }
 }
