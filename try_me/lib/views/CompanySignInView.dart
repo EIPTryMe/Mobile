@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tryme/views/HomeView.dart';
-import 'package:tryme/views/SignUpView.dart';
+import 'package:tryme/views/CompanyHomeView.dart';
 import 'package:tryme/Globals.dart' as globals;
 
 class CompanySignInView extends StatefulWidget {
@@ -158,14 +157,14 @@ class _CompanySignInViewState extends State<CompanySignInView> {
       onPressed: () {
         if (_formKeyEmail.currentState.validate() &&
             _formKeyPassword.currentState.validate()) {
+          globals.myCompany = new globals.Company();
+          globals.initCompany(globals.myCompany);
           globals.isLoggedIn = true;
           globals.isACompany = true;
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => HomeView()),
+            MaterialPageRoute(builder: (context) => CompanyHomeView()),
           );
-          print(_email);
-          print(_password);
         }
       },
       child: Container(
@@ -225,38 +224,6 @@ class _CompanySignInViewState extends State<CompanySignInView> {
       ),
     );
   }
-
-//  Widget _createAccountLabel() {
-//    return Container(
-//      margin: EdgeInsets.symmetric(vertical: 20),
-//      alignment: Alignment.bottomCenter,
-//      child: Row(
-//        mainAxisAlignment: MainAxisAlignment.center,
-//        children: <Widget>[
-//          Text(
-//            'Pas encore inscrit ?',
-//            style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600),
-//          ),
-//          SizedBox(
-//            width: 10,
-//          ),
-//          InkWell(
-//            onTap: () {
-//              Navigator.push(context,
-//                  MaterialPageRoute(builder: (context) => SignUpView()));
-//            },
-//            child: Text(
-//              'Inscrivez-vous',
-//              style: TextStyle(
-//                  color: Color(0xfff79c4f),
-//                  fontSize: 13,
-//                  fontWeight: FontWeight.w600),
-//            ),
-//          )
-//        ],
-//      ),
-//    );
-//  }
 
   Widget _title() {
     return RichText(
