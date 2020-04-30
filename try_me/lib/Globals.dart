@@ -1,5 +1,9 @@
 library my_prj.globals;
 
+import 'package:tryme/GraphQLConfiguration.dart';
+
+GraphQLConfiguration graphQLConfiguration = GraphQLConfiguration();
+
 bool isLoggedIn = false;
 bool isACompany = false;
 
@@ -11,8 +15,6 @@ class Auth0User {
   String email = '';
   bool isEmailVerified = false;
 }
-
-Auth0User auth0User = Auth0User();
 
 class Company {
   String name = '';
@@ -33,4 +35,6 @@ class User {
   String pathToAvatar = '';
 }
 
-Company myCompany = Company();
+Auth0User auth0User = Auth0User();
+User user = User();
+Company company = Company();

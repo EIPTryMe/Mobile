@@ -11,10 +11,7 @@ import 'package:tryme/views/CompanyInformationView.dart';
 import 'package:tryme/views/ShoppingCardView.dart';
 import 'package:tryme/views/CompanySignInView.dart';
 import 'package:tryme/views/CompanyHomeView.dart';
-
-import 'package:tryme/Auth0API.dart';
-
-GraphQLConfiguration graphQLConfiguration = GraphQLConfiguration();
+import 'package:tryme/Globals.dart' as globals;
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -37,6 +34,6 @@ void main() {
         },
       ),
     ),
-    client: graphQLConfiguration.client,
+    client: globals.graphQLConfiguration.client,
   ));
 }

@@ -77,15 +77,15 @@ class _CompanyHomeViewState extends State<CompanyHomeView> {
                 colors: [Color(0xfff7892b), Color(0xfffbb448)]),
           ),
           accountName: Text(
-            globals.myCompany.name,
+            globals.company.name,
             style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 20.0,
             ),
           ),
-          accountEmail: Text(globals.myCompany.email),
+          accountEmail: Text(globals.company.email),
           currentAccountPicture: CircleAvatar(
-            backgroundImage: AssetImage(globals.myCompany.pathToAvatar),
+            backgroundImage: AssetImage(globals.company.pathToAvatar),
           ),
         ),
         ListTile(

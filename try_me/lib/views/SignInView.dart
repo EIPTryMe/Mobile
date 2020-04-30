@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:tryme/Auth0API.dart';
 import 'package:tryme/views/SignUpView.dart';
+import 'package:tryme/widgets/Queries.dart';
+import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:tryme/Globals.dart' as globals;
 
 class SignInView extends StatefulWidget {
@@ -10,6 +12,19 @@ class SignInView extends StatefulWidget {
 
   @override
   _SignInViewState createState() => _SignInViewState();
+}
+
+void initialiseUser() async {
+  QueryResult result;
+  QueryOptions queryOption = QueryOptions(documentNode: gql(Queries.user('auth0|5eaafb1bb975740bf829a7d6'/*globals.auth0User.uid*/)));
+  result = await globals.graphQLConfiguration.clientToQuery.query(queryOption);
+  globals.user.firstName = result.data['user'][0]['first_name'] != null ? result.data['user'][0]['first_name'] : '';
+  globals.user.lastName = result.data['user'][0]['name'] != null ? result.data['user'][0]['name'] : '';
+  globals.user.address = result.data['user'][0]['address'] != null ? result.data['user'][0]['address'] : '';
+  //globals.user.phoneNumber = result.data['user'][0]['phone'] != null ? result.data['user'][0]['phone'] : '';
+  globals.user.email = result.data['user'][0]['email'] != null ? result.data['user'][0]['email'] : '';
+  globals.user.birthDate = result.data['user'][0]['birth_date'] != null ? result.data['user'][0]['birth_date'] : '';
+  globals.user.pathToAvatar = globals.auth0User.picture != null ? globals.auth0User.picture : '';
 }
 
 class CurvePainter extends CustomPainter {
@@ -154,6 +169,7 @@ class _SignInViewState extends State<SignInView> {
         if (_formKeyEmail.currentState.validate() && _formKeyPassword.currentState.validate()) {
           Auth0API.login(_email, _password).then((isConnected) {
             if (isConnected) {
+              initialiseUser();
               globals.isLoggedIn = true;
               globals.isACompany = false;
               Navigator.pushNamedAndRemoveUntil(context, '/home', ModalRoute.withName('/'));

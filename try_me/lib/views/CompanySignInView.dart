@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:tryme/views/SignUpView.dart';
 import 'package:tryme/Auth0API.dart';
 import 'package:tryme/views/CompanyHomeView.dart';
+import 'package:tryme/widgets/Queries.dart';
+import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:tryme/Globals.dart' as globals;
 
 class CompanySignInView extends StatefulWidget {
@@ -11,6 +13,18 @@ class CompanySignInView extends StatefulWidget {
 
   @override
   _CompanySignInViewState createState() => _CompanySignInViewState();
+}
+
+void initialiseCompany() async {
+  QueryResult result;
+  QueryOptions queryOption = QueryOptions(documentNode: gql(Queries.company(globals.auth0User.uid)));
+  result = await globals.graphQLConfiguration.clientToQuery.query(queryOption);
+  globals.company.name = result.data['user'][0]['name'] != null ? result.data['user'][0]['name'] : '';
+  globals.company.address = result.data['user'][0]['address'] != null ? result.data['user'][0]['address'] : '';
+  //globals.company.phoneNumber = result.data['user'][0]['phone'] != null ? result.data['user'][0]['phone'] : '';
+  globals.company.email = result.data['user'][0]['email'] != null ? result.data['user'][0]['email'] : '';
+  //globals.company.siret = result.data['user'][0]['siret'] != null ? result.data['user'][0]['siret'] : '';
+  globals.company.pathToAvatar = globals.auth0User.picture != null ? globals.auth0User.picture : '';
 }
 
 class CurvePainter extends CustomPainter {
@@ -151,24 +165,18 @@ class _CompanySignInViewState extends State<CompanySignInView> {
 
   Widget _submitButton() {
     return FlatButton(
-//      onPressed: () {
-//        if (_formKeyEmail.currentState.validate() && _formKeyPassword.currentState.validate()) {
-//          Auth0API.login(_email, _password).then((isConnected) {
-//            if (isConnected) {
-//              globals.isLoggedIn = true;
-//              globals.isACompany = true;
-//              Navigator.pushNamedAndRemoveUntil(context, '/companyhomeview', ModalRoute.withName('/'));
-//            }
-//          });
-//        }
-//      },
-    onPressed: () {
-      if (_formKeyEmail.currentState.validate() && _formKeyPassword.currentState.validate()) {
-        globals.isLoggedIn = true;
-        globals.isACompany = true;
-        Navigator.pushNamedAndRemoveUntil(context, '/companyHome', ModalRoute.withName('/'));
-      }
-    },
+      onPressed: () {
+        if (_formKeyEmail.currentState.validate() && _formKeyPassword.currentState.validate()) {
+          Auth0API.login(_email, _password).then((isConnected) {
+            if (isConnected) {
+              initialiseCompany();
+              globals.isLoggedIn = true;
+              globals.isACompany = true;
+              Navigator.pushNamedAndRemoveUntil(context, '/companyHome', ModalRoute.withName('/'));
+            }
+          });
+        }
+      },
       child: Container(
         width: MediaQuery.of(context).size.width,
         padding: EdgeInsets.symmetric(vertical: 15),

@@ -1,9 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:tryme/main.dart';
 import 'package:tryme/widgets/Queries.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:tryme/Globals.dart' as globals;
+
 
 List images = [
   'https://cdn.futura-sciences.com/buildsv6/images/mediumoriginal/6/5/2/652a7adb1b_98148_01-intro-773.jpg',
@@ -30,7 +31,7 @@ class _ProductViewState extends State<ProductView> {
   void getData() async {
     QueryResult result;
     QueryOptions queryOption = QueryOptions(documentNode: gql(Queries.product(widget.id)));
-    result = await graphQLConfiguration.clientToQuery.query(queryOption);
+    result = await globals.graphQLConfiguration.clientToQuery.query(queryOption);
     if (this.mounted) {
       setState(() {
         product = result.data['product'][0];

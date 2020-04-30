@@ -21,7 +21,7 @@ class _HomeViewState extends State<HomeView> {
   void getData() async {
     QueryResult result;
     QueryOptions queryOption = QueryOptions(documentNode: gql(Queries.products()));
-    result = await graphQLConfiguration.clientToQuery.query(queryOption);
+    result = await globals.graphQLConfiguration.clientToQuery.query(queryOption);
     if (this.mounted)
       setState(() {
         products = result.data['product'];
