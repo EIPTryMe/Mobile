@@ -124,7 +124,7 @@ class _PersonalInformationViewState extends State<PersonalInformationView> {
                     child: Form(
                       key: _formKey,
                       child: TextFormField(
-                        initialValue: globals.user.username,
+                        initialValue: globals.auth0User.username,
                         decoration: InputDecoration(
                           labelText: "Enter First Name",
                         ),
@@ -710,9 +710,8 @@ class _PersonalInformationViewState extends State<PersonalInformationView> {
       appBar: AppBar(
         title: Text('Informations personnelles'),
         centerTitle: true,
-        backgroundColor: Colors.grey[800],
+        backgroundColor: Color(0xfff99e38),
       ),
-      backgroundColor: Color(0xFF3f4254),
       body: SingleChildScrollView(
         child: Container(
           height: _heightScreen * 0.85,

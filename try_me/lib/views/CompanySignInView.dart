@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tryme/views/SignUpView.dart';
 import 'package:tryme/Auth0API.dart';
+import 'package:tryme/views/CompanyHomeView.dart';
 import 'package:tryme/Globals.dart' as globals;
 
 class CompanySignInView extends StatefulWidget {
@@ -150,19 +151,24 @@ class _CompanySignInViewState extends State<CompanySignInView> {
 
   Widget _submitButton() {
     return FlatButton(
-      onPressed: () {
-        if (_formKeyEmail.currentState.validate() && _formKeyPassword.currentState.validate()) {
-          Auth0API.login(_email, _password).then((isConnected) {
-            if (isConnected) {
-              globals.isLoggedIn = true;
-              globals.isACompany = true;
-              Navigator.pushNamedAndRemoveUntil(context, '/home', ModalRoute.withName('/'));
-            }
-          });
-          print(_email);
-          print(_password);
-        }
-      },
+//      onPressed: () {
+//        if (_formKeyEmail.currentState.validate() && _formKeyPassword.currentState.validate()) {
+//          Auth0API.login(_email, _password).then((isConnected) {
+//            if (isConnected) {
+//              globals.isLoggedIn = true;
+//              globals.isACompany = true;
+//              Navigator.pushNamedAndRemoveUntil(context, '/companyhomeview', ModalRoute.withName('/'));
+//            }
+//          });
+//        }
+//      },
+    onPressed: () {
+      if (_formKeyEmail.currentState.validate() && _formKeyPassword.currentState.validate()) {
+        globals.isLoggedIn = true;
+        globals.isACompany = true;
+        Navigator.pushNamedAndRemoveUntil(context, '/companyHome', ModalRoute.withName('/'));
+      }
+    },
       child: Container(
         width: MediaQuery.of(context).size.width,
         padding: EdgeInsets.symmetric(vertical: 15),
@@ -211,38 +217,6 @@ class _CompanySignInViewState extends State<CompanySignInView> {
       ),
     );
   }
-
-//  Widget _createAccountLabel() {
-//    return Container(
-//      margin: EdgeInsets.symmetric(vertical: 20),
-//      alignment: Alignment.bottomCenter,
-//      child: Row(
-//        mainAxisAlignment: MainAxisAlignment.center,
-//        children: <Widget>[
-//          Text(
-//            'Pas encore inscrit ?',
-//            style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600),
-//          ),
-//          SizedBox(
-//            width: 10,
-//          ),
-//          InkWell(
-//            onTap: () {
-//              Navigator.push(context,
-//                  MaterialPageRoute(builder: (context) => SignUpView()));
-//            },
-//            child: Text(
-//              'Inscrivez-vous',
-//              style: TextStyle(
-//                  color: Color(0xfff79c4f),
-//                  fontSize: 13,
-//                  fontWeight: FontWeight.w600),
-//            ),
-//          )
-//        ],
-//      ),
-//    );
-//  }
 
   Widget _title() {
     return RichText(

@@ -25,7 +25,7 @@ class Auth0API {
     try {
       var response = await auth0.auth.passwordRealm({'username': email, 'password': password, 'realm': 'Username-Password-Authentication'});
 
-      globals.user.accessToken = response['access_token'];
+      globals.auth0User.accessToken = response['access_token'];
 
       print('''
     \nAccess Token: ${response['access_token']}
@@ -37,6 +37,7 @@ class Auth0API {
       return (false);
     }
   }
+
 
   static void webAuth() async {
     try {
@@ -60,14 +61,14 @@ class Auth0API {
 
   static Future<bool> userInfo() async {
     try {
-      var authClient = Auth0Auth(auth0.auth.clientId, auth0.auth.client.baseUrl, bearer: globals.user.accessToken);
+      var authClient = Auth0Auth(auth0.auth.clientId, auth0.auth.client.baseUrl, bearer: globals.auth0User.accessToken);
       var info = await authClient.getUserInfo();
 
-      globals.user.uid = info['sub'];
-      globals.user.username = info['nickname'];
-      globals.user.picture = info['picture'];
-      globals.user.email = info['email'];
-      globals.user.isEmailVerified = info['email_verified'];
+      globals.auth0User.uid = info['sub'];
+      globals.auth0User.username = info['nickname'];
+      globals.auth0User.picture = info['picture'];
+      globals.auth0User.email = info['email'];
+      globals.auth0User.isEmailVerified = info['email_verified'];
 
       String buffer = '';
       info.forEach((k, v) => buffer = '$buffer\n$k: $v');

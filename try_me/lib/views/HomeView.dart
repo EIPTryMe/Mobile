@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:tryme/main.dart';
 import 'package:tryme/views/AuthenticationView.dart';
 import 'package:tryme/views/PersonalInformationView.dart';
-import 'package:tryme/views/CompanyInformationView.dart';
 import 'package:tryme/views/ShoppingCardView.dart';
 import 'package:tryme/widgets/Product.dart';
 import 'package:tryme/widgets/Queries.dart';
@@ -183,51 +182,6 @@ class _HomeViewState extends State<HomeView> {
     ));
   }
 
-  Widget _drawerIsACompany() {
-    return Drawer(
-        child: ListView(
-      padding: EdgeInsets.zero,
-      children: <Widget>[
-        Container(
-          height: 70.0,
-          child: DrawerHeader(
-            child: Text(
-              'Menu',
-              style: TextStyle(
-                color: Colors.white,
-              ),
-            ),
-            decoration: BoxDecoration(
-              color: Colors.black,
-            ),
-          ),
-        ),
-        ListTile(
-          title: Text('Informations entreprise'),
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => CompanyInformationView()),
-            );
-          },
-        ),
-        Divider(
-          height: 1,
-          color: Colors.grey[800],
-        ),
-        ListTile(
-          title: Text('Déconnexion'),
-          onTap: () async {
-            final bool _logout = await LogOut().Confirm(context);
-            if (_logout != null) {
-              disconnect(_logout);
-            }
-          },
-        ),
-      ],
-    ));
-  }
-
   @override
   Widget build(BuildContext context) {
     if (!globals.isLoggedIn && !globals.isACompany) {
@@ -246,8 +200,7 @@ class _HomeViewState extends State<HomeView> {
       );
     } else {
       return Scaffold(
-        appBar: _appbar(),
-        drawer: _drawerIsACompany(),
+
         body: ProductList(products: products),
         backgroundColor: Colors.grey[200],
       );

@@ -10,6 +10,7 @@ import 'package:tryme/views/PersonalInformationView.dart';
 import 'package:tryme/views/CompanyInformationView.dart';
 import 'package:tryme/views/ShoppingCardView.dart';
 import 'package:tryme/views/CompanySignInView.dart';
+import 'package:tryme/views/CompanyHomeView.dart';
 
 import 'package:tryme/Auth0API.dart';
 
@@ -32,6 +33,7 @@ void main() {
           '/product': (context) => ProductView(),
           '/personalInformation': (context) => PersonalInformationView(),
           '/companyInformation': (context) => CompanyInformationView(),
+          '/companyHome': (context) => CompanyHomeView(),
         },
       ),
     ),
