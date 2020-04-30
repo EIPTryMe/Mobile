@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:tryme/views/HomeView.dart';
 import 'package:tryme/views/SignUpView.dart';
+import 'package:tryme/Auth0API.dart';
 import 'package:tryme/Globals.dart' as globals;
 
 class CompanySignInView extends StatefulWidget {
@@ -22,10 +22,8 @@ class CurvePainter extends CustomPainter {
     paint.color = Color(0xfff7892b);
 
     path.moveTo(0, size.height * 0.05);
-    path.quadraticBezierTo(size.width * 0.08, size.height * 0.33,
-        size.width * 0.32, size.height * 0.20);
-    path.quadraticBezierTo(size.width * 0.70, size.height * 0.00,
-        size.width * 1.0, size.height * 0.10);
+    path.quadraticBezierTo(size.width * 0.08, size.height * 0.33, size.width * 0.32, size.height * 0.20);
+    path.quadraticBezierTo(size.width * 0.70, size.height * 0.00, size.width * 1.0, size.height * 0.10);
     path.lineTo(size.width, 0);
     path.lineTo(0, 0);
     canvas.drawPath(path, paint);
@@ -37,10 +35,8 @@ class CurvePainter extends CustomPainter {
     paint2.color = Color(0xfffbb448);
 
     path2.moveTo(size.width * 0.02, size.height * 0.03);
-    path2.quadraticBezierTo(size.width * 0.08, size.height * 0.21,
-        size.width * 0.32, size.height * 0.12);
-    path2.quadraticBezierTo(size.width * 0.70, size.height * 0.00,
-        size.width * 1.0, size.height * 0.06);
+    path2.quadraticBezierTo(size.width * 0.08, size.height * 0.21, size.width * 0.32, size.height * 0.12);
+    path2.quadraticBezierTo(size.width * 0.70, size.height * 0.00, size.width * 1.0, size.height * 0.06);
     path2.lineTo(size.width, 0);
     path2.lineTo(0, 0);
 
@@ -72,8 +68,7 @@ class _CompanySignInViewState extends State<CompanySignInView> {
               padding: EdgeInsets.only(left: 0, top: 10, bottom: 10),
               child: Icon(Icons.keyboard_arrow_left, color: Colors.black),
             ),
-            Text('Retour',
-                style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500))
+            Text('Retour', style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500))
           ],
         ),
       ),
@@ -156,14 +151,14 @@ class _CompanySignInViewState extends State<CompanySignInView> {
   Widget _submitButton() {
     return FlatButton(
       onPressed: () {
-        if (_formKeyEmail.currentState.validate() &&
-            _formKeyPassword.currentState.validate()) {
-          globals.isLoggedIn = true;
-          globals.isACompany = true;
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => HomeView()),
-          );
+        if (_formKeyEmail.currentState.validate() && _formKeyPassword.currentState.validate()) {
+          Auth0API.login(_email, _password).then((isConnected) {
+            if (isConnected) {
+              globals.isLoggedIn = true;
+              globals.isACompany = true;
+              Navigator.pushNamedAndRemoveUntil(context, '/home', ModalRoute.withName('/'));
+            }
+          });
           print(_email);
           print(_password);
         }
@@ -174,17 +169,8 @@ class _CompanySignInViewState extends State<CompanySignInView> {
         alignment: Alignment.center,
         decoration: BoxDecoration(
             borderRadius: BorderRadius.all(Radius.circular(5)),
-            boxShadow: <BoxShadow>[
-              BoxShadow(
-                  color: Colors.grey.shade200,
-                  offset: Offset(2, 4),
-                  blurRadius: 5,
-                  spreadRadius: 2)
-            ],
-            gradient: LinearGradient(
-                begin: Alignment.centerLeft,
-                end: Alignment.centerRight,
-                colors: [Color(0xfffbb448), Color(0xfff7892b)])),
+            boxShadow: <BoxShadow>[BoxShadow(color: Colors.grey.shade200, offset: Offset(2, 4), blurRadius: 5, spreadRadius: 2)],
+            gradient: LinearGradient(begin: Alignment.centerLeft, end: Alignment.centerRight, colors: [Color(0xfffbb448), Color(0xfff7892b)])),
         child: Text(
           'Connexion',
           style: TextStyle(fontSize: 20, color: Colors.white),
@@ -313,9 +299,7 @@ class _CompanySignInViewState extends State<CompanySignInView> {
                   Container(
                     padding: EdgeInsets.symmetric(vertical: 10),
                     alignment: Alignment.centerRight,
-                    child: Text('Mot de Passe oublié ?',
-                        style: TextStyle(
-                            fontSize: 14, fontWeight: FontWeight.w500)),
+                    child: Text('Mot de Passe oublié ?', style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500)),
                   ),
                   Expanded(
                     flex: 1,

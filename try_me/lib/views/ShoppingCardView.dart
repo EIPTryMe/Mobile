@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-class ShoppingBasketView extends StatefulWidget {
+class ShoppingCardView extends StatefulWidget {
   @override
-  _ShoppingBasketViewState createState() => _ShoppingBasketViewState();
+  _ShoppingCardViewState createState() => _ShoppingCardViewState();
 }
 
-class _ShoppingBasketViewState extends State<ShoppingBasketView> {
+class _ShoppingCardViewState extends State<ShoppingCardView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

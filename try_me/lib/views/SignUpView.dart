@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tryme/views/SignInView.dart';
-import 'package:tryme/views/HomeView.dart';
+import 'package:tryme/Auth0API.dart';
 import 'package:tryme/Globals.dart' as globals;
 
 class SignUpView extends StatefulWidget {
@@ -22,10 +22,8 @@ class CurvePainter extends CustomPainter {
     paint.color = Color(0xfff7892b);
 
     path.moveTo(0, size.height * 0.05);
-    path.quadraticBezierTo(size.width * 0.08, size.height * 0.33,
-        size.width * 0.32, size.height * 0.20);
-    path.quadraticBezierTo(size.width * 0.70, size.height * 0.00,
-        size.width * 1.0, size.height * 0.10);
+    path.quadraticBezierTo(size.width * 0.08, size.height * 0.33, size.width * 0.32, size.height * 0.20);
+    path.quadraticBezierTo(size.width * 0.70, size.height * 0.00, size.width * 1.0, size.height * 0.10);
     path.lineTo(size.width, 0);
     path.lineTo(0, 0);
     canvas.drawPath(path, paint);
@@ -37,10 +35,8 @@ class CurvePainter extends CustomPainter {
     paint2.color = Color(0xfffbb448);
 
     path2.moveTo(size.width * 0.02, size.height * 0.03);
-    path2.quadraticBezierTo(size.width * 0.08, size.height * 0.21,
-        size.width * 0.32, size.height * 0.12);
-    path2.quadraticBezierTo(size.width * 0.70, size.height * 0.00,
-        size.width * 1.0, size.height * 0.06);
+    path2.quadraticBezierTo(size.width * 0.08, size.height * 0.21, size.width * 0.32, size.height * 0.12);
+    path2.quadraticBezierTo(size.width * 0.70, size.height * 0.00, size.width * 1.0, size.height * 0.06);
     path2.lineTo(size.width, 0);
     path2.lineTo(0, 0);
 
@@ -57,6 +53,8 @@ class _SignUpViewState extends State<SignUpView> {
   final _formKeyEmail = GlobalKey<FormState>();
   final _formKeyPassword = GlobalKey<FormState>();
   final _formKeyConfirm = GlobalKey<FormState>();
+  var _email;
+  var _password;
 
   bool _emailValid;
   bool _passwordValid;
@@ -78,8 +76,7 @@ class _SignUpViewState extends State<SignUpView> {
                 color: Colors.black,
               ),
             ),
-            Text('Retour',
-                style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500))
+            Text('Retour', style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500))
           ],
         ),
       ),
@@ -109,14 +106,13 @@ class _SignUpViewState extends State<SignUpView> {
               ),
               keyboardType: TextInputType.emailAddress,
               validator: (value) {
-                _emailValid =
-                    RegExp(r"^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$")
-                        .hasMatch(value);
+                _emailValid = RegExp(r"^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$").hasMatch(value);
                 if (value.isEmpty) {
                   return "You didn\'t write your email";
                 } else if (!_emailValid) {
                   return "Your email address is incorrect";
                 }
+                _email = value;
                 return null;
               },
             ),
@@ -150,9 +146,7 @@ class _SignUpViewState extends State<SignUpView> {
               keyboardType: TextInputType.text,
               obscureText: true,
               validator: (value) {
-                _passwordValid = RegExp(
-                        r"^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,20})")
-                    .hasMatch(value);
+                _passwordValid = RegExp(r"^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,20})").hasMatch(value);
                 if (value.isEmpty) {
                   return "You didn't write your password";
                 } else if (!_passwordValid) {
@@ -197,6 +191,7 @@ class _SignUpViewState extends State<SignUpView> {
                 } else if (value != _firstPassword) {
                   return "Your passwords do not match";
                 }
+                _password = value;
                 return null;
               },
             ),
@@ -209,14 +204,16 @@ class _SignUpViewState extends State<SignUpView> {
   Widget _submitButton() {
     return FlatButton(
       onPressed: () {
-        if (_formKeyEmail.currentState.validate() &&
-            _formKeyPassword.currentState.validate() &&
-            _formKeyConfirm.currentState.validate()) {
-          globals.isLoggedIn = true;
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => HomeView()),
-          );
+        if (_formKeyEmail.currentState.validate() && _formKeyPassword.currentState.validate() && _formKeyConfirm.currentState.validate()) {
+          Auth0API.register(_email, _password).then((isConnected) {
+            if (isConnected) {
+              globals.isLoggedIn = true;
+              globals.isACompany = false;
+              Navigator.pushNamedAndRemoveUntil(context, '/home', ModalRoute.withName('/'));
+            }
+          });
+          print(_email);
+          print(_password);
         }
       },
       child: Container(
@@ -226,17 +223,8 @@ class _SignUpViewState extends State<SignUpView> {
         alignment: Alignment.center,
         decoration: BoxDecoration(
             borderRadius: BorderRadius.all(Radius.circular(5)),
-            boxShadow: <BoxShadow>[
-              BoxShadow(
-                  color: Colors.grey.shade200,
-                  offset: Offset(2, 4),
-                  blurRadius: 5,
-                  spreadRadius: 2)
-            ],
-            gradient: LinearGradient(
-                begin: Alignment.centerLeft,
-                end: Alignment.centerRight,
-                colors: [Color(0xfffbb448), Color(0xfff7892b)])),
+            boxShadow: <BoxShadow>[BoxShadow(color: Colors.grey.shade200, offset: Offset(2, 4), blurRadius: 5, spreadRadius: 2)],
+            gradient: LinearGradient(begin: Alignment.centerLeft, end: Alignment.centerRight, colors: [Color(0xfffbb448), Color(0xfff7892b)])),
         child: Text(
           "S\'inscrire maintenant",
           style: TextStyle(fontSize: 20, color: Colors.white),
@@ -261,9 +249,7 @@ class _SignUpViewState extends State<SignUpView> {
               child: Container(
                 decoration: BoxDecoration(
                   color: Color(0xff1959a9),
-                  borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(5),
-                      topLeft: Radius.circular(5)),
+                  borderRadius: BorderRadius.only(bottomLeft: Radius.circular(5), topLeft: Radius.circular(5)),
                 ),
                 alignment: Alignment.center,
                 child: Image(
@@ -276,16 +262,10 @@ class _SignUpViewState extends State<SignUpView> {
               child: Container(
                 decoration: BoxDecoration(
                   color: Color(0xff2872ba),
-                  borderRadius: BorderRadius.only(
-                      bottomRight: Radius.circular(5),
-                      topRight: Radius.circular(5)),
+                  borderRadius: BorderRadius.only(bottomRight: Radius.circular(5), topRight: Radius.circular(5)),
                 ),
                 alignment: Alignment.center,
-                child: Text('S\'inscrire avec Facebook',
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 20,
-                        fontWeight: FontWeight.w400)),
+                child: Text('S\'inscrire avec Facebook', style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.w400)),
               ),
             ),
           ],
@@ -310,9 +290,7 @@ class _SignUpViewState extends State<SignUpView> {
               child: Container(
                 decoration: BoxDecoration(
                   color: Color(0xffffff),
-                  borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(5),
-                      topLeft: Radius.circular(5)),
+                  borderRadius: BorderRadius.only(bottomLeft: Radius.circular(5), topLeft: Radius.circular(5)),
                 ),
                 alignment: Alignment.center,
                 child: Image(
@@ -325,16 +303,10 @@ class _SignUpViewState extends State<SignUpView> {
               child: Container(
                 decoration: BoxDecoration(
                   color: Color(0xffff3d00),
-                  borderRadius: BorderRadius.only(
-                      bottomRight: Radius.circular(5),
-                      topRight: Radius.circular(5)),
+                  borderRadius: BorderRadius.only(bottomRight: Radius.circular(5), topRight: Radius.circular(5)),
                 ),
                 alignment: Alignment.center,
-                child: Text('S\'inscrire avec Google',
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 20,
-                        fontWeight: FontWeight.w400)),
+                child: Text('S\'inscrire avec Google', style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.w400)),
               ),
             ),
           ],
@@ -360,15 +332,11 @@ class _SignUpViewState extends State<SignUpView> {
           InkWell(
             onTap: () {
               Navigator.pop(context);
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => SignInView()));
+              Navigator.push(context, MaterialPageRoute(builder: (context) => SignInView()));
             },
             child: Text(
               'Connectez-vous ici',
-              style: TextStyle(
-                  color: Color(0xfff79c4f),
-                  fontSize: 13,
-                  fontWeight: FontWeight.w600),
+              style: TextStyle(color: Color(0xfff79c4f), fontSize: 13, fontWeight: FontWeight.w600),
             ),
           )
         ],

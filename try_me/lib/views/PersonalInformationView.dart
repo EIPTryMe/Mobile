@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tryme/Globals.dart' as globals;
 
 class PersonalInformationView extends StatefulWidget {
   @override
@@ -123,7 +124,7 @@ class _PersonalInformationViewState extends State<PersonalInformationView> {
                     child: Form(
                       key: _formKey,
                       child: TextFormField(
-                        initialValue: user.firstName,
+                        initialValue: globals.user.username,
                         decoration: InputDecoration(
                           labelText: "Enter First Name",
                         ),

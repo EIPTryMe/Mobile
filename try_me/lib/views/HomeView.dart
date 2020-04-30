@@ -3,7 +3,7 @@ import 'package:tryme/main.dart';
 import 'package:tryme/views/AuthenticationView.dart';
 import 'package:tryme/views/PersonalInformationView.dart';
 import 'package:tryme/views/CompanyInformationView.dart';
-import 'package:tryme/views/ShoppingBasketView.dart';
+import 'package:tryme/views/ShoppingCardView.dart';
 import 'package:tryme/widgets/Product.dart';
 import 'package:tryme/widgets/Queries.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
@@ -21,12 +21,12 @@ class _HomeViewState extends State<HomeView> {
 
   void getData() async {
     QueryResult result;
-    Queries queries = Queries();
     QueryOptions queryOption = QueryOptions(documentNode: gql(Queries.products()));
     result = await graphQLConfiguration.clientToQuery.query(queryOption);
-    setState(() {
-      products = result.data['product'];
-    });
+    if (this.mounted)
+      setState(() {
+        products = result.data['product'];
+      });
   }
 
   @override
@@ -81,7 +81,7 @@ class _HomeViewState extends State<HomeView> {
           onPressed: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => ShoppingBasketView()),
+              MaterialPageRoute(builder: (context) => ShoppingCardView()),
             );
           },
           icon: Icon(Icons.shopping_cart),

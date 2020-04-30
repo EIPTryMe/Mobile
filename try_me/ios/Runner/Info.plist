@@ -50,7 +50,7 @@
             <string>auth0</string>
             <key>CFBundleURLSchemes</key>
             <array>
-                <string>dev-2o6a8byc.eu.auth0.com</string>
+                <string>dev-2o6a8byc.eu.auth0.com/api/v2</string>
             </array>
         </dict>
     </array>

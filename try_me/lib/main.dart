@@ -8,10 +8,10 @@ import 'package:tryme/views/SignInView.dart';
 import 'package:tryme/views/ProductView.dart';
 import 'package:tryme/views/PersonalInformationView.dart';
 import 'package:tryme/views/CompanyInformationView.dart';
-import 'package:tryme/views/ShoppingBasketView.dart';
+import 'package:tryme/views/ShoppingCardView.dart';
 import 'package:tryme/views/CompanySignInView.dart';
 
-import 'package:tryme/LoginTest.dart';
+import 'package:tryme/Auth0API.dart';
 
 GraphQLConfiguration graphQLConfiguration = GraphQLConfiguration();
 
@@ -21,14 +21,13 @@ void main() {
   runApp(GraphQLProvider(
     child: CacheProvider(
       child: MaterialApp(
-        initialRoute: '/',
+        initialRoute: '/home',
         routes: {
-          '/test': (context) => LoginTest(),
-          '/': (context) => HomeView(),
+          '/home': (context) => HomeView(),
           '/authentication': (context) => AuthenticationView(),
           '/signup': (context) => SignUpView(),
           '/signin': (context) => SignInView(),
-          '/ShoppingBasket': (context) => ShoppingBasketView(),
+          '/ShoppingBasket': (context) => ShoppingCardView(),
           '/companysignin': (context) => CompanySignInView(),
           '/product': (context) => ProductView(),
           '/personalInformation': (context) => PersonalInformationView(),
