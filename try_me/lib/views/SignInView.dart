@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tryme/Auth0API.dart';
+import 'package:tryme/views/HomeView.dart';
 import 'package:tryme/views/SignUpView.dart';
 import 'package:tryme/widgets/Queries.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
@@ -14,9 +15,9 @@ class SignInView extends StatefulWidget {
   _SignInViewState createState() => _SignInViewState();
 }
 
-void initialiseUser() async {
+Future initialiseUser() async {
   QueryResult result;
-  QueryOptions queryOption = QueryOptions(documentNode: gql(Queries.user('auth0|5eaafb1bb975740bf829a7d6'/*globals.auth0User.uid*/)));
+  QueryOptions queryOption = QueryOptions(documentNode: gql(Queries.user('auth0|5eaafb1bb975740bf829a7d6' /*globals.auth0User.uid*/)));
   result = await globals.graphQLConfiguration.clientToQuery.query(queryOption);
   globals.user.firstName = result.data['user'][0]['first_name'] != null ? result.data['user'][0]['first_name'] : '';
   globals.user.lastName = result.data['user'][0]['name'] != null ? result.data['user'][0]['name'] : '';
@@ -169,10 +170,11 @@ class _SignInViewState extends State<SignInView> {
         if (_formKeyEmail.currentState.validate() && _formKeyPassword.currentState.validate()) {
           Auth0API.login(_email, _password).then((isConnected) {
             if (isConnected) {
-              initialiseUser();
-              globals.isLoggedIn = true;
-              globals.isACompany = false;
-              Navigator.pushNamedAndRemoveUntil(context, '/home', ModalRoute.withName('/'));
+              initialiseUser().whenComplete(() {
+                globals.isLoggedIn = true;
+                globals.isACompany = false;
+                Navigator.pushNamedAndRemoveUntil(context, '/home', ModalRoute.withName('/'));
+              });
             }
           });
         }

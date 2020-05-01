@@ -15,7 +15,7 @@ class CompanySignInView extends StatefulWidget {
   _CompanySignInViewState createState() => _CompanySignInViewState();
 }
 
-void initialiseCompany() async {
+Future initialiseCompany() async {
   QueryResult result;
   QueryOptions queryOption = QueryOptions(documentNode: gql(Queries.company(globals.auth0User.uid)));
   result = await globals.graphQLConfiguration.clientToQuery.query(queryOption);
@@ -23,7 +23,7 @@ void initialiseCompany() async {
   globals.company.address = result.data['user'][0]['address'] != null ? result.data['user'][0]['address'] : '';
   //globals.company.phoneNumber = result.data['user'][0]['phone'] != null ? result.data['user'][0]['phone'] : '';
   globals.company.email = result.data['user'][0]['email'] != null ? result.data['user'][0]['email'] : '';
-  //globals.company.siret = result.data['user'][0]['siret'] != null ? result.data['user'][0]['siret'] : '';
+  globals.company.siret = result.data['user'][0]['siret'] != null ? result.data['user'][0]['siret'] : '';
   globals.company.pathToAvatar = globals.auth0User.picture != null ? globals.auth0User.picture : '';
 }
 
@@ -169,10 +169,11 @@ class _CompanySignInViewState extends State<CompanySignInView> {
         if (_formKeyEmail.currentState.validate() && _formKeyPassword.currentState.validate()) {
           Auth0API.login(_email, _password).then((isConnected) {
             if (isConnected) {
-              initialiseCompany();
-              globals.isLoggedIn = true;
-              globals.isACompany = true;
-              Navigator.pushNamedAndRemoveUntil(context, '/companyHome', ModalRoute.withName('/'));
+              initialiseCompany().whenComplete(() {
+                globals.isLoggedIn = true;
+                globals.isACompany = true;
+                Navigator.pushNamedAndRemoveUntil(context, '/companyHome', ModalRoute.withName('/'));
+              });
             }
           });
         }
