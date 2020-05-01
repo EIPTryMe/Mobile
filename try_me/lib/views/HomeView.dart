@@ -88,7 +88,7 @@ class _HomeViewState extends State<HomeView> {
       ],
       title: customSearchBar,
       centerTitle: true,
-      backgroundColor: Colors.grey[800],
+      backgroundColor: Color(0xfff99e38),
     );
   }
 
@@ -107,7 +107,7 @@ class _HomeViewState extends State<HomeView> {
               ),
             ),
             decoration: BoxDecoration(
-              color: Colors.black,
+              color: Color(0xfff99e38),
             ),
           ),
         ),
@@ -142,21 +142,27 @@ class _HomeViewState extends State<HomeView> {
         child: ListView(
       padding: EdgeInsets.zero,
       children: <Widget>[
-        Container(
-          height: 70.0,
-          child: DrawerHeader(
-            child: Text(
-              'Menu',
-              style: TextStyle(
-                color: Colors.white,
-              ),
+        UserAccountsDrawerHeader(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+                begin: Alignment.centerLeft,
+                end: Alignment.centerRight,
+                colors: [Color(0xfff7892b), Color(0xfffbb448)]),
+          ),
+          accountName: Text(
+            'temp',
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 20.0,
             ),
-            decoration: BoxDecoration(
-              color: Colors.black,
-            ),
+          ),
+          accountEmail: Text('temp as well'),
+          currentAccountPicture: CircleAvatar(
+            backgroundImage: AssetImage('assets/company_logo_temp.jpg'),
           ),
         ),
         ListTile(
+          leading: Icon(Icons.info_outline),
           title: Text('Informations personnelles'),
           onTap: () {
             Navigator.push(

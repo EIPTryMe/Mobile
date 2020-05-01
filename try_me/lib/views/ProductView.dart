@@ -54,7 +54,7 @@ class _ProductViewState extends State<ProductView> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.orange[800],
+          backgroundColor: Color(0xfff99e38),
         ),
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -144,7 +144,7 @@ class _ProductViewState extends State<ProductView> {
             Expanded(
               flex: 1,
               child: FlatButton(
-                color: Colors.orange[800],
+                color: Color(0xfff99e38),
                 onPressed: () {},
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,

@@ -3,7 +3,8 @@ import 'package:tryme/Globals.dart' as globals;
 
 class PersonalInformationView extends StatefulWidget {
   @override
-  _PersonalInformationViewState createState() => _PersonalInformationViewState();
+  _PersonalInformationViewState createState() =>
+      _PersonalInformationViewState();
 }
 
 class UserInfo {
@@ -17,7 +18,8 @@ class UserInfo {
 
 String modifyPhoneNumber(String phoneNumber) {
   String tmp = phoneNumber;
-  phoneNumber = tmp.replaceAllMapped(RegExp(r".{2}"), (match) => "${match.group(0)} ");
+  phoneNumber =
+      tmp.replaceAllMapped(RegExp(r".{2}"), (match) => "${match.group(0)} ");
   phoneNumber = phoneNumber.substring(0, phoneNumber.length - 1);
   return (phoneNumber);
 }
@@ -63,7 +65,7 @@ class _PersonalInformationViewState extends State<PersonalInformationView> {
         Padding(
           padding: EdgeInsets.all(widthScreen / 20),
           child: CircleAvatar(
-            backgroundImage: AssetImage('assets/profil.jpg'),
+            backgroundImage: AssetImage('assets/company_logo_temp.jpg'),
             radius: widthScreen / 10,
           ),
         ),
@@ -78,7 +80,7 @@ class _PersonalInformationViewState extends State<PersonalInformationView> {
                     user.firstName,
                     style: TextStyle(
                       letterSpacing: 2.0,
-                      color: Colors.white,
+                      color: Colors.black,
                     ),
                   ),
                 ),
@@ -89,7 +91,7 @@ class _PersonalInformationViewState extends State<PersonalInformationView> {
                     user.lastName,
                     style: TextStyle(
                       letterSpacing: 2.0,
-                      color: Colors.white,
+                      color: Colors.black,
                     ),
                   ),
                 ),
@@ -111,11 +113,10 @@ class _PersonalInformationViewState extends State<PersonalInformationView> {
               child: Form(
                 child: Theme(
                   data: ThemeData(
-                    brightness: Brightness.dark,
-                    primarySwatch: Colors.teal,
+                    primarySwatch: Colors.orange,
                     inputDecorationTheme: InputDecorationTheme(
                       labelStyle: TextStyle(
-                        color: Colors.teal,
+                        color: Color(0xfff99e38),
                         fontSize: 10.0,
                       ),
                     ),
@@ -126,11 +127,17 @@ class _PersonalInformationViewState extends State<PersonalInformationView> {
                       child: TextFormField(
                         initialValue: globals.auth0User.username,
                         decoration: InputDecoration(
+                          border: InputBorder.none,
+                          focusedBorder: InputBorder.none,
+                          enabledBorder: InputBorder.none,
+                          errorBorder: InputBorder.none,
+                          disabledBorder: InputBorder.none,
                           labelText: "Enter First Name",
                         ),
                         keyboardType: TextInputType.text,
                         validator: (value) {
-                          _infoValid = RegExp(r"^[a-zA-Z-]{2,16}$").hasMatch(value);
+                          _infoValid =
+                              RegExp(r"^[a-zA-Z-]{2,16}$").hasMatch(value);
                           if (value.isEmpty) {
                             return "You didn\'t write your first name";
                           } else if (!_infoValid) {
@@ -158,7 +165,7 @@ class _PersonalInformationViewState extends State<PersonalInformationView> {
               },
               icon: Icon(
                 Icons.check,
-                color: Colors.white,
+                color: Colors.black,
               ),
             )
           ],
@@ -173,7 +180,7 @@ class _PersonalInformationViewState extends State<PersonalInformationView> {
               child: Text(
                 user.firstName,
                 style: TextStyle(
-                  color: Colors.white,
+                  color: Colors.black,
                 ),
               ),
             ),
@@ -189,7 +196,7 @@ class _PersonalInformationViewState extends State<PersonalInformationView> {
               },
               icon: Icon(
                 Icons.edit,
-                color: Colors.white,
+                color: Colors.black,
               ),
             ),
           ],
@@ -197,10 +204,6 @@ class _PersonalInformationViewState extends State<PersonalInformationView> {
       );
     }
   }
-
-  /* 
-  * Put every Widget in his own file for more clarity
-  */
 
   Widget _personalLastName(var edit) {
     if (edit[2]) {
@@ -212,11 +215,10 @@ class _PersonalInformationViewState extends State<PersonalInformationView> {
               child: Form(
                 child: Theme(
                   data: ThemeData(
-                    brightness: Brightness.dark,
-                    primarySwatch: Colors.teal,
+                    primarySwatch: Colors.orange,
                     inputDecorationTheme: InputDecorationTheme(
                       labelStyle: TextStyle(
-                        color: Colors.teal,
+                        color: Color(0xfff99e38),
                         fontSize: 10.0,
                       ),
                     ),
@@ -227,11 +229,17 @@ class _PersonalInformationViewState extends State<PersonalInformationView> {
                       child: TextFormField(
                         initialValue: user.lastName,
                         decoration: InputDecoration(
+                          border: InputBorder.none,
+                          focusedBorder: InputBorder.none,
+                          enabledBorder: InputBorder.none,
+                          errorBorder: InputBorder.none,
+                          disabledBorder: InputBorder.none,
                           labelText: "Enter Last Name",
                         ),
                         keyboardType: TextInputType.text,
                         validator: (value) {
-                          _infoValid = RegExp(r"^[a-zA-Z-' ]{2,20}$").hasMatch(value);
+                          _infoValid =
+                              RegExp(r"^[a-zA-Z-' ]{2,20}$").hasMatch(value);
                           if (value.isEmpty) {
                             return "You didn\'t write your last name";
                           } else if (!_infoValid) {
@@ -259,7 +267,7 @@ class _PersonalInformationViewState extends State<PersonalInformationView> {
               },
               icon: Icon(
                 Icons.check,
-                color: Colors.white,
+                color: Colors.black,
               ),
             )
           ],
@@ -274,7 +282,7 @@ class _PersonalInformationViewState extends State<PersonalInformationView> {
               child: Text(
                 user.lastName,
                 style: TextStyle(
-                  color: Colors.white,
+                  color: Colors.black,
                 ),
               ),
             ),
@@ -290,7 +298,7 @@ class _PersonalInformationViewState extends State<PersonalInformationView> {
               },
               icon: Icon(
                 Icons.edit,
-                color: Colors.white,
+                color: Colors.black,
               ),
             ),
           ],
@@ -309,11 +317,10 @@ class _PersonalInformationViewState extends State<PersonalInformationView> {
               child: Form(
                 child: Theme(
                   data: ThemeData(
-                    brightness: Brightness.dark,
-                    primarySwatch: Colors.teal,
+                    primarySwatch: Colors.orange,
                     inputDecorationTheme: InputDecorationTheme(
                       labelStyle: TextStyle(
-                        color: Colors.teal,
+                        color: Color(0xfff99e38),
                         fontSize: 10.0,
                       ),
                     ),
@@ -324,11 +331,17 @@ class _PersonalInformationViewState extends State<PersonalInformationView> {
                       child: TextFormField(
                         initialValue: user.address,
                         decoration: InputDecoration(
+                          border: InputBorder.none,
+                          focusedBorder: InputBorder.none,
+                          enabledBorder: InputBorder.none,
+                          errorBorder: InputBorder.none,
+                          disabledBorder: InputBorder.none,
                           labelText: "Enter Address",
                         ),
                         keyboardType: TextInputType.text,
                         validator: (value) {
-                          _infoValid = RegExp(r"^[a-zA-Z0-9-', ]{2,100}$").hasMatch(value);
+                          _infoValid = RegExp(r"^[a-zA-Z0-9-', ]{2,100}$")
+                              .hasMatch(value);
                           if (value.isEmpty) {
                             return "You didn\'t write your address";
                           } else if (!_infoValid) {
@@ -356,7 +369,7 @@ class _PersonalInformationViewState extends State<PersonalInformationView> {
               },
               icon: Icon(
                 Icons.check,
-                color: Colors.white,
+                color: Colors.black,
               ),
             )
           ],
@@ -371,7 +384,7 @@ class _PersonalInformationViewState extends State<PersonalInformationView> {
               child: Text(
                 user.address,
                 style: TextStyle(
-                  color: Colors.white,
+                  color: Colors.black,
                 ),
               ),
             ),
@@ -387,7 +400,7 @@ class _PersonalInformationViewState extends State<PersonalInformationView> {
               },
               icon: Icon(
                 Icons.edit,
-                color: Colors.white,
+                color: Colors.black,
               ),
             ),
           ],
@@ -406,11 +419,10 @@ class _PersonalInformationViewState extends State<PersonalInformationView> {
               child: Form(
                 child: Theme(
                   data: ThemeData(
-                    brightness: Brightness.dark,
-                    primarySwatch: Colors.teal,
+                    primarySwatch: Colors.orange,
                     inputDecorationTheme: InputDecorationTheme(
                       labelStyle: TextStyle(
-                        color: Colors.teal,
+                        color: Color(0xfff99e38),
                         fontSize: 10.0,
                       ),
                     ),
@@ -421,11 +433,17 @@ class _PersonalInformationViewState extends State<PersonalInformationView> {
                       child: TextFormField(
                         initialValue: user.phoneNumber,
                         decoration: InputDecoration(
+                          border: InputBorder.none,
+                          focusedBorder: InputBorder.none,
+                          enabledBorder: InputBorder.none,
+                          errorBorder: InputBorder.none,
+                          disabledBorder: InputBorder.none,
                           labelText: "Enter Phone Number",
                         ),
                         keyboardType: TextInputType.phone,
                         validator: (value) {
-                          _infoValid = RegExp(r"^[0-9 ]{10,10}$").hasMatch(value);
+                          _infoValid =
+                              RegExp(r"^[0-9 ]{10,10}$").hasMatch(value);
                           if (value.isEmpty) {
                             return "You didn\'t write your phone number";
                           } else if (!_infoValid) {
@@ -454,7 +472,7 @@ class _PersonalInformationViewState extends State<PersonalInformationView> {
               },
               icon: Icon(
                 Icons.check,
-                color: Colors.white,
+                color: Colors.black,
               ),
             )
           ],
@@ -469,7 +487,7 @@ class _PersonalInformationViewState extends State<PersonalInformationView> {
               child: Text(
                 user.phoneNumber,
                 style: TextStyle(
-                  color: Colors.white,
+                  color: Colors.black,
                 ),
               ),
             ),
@@ -485,7 +503,7 @@ class _PersonalInformationViewState extends State<PersonalInformationView> {
               },
               icon: Icon(
                 Icons.edit,
-                color: Colors.white,
+                color: Colors.black,
               ),
             ),
           ],
@@ -504,11 +522,10 @@ class _PersonalInformationViewState extends State<PersonalInformationView> {
               child: Form(
                 child: Theme(
                   data: ThemeData(
-                    brightness: Brightness.dark,
-                    primarySwatch: Colors.teal,
+                    primarySwatch: Colors.orange,
                     inputDecorationTheme: InputDecorationTheme(
                       labelStyle: TextStyle(
-                        color: Colors.teal,
+                        color: Color(0xfff99e38),
                         fontSize: 10.0,
                       ),
                     ),
@@ -519,11 +536,18 @@ class _PersonalInformationViewState extends State<PersonalInformationView> {
                       child: TextFormField(
                         initialValue: user.email,
                         decoration: InputDecoration(
+                          border: InputBorder.none,
+                          focusedBorder: InputBorder.none,
+                          enabledBorder: InputBorder.none,
+                          errorBorder: InputBorder.none,
+                          disabledBorder: InputBorder.none,
                           labelText: "Enter Email",
                         ),
                         keyboardType: TextInputType.emailAddress,
                         validator: (value) {
-                          _infoValid = RegExp(r"^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$").hasMatch(value);
+                          _infoValid = RegExp(
+                                  r"^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$")
+                              .hasMatch(value);
                           if (value.isEmpty) {
                             return "You didn\'t write your email";
                           } else if (!_infoValid) {
@@ -551,7 +575,7 @@ class _PersonalInformationViewState extends State<PersonalInformationView> {
               },
               icon: Icon(
                 Icons.check,
-                color: Colors.white,
+                color: Colors.black,
               ),
             )
           ],
@@ -566,7 +590,7 @@ class _PersonalInformationViewState extends State<PersonalInformationView> {
               child: Text(
                 user.email,
                 style: TextStyle(
-                  color: Colors.white,
+                  color: Colors.black,
                 ),
               ),
             ),
@@ -582,7 +606,7 @@ class _PersonalInformationViewState extends State<PersonalInformationView> {
               },
               icon: Icon(
                 Icons.edit,
-                color: Colors.white,
+                color: Colors.black,
               ),
             ),
           ],
@@ -601,11 +625,10 @@ class _PersonalInformationViewState extends State<PersonalInformationView> {
               child: Form(
                 child: Theme(
                   data: ThemeData(
-                    brightness: Brightness.dark,
-                    primarySwatch: Colors.teal,
+                    primarySwatch: Colors.orange,
                     inputDecorationTheme: InputDecorationTheme(
                       labelStyle: TextStyle(
-                        color: Colors.teal,
+                        color: Color(0xfff99e38),
                         fontSize: 10.0,
                       ),
                     ),
@@ -616,11 +639,18 @@ class _PersonalInformationViewState extends State<PersonalInformationView> {
                       child: TextFormField(
                         initialValue: user.birthDate,
                         decoration: InputDecoration(
+                          border: InputBorder.none,
+                          focusedBorder: InputBorder.none,
+                          enabledBorder: InputBorder.none,
+                          errorBorder: InputBorder.none,
+                          disabledBorder: InputBorder.none,
                           labelText: "Enter BirthDate",
                         ),
                         keyboardType: TextInputType.datetime,
                         validator: (value) {
-                          _infoValid = RegExp(r"^([0-2][0-9]|(3)[0-1])(\/)(((0)[0-9])|((1)[0-2]))(\/)\d{4}$").hasMatch(value);
+                          _infoValid = RegExp(
+                                  r"^([0-2][0-9]|(3)[0-1])(\/)(((0)[0-9])|((1)[0-2]))(\/)\d{4}$")
+                              .hasMatch(value);
                           if (value.isEmpty) {
                             return "You didn\'t write your birth date";
                           } else if (!_infoValid) {
@@ -648,7 +678,7 @@ class _PersonalInformationViewState extends State<PersonalInformationView> {
               },
               icon: Icon(
                 Icons.check,
-                color: Colors.white,
+                color: Colors.black,
               ),
             )
           ],
@@ -663,7 +693,7 @@ class _PersonalInformationViewState extends State<PersonalInformationView> {
               child: Text(
                 user.birthDate,
                 style: TextStyle(
-                  color: Colors.white,
+                  color: Colors.black,
                 ),
               ),
             ),
@@ -679,7 +709,7 @@ class _PersonalInformationViewState extends State<PersonalInformationView> {
               },
               icon: Icon(
                 Icons.edit,
-                color: Colors.white,
+                color: Colors.black,
               ),
             ),
           ],
@@ -690,10 +720,11 @@ class _PersonalInformationViewState extends State<PersonalInformationView> {
 
   Widget _myDivider() {
     return Container(
-      margin: EdgeInsets.only(left: _widthScreen / 10, right: _widthScreen / 10),
+      margin:
+          EdgeInsets.only(left: _widthScreen / 10, right: _widthScreen / 10),
       child: Divider(
         height: 1,
-        color: Color(0xFF646679),
+        color: Colors.black,
       ),
     );
   }
@@ -746,7 +777,7 @@ class _PersonalInformationViewState extends State<PersonalInformationView> {
                     color: Colors.white,
                   ),
                 ),
-                color: Color(0xFF478ce0),
+                color: Color(0xfff99e38),
               ),
             ],
           ),
