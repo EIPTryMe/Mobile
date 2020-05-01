@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:tryme/main.dart';
 import 'package:tryme/views/AuthenticationView.dart';
 import 'package:tryme/views/PersonalInformationView.dart';
 import 'package:tryme/views/ShoppingCardView.dart';
@@ -150,15 +149,16 @@ class _HomeViewState extends State<HomeView> {
                 colors: [Color(0xfff7892b), Color(0xfffbb448)]),
           ),
           accountName: Text(
-            'temp',
+            globals.user.firstName != null ? globals.user.firstName : 'Pas de prénom défini',
             style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 20.0,
             ),
           ),
-          accountEmail: Text('temp as well'),
+          accountEmail: Text(globals.user.email != null ? globals.user.email : "Pas d'email défini"),
           currentAccountPicture: CircleAvatar(
-            backgroundImage: AssetImage('assets/company_logo_temp.jpg'),
+            backgroundImage: globals.user.pathToAvatar != null ? NetworkImage(globals.user.pathToAvatar) : AssetImage("assets/company_logo_temp.jpg"),
+          //  backgroundImage: AssetImage("assets/company_logo_temp.jpg"),
           ),
         ),
         ListTile(

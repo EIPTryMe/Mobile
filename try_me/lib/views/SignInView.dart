@@ -175,8 +175,6 @@ class _SignInViewState extends State<SignInView> {
               Navigator.pushNamedAndRemoveUntil(context, '/home', ModalRoute.withName('/'));
             }
           });
-          print(_email);
-          print(_password);
         }
       },
       child: Container(
