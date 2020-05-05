@@ -1,5 +1,6 @@
 import 'package:flutter_auth0/flutter_auth0.dart';
-import 'package:tryme/Globals.dart' as globals;
+
+import 'package:tryme/Globals.dart';
 
 class Auth0API {
   static String domain = 'dev-2o6a8byc.eu.auth0.com/api/v2';
@@ -25,7 +26,7 @@ class Auth0API {
     try {
       var response = await auth0.auth.passwordRealm({'username': email, 'password': password, 'realm': 'Username-Password-Authentication'});
 
-      globals.auth0User.accessToken = response['access_token'];
+      auth0User.accessToken = response['access_token'];
 
       print('''
     \nAccess Token: ${response['access_token']}
@@ -61,14 +62,14 @@ class Auth0API {
 
   static Future<bool> userInfo() async {
     try {
-      var authClient = Auth0Auth(auth0.auth.clientId, auth0.auth.client.baseUrl, bearer: globals.auth0User.accessToken);
+      var authClient = Auth0Auth(auth0.auth.clientId, auth0.auth.client.baseUrl, bearer: auth0User.accessToken);
       var info = await authClient.getUserInfo();
 
-      globals.auth0User.uid = info['sub'];
-      globals.auth0User.username = info['nickname'];
-      globals.auth0User.picture = info['picture'];
-      globals.auth0User.email = info['email'];
-      globals.auth0User.isEmailVerified = info['email_verified'];
+      auth0User.uid = info['sub'];
+      auth0User.username = info['nickname'];
+      auth0User.picture = info['picture'];
+      auth0User.email = info['email'];
+      auth0User.isEmailVerified = info['email_verified'];
 
       String buffer = '';
       info.forEach((k, v) => buffer = '$buffer\n$k: $v');

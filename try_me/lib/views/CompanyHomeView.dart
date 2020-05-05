@@ -1,9 +1,9 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
 import 'package:tryme/views/CompanyInformationView.dart';
 import 'package:tryme/views/HomeView.dart';
 import 'package:tryme/Dialogs.dart';
-import 'package:tryme/Globals.dart' as globals;
+import 'package:tryme/Globals.dart';
 
 class CompanyHomeView extends StatefulWidget {
   @override
@@ -14,8 +14,8 @@ class _CompanyHomeViewState extends State<CompanyHomeView> {
   void disconnect(bool _yes) {
     if (_yes) {
       setState(() {
-        globals.isLoggedIn = false;
-        if (globals.isACompany) globals.isACompany = false;
+        isLoggedIn = false;
+        if (isACompany) isACompany = false;
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => HomeView()),
@@ -77,15 +77,15 @@ class _CompanyHomeViewState extends State<CompanyHomeView> {
                 colors: [Color(0xfff7892b), Color(0xfffbb448)]),
           ),
           accountName: Text(
-            globals.company.name,
+            company.name,
             style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 20.0,
             ),
           ),
-          accountEmail: Text(globals.company.email),
+          accountEmail: Text(company.email),
           currentAccountPicture: CircleAvatar(
-            backgroundImage: AssetImage(globals.company.pathToAvatar),
+            backgroundImage: AssetImage(company.pathToAvatar),
           ),
         ),
         ListTile(

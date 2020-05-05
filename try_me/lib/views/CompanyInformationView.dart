@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:tryme/Globals.dart' as globals;
+
+import 'package:tryme/Globals.dart';
 
 class CompanyInformationView extends StatefulWidget {
   @override
@@ -49,7 +50,7 @@ class _CompanyInformationViewState extends State<CompanyInformationView> {
         Padding(
           padding: EdgeInsets.all(widthScreen / 20),
           child: CircleAvatar(
-            backgroundImage: NetworkImage(globals.company.pathToAvatar),
+            backgroundImage: NetworkImage(company.pathToAvatar),
             radius: widthScreen / 10,
           ),
         ),
@@ -61,7 +62,7 @@ class _CompanyInformationViewState extends State<CompanyInformationView> {
                 Container(
                   //get first name here
                   child: Text(
-                    globals.company.name,
+                    company.name,
                     style: TextStyle(
                       letterSpacing: 2.0,
                       color: Colors.black,
@@ -72,7 +73,7 @@ class _CompanyInformationViewState extends State<CompanyInformationView> {
                 Container(
                   //get last name here
                   child: Text(
-                    globals.company.email,
+                    company.email,
                     style: TextStyle(
                       letterSpacing: 2.0,
                       color: Colors.black,
@@ -109,7 +110,7 @@ class _CompanyInformationViewState extends State<CompanyInformationView> {
                     child: Form(
                       key: _formKey,
                       child: TextFormField(
-                        initialValue: globals.company.name,
+                        initialValue: company.name,
                         decoration: InputDecoration(
                           border: InputBorder.none,
                           focusedBorder: InputBorder.none,
@@ -147,8 +148,8 @@ class _CompanyInformationViewState extends State<CompanyInformationView> {
                     edit[0] = false;
                     buttonText = 'Save';
                     print(tmp);
-                    globals.company.name = tmp;
-                    print(globals.company.name);
+                    company.name = tmp;
+                    print(company.name);
                   }
                 });
               },
@@ -167,7 +168,7 @@ class _CompanyInformationViewState extends State<CompanyInformationView> {
           children: <Widget>[
             Expanded(
               child: Text(
-                globals.company.name,
+                company.name,
                 style: TextStyle(
                   color: Colors.black,
                 ),
@@ -216,7 +217,7 @@ class _CompanyInformationViewState extends State<CompanyInformationView> {
                     child: Form(
                       key: _formKey,
                       child: TextFormField(
-                        initialValue: globals.company.email,
+                        initialValue: company.email,
                         decoration: InputDecoration(
                           border: InputBorder.none,
                           focusedBorder: InputBorder.none,
@@ -253,7 +254,7 @@ class _CompanyInformationViewState extends State<CompanyInformationView> {
                     edit[2] = false;
                     edit[0] = false;
                     buttonText = 'Save';
-                    globals.company.email = tmp;
+                    company.email = tmp;
                   }
                 });
               },
@@ -272,7 +273,7 @@ class _CompanyInformationViewState extends State<CompanyInformationView> {
           children: <Widget>[
             Expanded(
               child: Text(
-                globals.company.email,
+                company.email,
                 style: TextStyle(
                   color: Colors.black,
                 ),
@@ -322,7 +323,7 @@ class _CompanyInformationViewState extends State<CompanyInformationView> {
                     child: Form(
                       key: _formKey,
                       child: TextFormField(
-                        initialValue: globals.company.phoneNumber,
+                        initialValue: company.phoneNumber,
                         decoration: InputDecoration(
                           border: InputBorder.none,
                           focusedBorder: InputBorder.none,
@@ -360,7 +361,7 @@ class _CompanyInformationViewState extends State<CompanyInformationView> {
                     edit[0] = false;
                     buttonText = 'Save';
                     tmp = modifyPhoneNumber(tmp);
-                    globals.company.phoneNumber = tmp;
+                    company.phoneNumber = tmp;
                   }
                 });
               },
@@ -379,7 +380,7 @@ class _CompanyInformationViewState extends State<CompanyInformationView> {
           children: <Widget>[
             Expanded(
               child: Text(
-                globals.company.phoneNumber,
+                company.phoneNumber,
                 style: TextStyle(
                   color: Colors.black,
                 ),
@@ -428,7 +429,7 @@ class _CompanyInformationViewState extends State<CompanyInformationView> {
                     child: Form(
                       key: _formKey,
                       child: TextFormField(
-                        initialValue: globals.company.address,
+                        initialValue: company.address,
                         decoration: InputDecoration(
                           border: InputBorder.none,
                           focusedBorder: InputBorder.none,
@@ -465,7 +466,7 @@ class _CompanyInformationViewState extends State<CompanyInformationView> {
                     edit[4] = false;
                     edit[0] = false;
                     buttonText = 'Save';
-                    globals.company.address = tmp;
+                    company.address = tmp;
                   }
                 });
               },
@@ -484,7 +485,7 @@ class _CompanyInformationViewState extends State<CompanyInformationView> {
           children: <Widget>[
             Expanded(
               child: Text(
-                globals.company.address,
+                company.address,
                 style: TextStyle(
                   color: Colors.black,
                 ),
@@ -533,7 +534,7 @@ class _CompanyInformationViewState extends State<CompanyInformationView> {
                     child: Form(
                       key: _formKey,
                       child: TextFormField(
-                        initialValue: globals.company.siret,
+                        initialValue: company.siret,
                         decoration: InputDecoration(
                           border: InputBorder.none,
                           focusedBorder: InputBorder.none,
@@ -571,7 +572,7 @@ class _CompanyInformationViewState extends State<CompanyInformationView> {
                     edit[0] = false;
                     buttonText = 'Save';
                     tmp = modifySiret(tmp);
-                    globals.company.siret = tmp;
+                    company.siret = tmp;
                   }
                 });
               },
@@ -590,7 +591,7 @@ class _CompanyInformationViewState extends State<CompanyInformationView> {
           children: <Widget>[
             Expanded(
               child: Text(
-                globals.company.siret,
+                company.siret,
                 style: TextStyle(
                   color: Colors.black,
                 ),

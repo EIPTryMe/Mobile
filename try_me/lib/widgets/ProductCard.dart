@@ -1,21 +1,12 @@
-import 'package:tryme/views/ProductView.dart';
 import 'package:flutter/material.dart';
 
-/*class Product {
-  Product({this.id, this.title, this.description, this.image, this.price});
-
-  int id;
-  String title;
-  String description;
-  String city;
-  String image;
-  double price;
-}*/
+import 'package:tryme/views/ProductView.dart';
+import 'package:tryme/Globals.dart';
 
 class ProductCard extends StatelessWidget {
   ProductCard({this.product});
 
-  final Map product;
+  final Product product;
   final double borderRadius = 12.0;
 
   @override
@@ -58,7 +49,7 @@ class ProductCard extends StatelessWidget {
                             child: Align(
                               alignment: Alignment.topCenter,
                               child: Text(
-                                product['name'] == null ? '' : product['name'],
+                                product.name == null ? '' : product.name,
                                 //product.title,
                                 style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
                               ),
@@ -68,7 +59,7 @@ class ProductCard extends StatelessWidget {
                             child: Align(
                               alignment: Alignment.bottomRight,
                               child: Text(
-                                product['price_per_month'] == null ? '' : product['price_per_month'].toString() + '€/Mois',
+                                product.pricePerMonth == null ? '' : product.pricePerMonth.toString() + '€/Mois',
                                 style: TextStyle(color: Colors.green, fontSize: 18.0, fontWeight: FontWeight.bold),
                               ),
                             ),
@@ -89,37 +80,12 @@ class ProductCard extends StatelessWidget {
               color: Colors.transparent,
               child: InkWell(
                 splashColor: Colors.white10,
-                onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => ProductView(id: product['id']))),
+                onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => ProductView(id: product.id))),
               ),
             ),
           ),
         ),
       ],
-    );
-  }
-}
-
-class ProductList extends StatefulWidget {
-  ProductList({this.products});
-
-  final List products;
-
-  @override
-  _ProductListState createState() => _ProductListState();
-}
-
-class _ProductListState extends State<ProductList> {
-  @override
-  Widget build(BuildContext context) {
-    return ListView(
-      children: widget.products
-          .map((product) => Padding(
-                padding: const EdgeInsets.fromLTRB(8, 4, 8, 4),
-                child: ProductCard(
-                  product: product,
-                ),
-              ))
-          .toList(),
     );
   }
 }

@@ -1,21 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+
 import 'package:graphql_flutter/graphql_flutter.dart';
-import 'package:tryme/GraphQLConfiguration.dart';
-import 'package:tryme/views/HomeView.dart';
+
 import 'package:tryme/views/AuthenticationView.dart';
-import 'package:tryme/views/SignUpView.dart';
-import 'package:tryme/views/SignInView.dart';
-import 'package:tryme/views/ProductView.dart';
-import 'package:tryme/views/PersonalInformationView.dart';
-import 'package:tryme/views/CompanyInformationView.dart';
-import 'package:tryme/views/ShoppingCardView.dart';
-import 'package:tryme/views/CompanySignInView.dart';
 import 'package:tryme/views/CompanyHomeView.dart';
-import 'package:tryme/Globals.dart' as globals;
+import 'package:tryme/views/CompanyInformationView.dart';
+import 'package:tryme/views/CompanySignInView.dart';
+import 'package:tryme/views/HomeView.dart';
+import 'package:tryme/views/PersonalInformationView.dart';
+import 'package:tryme/views/ProductView.dart';
+import 'package:tryme/views/ShoppingCardView.dart';
+import 'package:tryme/views/SignInView.dart';
+import 'package:tryme/views/SignUpView.dart';
+import 'package:tryme/Globals.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-
+  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+    statusBarColor: Colors.transparent, // status bar color
+  ));
   runApp(GraphQLProvider(
     child: CacheProvider(
       child: MaterialApp(
@@ -25,7 +29,7 @@ void main() {
           '/authentication': (context) => AuthenticationView(),
           '/signup': (context) => SignUpView(),
           '/signin': (context) => SignInView(),
-          '/ShoppingBasket': (context) => ShoppingCardView(),
+          '/shoppingCard': (context) => ShoppingCardView(),
           '/companysignin': (context) => CompanySignInView(),
           '/product': (context) => ProductView(),
           '/personalInformation': (context) => PersonalInformationView(),
@@ -34,6 +38,6 @@ void main() {
         },
       ),
     ),
-    client: globals.graphQLConfiguration.client,
+    client: graphQLConfiguration.client,
   ));
 }

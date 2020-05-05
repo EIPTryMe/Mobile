@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:tryme/views/SignUpView.dart';
-import 'package:tryme/Auth0API.dart';
-import 'package:tryme/views/CompanyHomeView.dart';
-import 'package:tryme/widgets/Queries.dart';
+
 import 'package:graphql_flutter/graphql_flutter.dart';
-import 'package:tryme/Globals.dart' as globals;
+
+import 'package:tryme/Auth0API.dart';
+import 'package:tryme/Globals.dart';
+import 'package:tryme/Queries.dart';
 
 class CompanySignInView extends StatefulWidget {
   CompanySignInView({Key key, this.title}) : super(key: key);
@@ -17,14 +17,14 @@ class CompanySignInView extends StatefulWidget {
 
 Future initialiseCompany() async {
   QueryResult result;
-  QueryOptions queryOption = QueryOptions(documentNode: gql(Queries.company(globals.auth0User.uid)));
-  result = await globals.graphQLConfiguration.clientToQuery.query(queryOption);
-  globals.company.name = result.data['user'][0]['name'] != null ? result.data['user'][0]['name'] : '';
-  globals.company.address = result.data['user'][0]['address'] != null ? result.data['user'][0]['address'] : '';
-  //globals.company.phoneNumber = result.data['user'][0]['phone'] != null ? result.data['user'][0]['phone'] : '';
-  globals.company.email = result.data['user'][0]['email'] != null ? result.data['user'][0]['email'] : '';
-  globals.company.siret = result.data['user'][0]['siret'] != null ? result.data['user'][0]['siret'] : '';
-  globals.company.pathToAvatar = globals.auth0User.picture != null ? globals.auth0User.picture : '';
+  QueryOptions queryOption = QueryOptions(documentNode: gql(Queries.company(auth0User.uid)));
+  result = await graphQLConfiguration.clientToQuery.query(queryOption);
+  company.name = result.data['user'][0]['name'] != null ? result.data['user'][0]['name'] : '';
+  company.address = result.data['user'][0]['address'] != null ? result.data['user'][0]['address'] : '';
+  //company.phoneNumber = result.data['user'][0]['phone'] != null ? result.data['user'][0]['phone'] : '';
+  company.email = result.data['user'][0]['email'] != null ? result.data['user'][0]['email'] : '';
+  company.siret = result.data['user'][0]['siret'] != null ? result.data['user'][0]['siret'] : '';
+  company.pathToAvatar = auth0User.picture != null ? auth0User.picture : '';
 }
 
 class CurvePainter extends CustomPainter {
@@ -170,8 +170,8 @@ class _CompanySignInViewState extends State<CompanySignInView> {
           Auth0API.login(_email, _password).then((isConnected) {
             if (isConnected) {
               initialiseCompany().whenComplete(() {
-                globals.isLoggedIn = true;
-                globals.isACompany = true;
+                isLoggedIn = true;
+                isACompany = true;
                 Navigator.pushNamedAndRemoveUntil(context, '/companyHome', ModalRoute.withName('/'));
               });
             }
