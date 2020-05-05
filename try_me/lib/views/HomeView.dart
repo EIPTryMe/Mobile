@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:tryme/views/AuthenticationView.dart';
 import 'package:tryme/views/PersonalInformationView.dart';
 import 'package:tryme/views/ShoppingCardView.dart';
+import 'package:tryme/views/UserOrdersView.dart';
 import 'package:tryme/widgets/Product.dart';
 import 'package:tryme/widgets/Queries.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
@@ -19,8 +20,10 @@ class _HomeViewState extends State<HomeView> {
 
   void getData() async {
     QueryResult result;
-    QueryOptions queryOption = QueryOptions(documentNode: gql(Queries.products()));
-    result = await globals.graphQLConfiguration.clientToQuery.query(queryOption);
+    QueryOptions queryOption =
+        QueryOptions(documentNode: gql(Queries.products()));
+    result =
+        await globals.graphQLConfiguration.clientToQuery.query(queryOption);
     if (this.mounted)
       setState(() {
         products = result.data['product'];
@@ -149,36 +152,122 @@ class _HomeViewState extends State<HomeView> {
                 colors: [Color(0xfff7892b), Color(0xfffbb448)]),
           ),
           accountName: Text(
-            globals.user.firstName != null ? globals.user.firstName : 'Pas de prénom défini',
+            globals.user.firstName != null
+                ? globals.user.firstName
+                : 'Pas de prénom défini',
             style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 20.0,
             ),
           ),
-          accountEmail: Text(globals.user.email != null ? globals.user.email : "Pas d'email défini"),
+          accountEmail: Text(globals.user.email != null
+              ? globals.user.email
+              : "Pas d'email défini"),
           currentAccountPicture: CircleAvatar(
-            backgroundImage: globals.user.pathToAvatar != null ? NetworkImage(globals.user.pathToAvatar) : AssetImage("assets/company_logo_temp.jpg"),
-          //  backgroundImage: AssetImage("assets/company_logo_temp.jpg"),
+            backgroundImage: globals.user.pathToAvatar != null
+                ? NetworkImage(globals.user.pathToAvatar)
+                : AssetImage("assets/company_logo_temp.jpg"),
+          ),
+        ),
+        ListTile(
+          leading: Icon(Icons.assignment),
+          title: Text(
+            'Mes Commandes',
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          trailing: GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => UserOrdersView(orderStatus: 'Mes Commandes',)),
+                );
+              },
+              child: Text(
+                'Tout voir',
+                style: TextStyle(
+                  color: Color(0xff3e97b7),
+                  fontSize: 12.0,
+                ),
+              )),
+        ),
+        Column(
+          children: <Widget>[
+            ListTile(
+              title: Text(
+                'En attente',
+              ),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => UserOrdersView(orderStatus: 'En attente',)),
+                );
+              },
+            ),
+            ListTile(
+              title: Text(
+                'Expédiées',
+              ),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => UserOrdersView(orderStatus: 'Expédiées',)),
+                );
+              },
+            ),
+            ListTile(
+              title: Text(
+                'Livrées',
+              ),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => UserOrdersView(orderStatus: 'Livrées',)),
+                );
+              },
+            ),
+          ],
+        ),
+        Padding(
+          padding: const EdgeInsets.only(right: 20.0, left: 20.0),
+          child: Divider(
+            height: 1,
+            color: Colors.grey[800],
           ),
         ),
         ListTile(
           leading: Icon(Icons.info_outline),
-          title: Text('Informations personnelles'),
+          title: Text(
+            'Informations personnelles',
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+            ),
+          ),
           onTap: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => PersonalInformationView()),
+              MaterialPageRoute(
+                  builder: (context) => PersonalInformationView()),
             );
           },
         ),
-        Divider(
-          height: 1,
-          color: Colors.grey[800],
+        Padding(
+          padding: const EdgeInsets.only(right: 20.0, left: 20.0),
+          child: Divider(
+            height: 1,
+            color: Colors.grey[800],
+          ),
         ),
         ListTile(
-          title: Text('Déconnexion'),
+          title: Text(
+            'Déconnexion',
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+            ),
+          ),
           onTap: () async {
-            final bool _logout = await LogOut().Confirm(context);
+            final bool _logout = await LogOut().confirm(context);
             if (_logout != null) {
               disconnect(_logout);
             }
@@ -206,7 +295,6 @@ class _HomeViewState extends State<HomeView> {
       );
     } else {
       return Scaffold(
-
         body: ProductList(products: products),
         backgroundColor: Colors.grey[200],
       );

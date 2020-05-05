@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
-import 'package:tryme/GraphQLConfiguration.dart';
 import 'package:tryme/views/HomeView.dart';
 import 'package:tryme/views/AuthenticationView.dart';
 import 'package:tryme/views/SignUpView.dart';
@@ -11,6 +10,8 @@ import 'package:tryme/views/CompanyInformationView.dart';
 import 'package:tryme/views/ShoppingCardView.dart';
 import 'package:tryme/views/CompanySignInView.dart';
 import 'package:tryme/views/CompanyHomeView.dart';
+import 'package:tryme/views/UserOrdersView.dart';
+import 'package:tryme/views/CompanyOrdersView.dart';
 import 'package:tryme/Globals.dart' as globals;
 
 void main() {
@@ -31,6 +32,8 @@ void main() {
           '/personalInformation': (context) => PersonalInformationView(),
           '/companyInformation': (context) => CompanyInformationView(),
           '/companyHome': (context) => CompanyHomeView(),
+          '/userOrders': (context) => UserOrdersView(),
+          '/companyOrders': (context) => CompanyOrdersView(),
         },
       ),
     ),
