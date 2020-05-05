@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tryme/views/SignUpView.dart';
 import 'package:tryme/Auth0API.dart';
-import 'package:tryme/views/CompanyHomeView.dart';
 import 'package:tryme/widgets/Queries.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:tryme/Globals.dart' as globals;
@@ -189,39 +187,6 @@ class _CompanySignInViewState extends State<CompanySignInView> {
           'Connexion',
           style: TextStyle(fontSize: 20, color: Colors.white),
         ),
-      ),
-    );
-  }
-
-  Widget _divider() {
-    return Container(
-      margin: EdgeInsets.symmetric(vertical: 10),
-      child: Row(
-        children: <Widget>[
-          SizedBox(
-            width: 20,
-          ),
-          Expanded(
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 10),
-              child: Divider(
-                thickness: 1,
-              ),
-            ),
-          ),
-          Text('or'),
-          Expanded(
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 10),
-              child: Divider(
-                thickness: 1,
-              ),
-            ),
-          ),
-          SizedBox(
-            width: 20,
-          ),
-        ],
       ),
     );
   }

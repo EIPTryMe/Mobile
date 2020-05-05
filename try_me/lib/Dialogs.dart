@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class LogOut {
-  Future<bool> Confirm(BuildContext context) async {
+  Future<bool> confirm(BuildContext context) async {
     return showDialog<bool>(
         context: context,
         barrierDismissible: true,

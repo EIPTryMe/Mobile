@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:tryme/views/CompanyInformationView.dart';
 import 'package:tryme/views/HomeView.dart';
 import 'package:tryme/Dialogs.dart';
+import 'package:tryme/views/CompanyOrdersView.dart';
 import 'package:tryme/Globals.dart' as globals;
 
 class CompanyHomeView extends StatefulWidget {
@@ -89,6 +90,73 @@ class _CompanyHomeViewState extends State<CompanyHomeView> {
           ),
         ),
         ListTile(
+          leading: Icon(Icons.assignment),
+          title: Text(
+            'Vos Commandes',
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          trailing: GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => CompanyOrdersView(orderStatus: 'Toutes vos commandes',)),
+                );
+              },
+              child: Text(
+                'Tout voir',
+                style: TextStyle(
+                  color: Color(0xff3e97b7),
+                  fontSize: 12.0,
+                ),
+              )),
+        ),
+        Column(
+          children: <Widget>[
+            ListTile(
+              title: Text(
+                'En cours',
+              ),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => CompanyOrdersView(orderStatus: 'En cours',)),
+                );
+              },
+            ),
+            ListTile(
+              title: Text(
+                'Expédiées',
+              ),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => CompanyOrdersView(orderStatus: 'Expédiées',)),
+                );
+              },
+            ),
+            ListTile(
+              title: Text(
+                'Livrées',
+              ),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => CompanyOrdersView(orderStatus: 'Livrées',)),
+                );
+              },
+            ),
+          ],
+        ),
+        Padding(
+          padding: const EdgeInsets.only(right: 20.0, left: 20.0),
+          child: Divider(
+            height: 1,
+            color: Colors.grey[800],
+          ),
+        ),
+        ListTile(
           leading: Icon(Icons.info_outline),
           title: Text('Informations entreprise'),
           onTap: () {
@@ -98,14 +166,17 @@ class _CompanyHomeViewState extends State<CompanyHomeView> {
             );
           },
         ),
-        Divider(
-          height: 1,
-          color: Colors.grey[800],
+        Padding(
+          padding: const EdgeInsets.only(right: 20.0, left: 20.0),
+          child: Divider(
+            height: 1,
+            color: Colors.grey[800],
+          ),
         ),
         ListTile(
           title: Text('Déconnexion'),
           onTap: () async {
-            final bool _logout = await LogOut().Confirm(context);
+            final bool _logout = await LogOut().confirm(context);
             if (_logout != null) {
               disconnect(_logout);
             }

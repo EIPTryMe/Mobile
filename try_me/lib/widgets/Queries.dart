@@ -1,6 +1,3 @@
-import 'package:graphql_flutter/graphql_flutter.dart';
-import 'package:flutter/material.dart';
-
 class Queries {
   static String products() => '''
   {
