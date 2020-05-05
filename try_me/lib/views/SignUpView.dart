@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+
 import 'package:tryme/views/SignInView.dart';
 import 'package:tryme/Auth0API.dart';
-import 'package:tryme/Globals.dart' as globals;
+import 'package:tryme/Globals.dart';
 
 class SignUpView extends StatefulWidget {
   SignUpView({Key key, this.title}) : super(key: key);
@@ -207,8 +208,8 @@ class _SignUpViewState extends State<SignUpView> {
         if (_formKeyEmail.currentState.validate() && _formKeyPassword.currentState.validate() && _formKeyConfirm.currentState.validate()) {
           Auth0API.register(_email, _password).then((isConnected) {
             if (isConnected) {
-              globals.isLoggedIn = true;
-              globals.isACompany = false;
+              isLoggedIn = true;
+              isACompany = false;
               Navigator.pushNamedAndRemoveUntil(context, '/home', ModalRoute.withName('/'));
             }
           });

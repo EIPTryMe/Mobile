@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:tryme/widgets/Product.dart';
+
+import 'package:tryme/widgets/ProductCard.dart';
+import 'package:tryme/Globals.dart';
 
 class UserOrdersView extends StatefulWidget {
   UserOrdersView({Key key, this.orderStatus}) : super(key: key);
@@ -16,13 +18,11 @@ class _UserOrdersViewState extends State<UserOrdersView> {
   List productsExpedited = List();
   List productsDelivered = List();
 
-  var product1 = {
-    'name': 'tom',
-    'image': 'https://i.redd.it/ugaauduw5ks31.png'
-  };
+  Product product1 = Product();
 
   @override
   void initState() {
+    product1.name = 'tom';
     initList(productsAll, 6);
     initList(productsOnHold, 1);
     initList(productsExpedited, 2);

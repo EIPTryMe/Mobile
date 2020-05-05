@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:tryme/widgets/Product.dart';
+
+import 'package:tryme/widgets/ProductCard.dart';
+import 'package:tryme/Globals.dart';
 
 class CompanyOrdersView extends StatefulWidget {
   CompanyOrdersView({Key key, this.orderStatus}) : super(key: key);
@@ -17,6 +19,7 @@ class _CompanyOrdersViewState extends State<CompanyOrdersView> {
   List productsExpedited = List();
   List productsDelivered = List();
 
+  //Product product1;
   var product1 = {
     'name': 'tom',
     'image': 'https://i.redd.it/ugaauduw5ks31.png'

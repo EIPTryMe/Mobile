@@ -34,8 +34,8 @@ class Queries {
   static String product(int id) => '''
   {
     product(where: {id: {_eq: $id}}) {
-      name
       id
+      name
       price_per_day
       price_per_week
       price_per_month

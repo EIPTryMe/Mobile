@@ -2,11 +2,6 @@ library my_prj.globals;
 
 import 'package:tryme/GraphQLConfiguration.dart';
 
-GraphQLConfiguration graphQLConfiguration = GraphQLConfiguration();
-
-bool isLoggedIn = false;
-bool isACompany = false;
-
 class Auth0User {
   String uid = '';
   String accessToken = '';
@@ -35,6 +30,23 @@ class User {
   String pathToAvatar = '';
 }
 
+class Product {
+  int id = 0;
+  String name = '';
+  int pricePerDay = 0;
+  int pricePerWeek = 0;
+  int pricePerMonth = 0;
+  List descriptions = List();
+  List specifications = List();
+}
+
+GraphQLConfiguration graphQLConfiguration = GraphQLConfiguration();
+
+bool isLoggedIn = false;
+bool isACompany = false;
+
 Auth0User auth0User = Auth0User();
 User user = User();
 Company company = Company();
+
+Map<int, int> shoppingCard = Map();

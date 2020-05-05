@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:tryme/Globals.dart' as globals;
+
+import 'package:tryme/Globals.dart';
 
 class PersonalInformationView extends StatefulWidget {
   @override
@@ -43,7 +44,7 @@ class _PersonalInformationViewState extends State<PersonalInformationView> {
         Padding(
           padding: EdgeInsets.all(widthScreen / 20),
           child: CircleAvatar(
-            backgroundImage: globals.user.pathToAvatar != null ? NetworkImage(globals.user.pathToAvatar) : AssetImage("assets/company_logo_temp.jpg"),
+            backgroundImage: user.pathToAvatar != null ? NetworkImage(user.pathToAvatar) : AssetImage("assets/company_logo_temp.jpg"),
             radius: widthScreen / 10,
           ),
         ),
@@ -55,7 +56,7 @@ class _PersonalInformationViewState extends State<PersonalInformationView> {
                 Container(
                   //get first name here
                   child: Text(
-                    globals.user.firstName != null ? globals.user.firstName : "Pas de prénom défini",
+                    user.firstName != null ? user.firstName : "Pas de prénom défini",
                     style: TextStyle(
                       letterSpacing: 2.0,
                       color: Colors.black,
@@ -66,7 +67,7 @@ class _PersonalInformationViewState extends State<PersonalInformationView> {
                 Container(
                   //get last name here
                   child: Text(
-                    globals.user.lastName != null ? globals.user.lastName :  "Pas de nom de famille défini",
+                    user.lastName != null ? user.lastName :  "Pas de nom de famille défini",
                     style: TextStyle(
                       letterSpacing: 2.0,
                       color: Colors.black,
@@ -103,7 +104,7 @@ class _PersonalInformationViewState extends State<PersonalInformationView> {
                     child: Form(
                       key: _formKey,
                       child: TextFormField(
-                        initialValue:  globals.user.firstName != null ? globals.user.firstName : "Pas de prénom défini",
+                        initialValue:  user.firstName != null ? user.firstName : "Pas de prénom défini",
                         decoration: InputDecoration(
                           border: InputBorder.none,
                           focusedBorder: InputBorder.none,
@@ -137,7 +138,7 @@ class _PersonalInformationViewState extends State<PersonalInformationView> {
                     edit[1] = false;
                     edit[0] = false;
                     buttonText = 'Save';
-                    globals.user.firstName = tmp;
+                    user.firstName = tmp;
                   }
                 });
               },
@@ -156,7 +157,7 @@ class _PersonalInformationViewState extends State<PersonalInformationView> {
           children: <Widget>[
             Expanded(
               child: Text(
-                globals.user.firstName != null ? globals.user.firstName : "Pas de prénom défini",
+                user.firstName != null ? user.firstName : "Pas de prénom défini",
                 style: TextStyle(
                   color: Colors.black,
                 ),
@@ -205,7 +206,7 @@ class _PersonalInformationViewState extends State<PersonalInformationView> {
                     child: Form(
                       key: _formKey,
                       child: TextFormField(
-                        initialValue: globals.user.lastName != null ? globals.user.lastName : "Pas de nom de famille défini",
+                        initialValue: user.lastName != null ? user.lastName : "Pas de nom de famille défini",
                         decoration: InputDecoration(
                           border: InputBorder.none,
                           focusedBorder: InputBorder.none,
@@ -239,7 +240,7 @@ class _PersonalInformationViewState extends State<PersonalInformationView> {
                     edit[2] = false;
                     edit[0] = false;
                     buttonText = 'Save';
-                    globals.user.lastName = tmp;
+                    user.lastName = tmp;
                   }
                 });
               },
@@ -258,7 +259,7 @@ class _PersonalInformationViewState extends State<PersonalInformationView> {
           children: <Widget>[
             Expanded(
               child: Text(
-                globals.user.lastName != null ? globals.user.lastName : "Pas de nom de famille défini",
+                user.lastName != null ? user.lastName : "Pas de nom de famille défini",
                 style: TextStyle(
                   color: Colors.black,
                 ),
@@ -307,7 +308,7 @@ class _PersonalInformationViewState extends State<PersonalInformationView> {
                     child: Form(
                       key: _formKey,
                       child: TextFormField(
-                        initialValue: globals.user.address != null ? globals.user.address : "Pas d'adresse définie",
+                        initialValue: user.address != null ? user.address : "Pas d'adresse définie",
                         decoration: InputDecoration(
                           border: InputBorder.none,
                           focusedBorder: InputBorder.none,
@@ -341,7 +342,7 @@ class _PersonalInformationViewState extends State<PersonalInformationView> {
                     edit[3] = false;
                     edit[0] = false;
                     buttonText = 'Save';
-                    globals.user.address = tmp;
+                    user.address = tmp;
                   }
                 });
               },
@@ -360,7 +361,7 @@ class _PersonalInformationViewState extends State<PersonalInformationView> {
           children: <Widget>[
             Expanded(
               child: Text(
-                globals.user.address != null ? globals.user.address : "Pas d'adresse définie",
+                user.address != null ? user.address : "Pas d'adresse définie",
                 style: TextStyle(
                   color: Colors.black,
                 ),
@@ -409,7 +410,7 @@ class _PersonalInformationViewState extends State<PersonalInformationView> {
                     child: Form(
                       key: _formKey,
                       child: TextFormField(
-                        initialValue: globals.user.phoneNumber != null ? globals.user.phoneNumber : "Pas de numéro de téléphone défini",
+                        initialValue: user.phoneNumber != null ? user.phoneNumber : "Pas de numéro de téléphone défini",
                         decoration: InputDecoration(
                           border: InputBorder.none,
                           focusedBorder: InputBorder.none,
@@ -444,7 +445,7 @@ class _PersonalInformationViewState extends State<PersonalInformationView> {
                     edit[0] = false;
                     buttonText = 'Save';
                     tmp = modifyPhoneNumber(tmp);
-                    globals.user.phoneNumber = tmp;
+                    user.phoneNumber = tmp;
                   }
                 });
               },
@@ -463,7 +464,7 @@ class _PersonalInformationViewState extends State<PersonalInformationView> {
           children: <Widget>[
             Expanded(
               child: Text(
-                globals.user.phoneNumber != null ? globals.user.phoneNumber : "Pas de numéro de téléphone défini",
+                user.phoneNumber != null ? user.phoneNumber : "Pas de numéro de téléphone défini",
                 style: TextStyle(
                   color: Colors.black,
                 ),
@@ -512,7 +513,7 @@ class _PersonalInformationViewState extends State<PersonalInformationView> {
                     child: Form(
                       key: _formKey,
                       child: TextFormField(
-                        initialValue: globals.user.email != null ? globals.user.email : "Pas d'email défini",
+                        initialValue: user.email != null ? user.email : "Pas d'email défini",
                         decoration: InputDecoration(
                           border: InputBorder.none,
                           focusedBorder: InputBorder.none,
@@ -547,7 +548,7 @@ class _PersonalInformationViewState extends State<PersonalInformationView> {
                     edit[5] = false;
                     edit[0] = false;
                     buttonText = 'Save';
-                    globals.user.email = tmp;
+                    user.email = tmp;
                   }
                 });
               },
@@ -566,7 +567,7 @@ class _PersonalInformationViewState extends State<PersonalInformationView> {
           children: <Widget>[
             Expanded(
               child: Text(
-                globals.user.email != null ? globals.user.email : "Pas d'email défini",
+                user.email != null ? user.email : "Pas d'email défini",
                 style: TextStyle(
                   color: Colors.black,
                 ),
@@ -615,7 +616,7 @@ class _PersonalInformationViewState extends State<PersonalInformationView> {
                     child: Form(
                       key: _formKey,
                       child: TextFormField(
-                        initialValue: globals.user.birthDate != null ? globals.user.birthDate : "Pas de date de naissance définie",
+                        initialValue: user.birthDate != null ? user.birthDate : "Pas de date de naissance définie",
                         decoration: InputDecoration(
                           border: InputBorder.none,
                           focusedBorder: InputBorder.none,
@@ -650,7 +651,7 @@ class _PersonalInformationViewState extends State<PersonalInformationView> {
                     edit[6] = false;
                     edit[0] = false;
                     buttonText = 'Save';
-                    globals.user.birthDate = tmp;
+                    user.birthDate = tmp;
                   }
                 });
               },
@@ -669,7 +670,7 @@ class _PersonalInformationViewState extends State<PersonalInformationView> {
           children: <Widget>[
             Expanded(
               child: Text(
-                globals.user.birthDate != null ? globals.user.birthDate : "Pas de date de naissance définie",
+                user.birthDate != null ? user.birthDate : "Pas de date de naissance définie",
                 style: TextStyle(
                   color: Colors.black,
                 ),
