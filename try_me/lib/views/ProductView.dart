@@ -5,6 +5,7 @@ import 'package:graphql_flutter/graphql_flutter.dart';
 
 import 'package:tryme/Globals.dart';
 import 'package:tryme/Queries.dart';
+import 'package:tryme/Request.dart';
 
 List images = [
   'https://cdn.futura-sciences.com/buildsv6/images/mediumoriginal/6/5/2/652a7adb1b_98148_01-intro-773.jpg',
@@ -17,7 +18,7 @@ List images = [
 class ProductView extends StatefulWidget {
   ProductView({this.id});
 
-  final int id;
+  final String id;
 
   @override
   _ProductViewState createState() => _ProductViewState();
@@ -28,20 +29,22 @@ class _ProductViewState extends State<ProductView> {
 
   void getData() async {
     QueryResult result;
-    QueryOptions queryOption = QueryOptions(documentNode: gql(Queries.product(widget.id)));
+    QueryOptions queryOption = QueryOptions(documentNode: gql(Queries.product(int.parse(widget.id))));
     result = await graphQLConfiguration.clientToQuery.query(queryOption);
     if (this.mounted) {
       setState(() {
-        product = Product();
-        product.id = result.data['product'][0]['id'];
-        product.name = result.data['product'][0]['name'];
-        product.pricePerDay = result.data['product'][0]['price_per_day'];
-        product.pricePerWeek = result.data['product'][0]['price_per_week'];
-        product.pricePerMonth = result.data['product'][0]['price_per_month'];
-        product.descriptions = result.data['product'][0]['product_descriptions'];
-        product.specifications = result.data['product'][0]['product_specifications'];
+        product = QueryParse.getProduct(result.data['product'][0]);
       });
     }
+  }
+
+  void addProduct() async {
+    if (auth0User.uid == null) return;
+    QueryResult result;
+    QueryOptions queryOption = QueryOptions(documentNode: gql(Mutations.addProduct(int.parse(widget.id))));
+    result = await graphQLConfiguration.getClientToQuery(user.id.toString()).query(queryOption);
+    addedToCardOverlay(context);
+    Request.getShoppingCard();
   }
 
   void addedToCardOverlay(BuildContext context) async {
@@ -85,7 +88,7 @@ class _ProductViewState extends State<ProductView> {
         actions: [
           IconButton(
             icon: Icon(Icons.shopping_cart),
-            onPressed: () => Navigator.pushNamed(context, '/shoppingCard'),
+            onPressed: () => Navigator.pushNamed(context, 'shoppingCard'),
           )
         ],
       ),
@@ -105,17 +108,17 @@ class _ProductViewState extends State<ProductView> {
                       items: images
                           .asMap()
                           .map((i, item) => MapEntry(
-                        i,
-                        GestureDetector(
-                          onTap: () => Navigator.push(
-                              context, MaterialPageRoute(builder: (context) => CarouselFullscreen(images: images, current: i))),
-                          child: Image.network(
-                            item,
-                            fit: BoxFit.cover,
-                            width: width,
-                          ),
-                        ),
-                      ))
+                                i,
+                                GestureDetector(
+                                  onTap: () => Navigator.push(
+                                      context, MaterialPageRoute(builder: (context) => CarouselFullscreen(images: images, current: i))),
+                                  child: Image.network(
+                                    item,
+                                    fit: BoxFit.cover,
+                                    width: width,
+                                  ),
+                                ),
+                              ))
                           .values
                           .toList(),
                       options: CarouselOptions(height: height, viewportFraction: 1.0),
@@ -153,10 +156,11 @@ class _ProductViewState extends State<ProductView> {
                         'Description',
                         style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
                       ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: product.descriptions.map((value) => Text(value['name'])).toList(),
-                      ),
+                      if (product.descriptions != null)
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: product.descriptions.map((value) => Text(value['name'])).toList(),
+                        ),
                       SizedBox(
                         height: 20,
                       ),
@@ -164,10 +168,11 @@ class _ProductViewState extends State<ProductView> {
                         'Spécification',
                         style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
                       ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: product.specifications.map((value) => Text(value['name'])).toList(),
-                      ),
+                      if (product.specifications != null)
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: product.specifications.map((value) => Text(value['name'])).toList(),
+                        ),
                     ],
                   ),
                 ),
@@ -178,14 +183,7 @@ class _ProductViewState extends State<ProductView> {
             flex: 1,
             child: FlatButton(
               color: Color(0xfff99e38),
-              onPressed: () {
-                if (shoppingCard.containsKey(widget.id))
-                  shoppingCard[widget.id]++;
-                else
-                  shoppingCard[widget.id] = 1;
-                addedToCardOverlay(context);
-                print(shoppingCard.length);
-              },
+              onPressed: () => addProduct(),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -217,12 +215,12 @@ class CarouselFullscreen extends StatelessWidget {
           return CarouselSlider(
             items: images
                 .map((item) => GestureDetector(
-              onTap: () => Navigator.pop(context),
-              child: Image.network(
-                item,
-                height: height,
-              ),
-            ))
+                      onTap: () => Navigator.pop(context),
+                      child: Image.network(
+                        item,
+                        height: height,
+                      ),
+                    ))
                 .toList(),
             options: CarouselOptions(height: height, viewportFraction: 1.0, initialPage: current),
           );

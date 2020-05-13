@@ -3,21 +3,19 @@ import 'package:flutter/material.dart';
 import 'package:tryme/views/SignInView.dart';
 import 'package:tryme/views/SignUpView.dart';
 
-class AuthenticationView extends StatefulWidget {
-  AuthenticationView({Key key, this.title}) : super(key: key);
+class AuthentificationView extends StatefulWidget {
+  AuthentificationView({Key key, this.title}) : super(key: key);
 
   final String title;
 
   @override
-  _AuthenticationViewState createState() => _AuthenticationViewState();
+  _AuthentificationViewState createState() => _AuthentificationViewState();
 }
 
-class _AuthenticationViewState extends State<AuthenticationView> {
+class _AuthentificationViewState extends State<AuthentificationView> {
   Widget _backButton() {
     return InkWell(
-      onTap: () {
-        Navigator.pop(context);
-      },
+      onTap: () => Navigator.pop(context),
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: 10),
         child: Row(
@@ -35,9 +33,7 @@ class _AuthenticationViewState extends State<AuthenticationView> {
 
   Widget _submitButton() {
     return InkWell(
-      onTap: () {
-        Navigator.push(context, MaterialPageRoute(builder: (context) => SignInView()));
-      },
+      onTap: () => Navigator.pushNamed(context, 'signIn'),
       child: Container(
         width: MediaQuery.of(context).size.width,
         padding: EdgeInsets.symmetric(vertical: 13),
@@ -56,12 +52,7 @@ class _AuthenticationViewState extends State<AuthenticationView> {
 
   Widget _signUpButton() {
     return InkWell(
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => SignUpView()),
-        );
-      },
+      onTap: () => Navigator.pushNamed(context, 'signUp'),
       child: Container(
         width: MediaQuery.of(context).size.width,
         padding: EdgeInsets.symmetric(vertical: 13),

@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:tryme/Globals.dart';
 
-import 'package:tryme/views/ShoppingCardView.dart';
-
 class MyAppBar extends StatefulWidget implements PreferredSizeWidget {
   @override
   _MyAppBarState createState() => _MyAppBarState();
@@ -49,12 +47,7 @@ class _MyAppBarState extends State<MyAppBar> {
         ),
         if (!isACompany)
           IconButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => ShoppingCardView()),
-              );
-            },
+            onPressed: () => Navigator.pushNamed(context, 'shoppingCard'),
             icon: Icon(Icons.shopping_cart),
           ),
       ],

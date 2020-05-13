@@ -3,6 +3,20 @@ import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 
 class GraphQLConfiguration {
+  GraphQLClient getClientToQuery(String uid) {
+    HttpLink httpLink = HttpLink(
+      uri: 'https://tryme-backend.herokuapp.com/v1/graphql',
+      headers: <String, String>{
+        'x-hasura-admin-secret': 'aUCyUfhw8eNxR35se7IzQ4D1yEQvB8vu',
+        'x-hasura-user-id': uid,
+      },
+    );
+    return (GraphQLClient(
+      link: httpLink,
+      cache: OptimisticCache(dataIdFromObject: typenameDataIdFromObject),
+    ));
+  }
+
   static HttpLink httpLink = HttpLink(
     uri: 'https://tryme-backend.herokuapp.com/v1/graphql',
     headers: <String, String>{

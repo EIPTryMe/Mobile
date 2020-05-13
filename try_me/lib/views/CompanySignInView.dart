@@ -4,7 +4,7 @@ import 'package:graphql_flutter/graphql_flutter.dart';
 
 import 'package:tryme/Auth0API.dart';
 import 'package:tryme/Globals.dart';
-import 'package:tryme/Queries.dart';
+import 'package:tryme/Request.dart';
 
 class CompanySignInView extends StatefulWidget {
   CompanySignInView({Key key, this.title}) : super(key: key);
@@ -13,18 +13,6 @@ class CompanySignInView extends StatefulWidget {
 
   @override
   _CompanySignInViewState createState() => _CompanySignInViewState();
-}
-
-Future initialiseCompany() async {
-  QueryResult result;
-  QueryOptions queryOption = QueryOptions(documentNode: gql(Queries.company(auth0User.uid)));
-  result = await graphQLConfiguration.clientToQuery.query(queryOption);
-  company.name = result.data['user'][0]['name'] != null ? result.data['user'][0]['name'] : '';
-  company.address = result.data['user'][0]['address'] != null ? result.data['user'][0]['address'] : '';
-  //company.phoneNumber = result.data['user'][0]['phone'] != null ? result.data['user'][0]['phone'] : '';
-  company.email = result.data['user'][0]['email'] != null ? result.data['user'][0]['email'] : '';
-  company.siret = result.data['user'][0]['siret'] != null ? result.data['user'][0]['siret'] : '';
-  company.pathToAvatar = auth0User.picture != null ? auth0User.picture : '';
 }
 
 class CurvePainter extends CustomPainter {
@@ -169,10 +157,10 @@ class _CompanySignInViewState extends State<CompanySignInView> {
         if (_formKeyEmail.currentState.validate() && _formKeyPassword.currentState.validate()) {
           Auth0API.login(_email, _password).then((isConnected) {
             if (isConnected) {
-              initialiseCompany().whenComplete(() {
+              Request.getCompany().whenComplete(() {
                 isLoggedIn = true;
                 isACompany = true;
-                Navigator.pushNamedAndRemoveUntil(context, '/companyHome', ModalRoute.withName('/'));
+                Navigator.pushNamedAndRemoveUntil(context, 'companyHome', ModalRoute.withName('/'));
               });
             }
           });

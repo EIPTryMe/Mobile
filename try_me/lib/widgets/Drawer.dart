@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:tryme/views/AuthenticationView.dart';
+import 'package:tryme/views/AuthentificationView.dart';
 import 'package:tryme/views/CompanyInformationView.dart';
 import 'package:tryme/views/CompanyOrdersView.dart';
 import 'package:tryme/views/CompanySignInView.dart';
@@ -13,7 +13,11 @@ void disconnect(bool _yes, BuildContext context) {
   if (_yes) {
     isLoggedIn = false;
     if (isACompany) isACompany = false;
-    Navigator.pushNamedAndRemoveUntil(context, '/home', ModalRoute.withName('/'));
+    shoppingCard.clear();
+    auth0User = Auth0User();
+    user = User();
+    company = Company();
+    Navigator.pushNamedAndRemoveUntil(context, 'home', ModalRoute.withName('/'));
   }
 }
 
@@ -40,12 +44,7 @@ class DrawerNotConnected extends StatelessWidget {
         ),
         ListTile(
           title: Text('Authentification'),
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => AuthenticationView()),
-            );
-          },
+          onTap: () => Navigator.pushNamed(context, 'authentification'),
         ),
         Divider(
           height: 1,
@@ -53,12 +52,7 @@ class DrawerNotConnected extends StatelessWidget {
         ),
         ListTile(
           title: Text('Entreprise'),
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => CompanySignInView()),
-            );
-          },
+          onTap: () => Navigator.pushNamed(context, 'companySignIn'),
         ),
       ],
     ));
@@ -97,15 +91,7 @@ class DrawerIsConnected extends StatelessWidget {
             ),
           ),
           trailing: GestureDetector(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => UserOrdersView(
-                            orderStatus: 'Mes Commandes',
-                          )),
-                );
-              },
+              onTap: () => Navigator.pushNamed(context, 'userOrders/Mes Commandes'),
               child: Text(
                 'Tout voir',
                 style: TextStyle(
@@ -120,43 +106,19 @@ class DrawerIsConnected extends StatelessWidget {
               title: Text(
                 'En attente',
               ),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => UserOrdersView(
-                            orderStatus: 'En attente',
-                          )),
-                );
-              },
+              onTap: () => Navigator.pushNamed(context, 'userOrders/En attente'),
             ),
             ListTile(
               title: Text(
                 'Expédiées',
               ),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => UserOrdersView(
-                            orderStatus: 'Expédiées',
-                          )),
-                );
-              },
+              onTap: () => Navigator.pushNamed(context, 'userOrders/Expédiées'),
             ),
             ListTile(
               title: Text(
                 'Livrées',
               ),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => UserOrdersView(
-                            orderStatus: 'Livrées',
-                          )),
-                );
-              },
+              onTap: () => Navigator.pushNamed(context, 'userOrders/Livrées'),
             ),
           ],
         ),
@@ -182,12 +144,7 @@ class DrawerIsConnected extends StatelessWidget {
               fontWeight: FontWeight.bold,
             ),
           ),
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => PersonalInformationView()),
-            );
-          },
+          onTap: () => Navigator.pushNamed(context, 'personalInformation'),
         ),
         Padding(
           padding: const EdgeInsets.only(right: 20.0, left: 20.0),
@@ -247,15 +204,7 @@ class DrawerCompany extends StatelessWidget {
             ),
           ),
           trailing: GestureDetector(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => CompanyOrdersView(
-                            orderStatus: 'Toutes vos commandes',
-                          )),
-                );
-              },
+              onTap: () => Navigator.pushNamed(context, 'companyOrders/Toutes vos commandes'),
               child: Text(
                 'Tout voir',
                 style: TextStyle(
@@ -270,43 +219,19 @@ class DrawerCompany extends StatelessWidget {
               title: Text(
                 'En cours',
               ),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => CompanyOrdersView(
-                            orderStatus: 'En cours',
-                          )),
-                );
-              },
+              onTap: () => Navigator.pushNamed(context, 'companyOrders/En cours'),
             ),
             ListTile(
               title: Text(
                 'Expédiées',
               ),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => CompanyOrdersView(
-                            orderStatus: 'Expédiées',
-                          )),
-                );
-              },
+              onTap: () => Navigator.pushNamed(context, 'companyOrders/Expédiées'),
             ),
             ListTile(
               title: Text(
                 'Livrées',
               ),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => CompanyOrdersView(
-                            orderStatus: 'Livrées',
-                          )),
-                );
-              },
+              onTap: () => Navigator.pushNamed(context, 'companyOrders/Livrées'),
             ),
           ],
         ),
@@ -327,12 +252,7 @@ class DrawerCompany extends StatelessWidget {
         ListTile(
           leading: Icon(Icons.info_outline),
           title: Text('Informations entreprise'),
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => CompanyInformationView()),
-            );
-          },
+          onTap: () => Navigator.pushNamed(context, 'companyInformation'),
         ),
         Padding(
           padding: const EdgeInsets.only(right: 20.0, left: 20.0),

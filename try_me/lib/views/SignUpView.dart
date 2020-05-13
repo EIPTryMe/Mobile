@@ -210,7 +210,7 @@ class _SignUpViewState extends State<SignUpView> {
             if (isConnected) {
               isLoggedIn = true;
               isACompany = false;
-              Navigator.pushNamedAndRemoveUntil(context, '/home', ModalRoute.withName('/'));
+              Navigator.pushNamedAndRemoveUntil(context, 'home', ModalRoute.withName('/'));
             }
           });
           print(_email);
