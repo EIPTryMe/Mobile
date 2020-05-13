@@ -6,6 +6,7 @@ import 'package:tryme/views/SignUpView.dart';
 import 'package:tryme/Auth0API.dart';
 import 'package:tryme/Globals.dart';
 import 'package:tryme/Queries.dart';
+import 'package:tryme/Request.dart';
 
 class SignInView extends StatefulWidget {
   SignInView({Key key, this.title}) : super(key: key);
@@ -14,19 +15,6 @@ class SignInView extends StatefulWidget {
 
   @override
   _SignInViewState createState() => _SignInViewState();
-}
-
-Future initialiseUser() async {
-  QueryResult result;
-  QueryOptions queryOption = QueryOptions(documentNode: gql(Queries.user('auth0|5eaafb1bb975740bf829a7d6' /*globals.auth0User.uid*/)));
-  result = await graphQLConfiguration.clientToQuery.query(queryOption);
-  user.firstName = result.data['user'][0]['first_name'] != null ? result.data['user'][0]['first_name'] : '';
-  user.lastName = result.data['user'][0]['name'] != null ? result.data['user'][0]['name'] : '';
-  user.address = result.data['user'][0]['address'] != null ? result.data['user'][0]['address'] : '';
-  //user.phoneNumber = result.data['user'][0]['phone'] != null ? result.data['user'][0]['phone'] : '';
-  user.email = result.data['user'][0]['email'] != null ? result.data['user'][0]['email'] : '';
-  user.birthDate = result.data['user'][0]['birth_date'] != null ? result.data['user'][0]['birth_date'] : '';
-  user.pathToAvatar = auth0User.picture != null ? auth0User.picture : '';
 }
 
 class CurvePainter extends CustomPainter {
@@ -171,10 +159,11 @@ class _SignInViewState extends State<SignInView> {
         if (_formKeyEmail.currentState.validate() && _formKeyPassword.currentState.validate()) {
           Auth0API.login(_email, _password).then((isConnected) {
             if (isConnected) {
-              initialiseUser().whenComplete(() {
+              Request.getUser().whenComplete(() {
+                Request.getShoppingCard();
                 isLoggedIn = true;
                 isACompany = false;
-                Navigator.pushNamedAndRemoveUntil(context, '/home', ModalRoute.withName('/'));
+                Navigator.pushNamedAndRemoveUntil(context, 'home', ModalRoute.withName('/'));
               });
             }
           });

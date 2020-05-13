@@ -47,10 +47,9 @@ class ProductCard extends StatelessWidget {
                         children: <Widget>[
                           Expanded(
                             child: Align(
-                              alignment: Alignment.topCenter,
+                              alignment: Alignment.topLeft,
                               child: Text(
                                 product.name == null ? '' : product.name,
-                                //product.title,
                                 style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
                               ),
                             ),
@@ -80,7 +79,7 @@ class ProductCard extends StatelessWidget {
               color: Colors.transparent,
               child: InkWell(
                 splashColor: Colors.white10,
-                onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => ProductView(id: product.id))),
+                onTap: () => Navigator.pushNamed(context, 'product/${product.id}'),
               ),
             ),
           ),

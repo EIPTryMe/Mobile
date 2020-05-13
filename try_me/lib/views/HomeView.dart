@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 
 import 'package:graphql_flutter/graphql_flutter.dart';
@@ -25,15 +27,7 @@ class _HomeViewState extends State<HomeView> {
       setState(() {
         products.clear();
         (result.data['product'] as List).forEach((element) {
-          Product product = Product();
-          product.id = element['id'];
-          product.name = element['name'];
-          product.pricePerDay = element['price_per_day'];
-          product.pricePerWeek = element['price_per_week'];
-          product.pricePerMonth = element['price_per_month'];
-          product.descriptions = element['product_descriptions'];
-          product.specifications = element['product_specifications'];
-          products.add(product);
+          products.add(QueryParse.getProductHome(element));
         });
       });
   }

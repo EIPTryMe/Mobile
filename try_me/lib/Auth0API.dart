@@ -1,6 +1,7 @@
 import 'package:flutter_auth0/flutter_auth0.dart';
 
 import 'package:tryme/Globals.dart';
+import 'package:tryme/Request.dart';
 
 class Auth0API {
   static String domain = 'dev-2o6a8byc.eu.auth0.com/api/v2';
@@ -38,7 +39,6 @@ class Auth0API {
       return (false);
     }
   }
-
 
   static void webAuth() async {
     try {
