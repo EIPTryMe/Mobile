@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'package:tryme/views/SignInView.dart';
-import 'package:tryme/views/SignUpView.dart';
-
 class AuthentificationView extends StatefulWidget {
   AuthentificationView({Key key, this.title}) : super(key: key);
 

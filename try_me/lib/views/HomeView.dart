@@ -1,14 +1,12 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 
 import 'package:graphql_flutter/graphql_flutter.dart';
 
-import 'package:tryme/Globals.dart';
-import 'package:tryme/Queries.dart';
 import 'package:tryme/widgets/AppBar.dart';
 import 'package:tryme/widgets/Drawer.dart';
 import 'package:tryme/widgets/ProductCard.dart';
+import 'package:tryme/Globals.dart';
+import 'package:tryme/Queries.dart';
 
 class HomeView extends StatefulWidget {
   @override

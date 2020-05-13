@@ -1,11 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'package:tryme/views/AuthentificationView.dart';
-import 'package:tryme/views/CompanyInformationView.dart';
-import 'package:tryme/views/CompanyOrdersView.dart';
-import 'package:tryme/views/CompanySignInView.dart';
-import 'package:tryme/views/PersonalInformationView.dart';
-import 'package:tryme/views/UserOrdersView.dart';
 import 'package:tryme/Dialogs.dart';
 import 'package:tryme/Globals.dart';
 

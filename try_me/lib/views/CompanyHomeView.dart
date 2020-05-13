@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import 'package:tryme/widgets/AppBar.dart';
 import 'package:tryme/widgets/Drawer.dart';
-import 'package:tryme/Globals.dart';
 
 class CompanyHomeView extends StatefulWidget {
   @override

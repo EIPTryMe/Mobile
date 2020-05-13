@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'package:tryme/widgets/ProductCard.dart';
 import 'package:tryme/widgets/ProductUserOrderCard.dart';
 import 'package:tryme/Globals.dart';
 

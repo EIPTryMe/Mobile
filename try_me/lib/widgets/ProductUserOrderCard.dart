@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'package:tryme/views/ProductView.dart';
-
 import 'package:tryme/Globals.dart';
 
 class ProductUserOrderCard extends StatelessWidget {
@@ -94,10 +92,7 @@ class ProductUserOrderCard extends StatelessWidget {
               color: Colors.transparent,
               child: InkWell(
                 splashColor: Colors.white10,
-                onTap: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => ProductView(id: product.id))),
+                onTap: () => Navigator.pushNamed(context, 'product/${product.id}'),
               ),
             ),
           ),

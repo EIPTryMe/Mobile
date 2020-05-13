@@ -1,8 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:tryme/Globals.dart';
-import 'package:tryme/views/ShoppingCardView.dart';
 
 class ProductShoppingCartCard extends StatefulWidget {
   ProductShoppingCartCard({this.cart, this.callback});

@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'package:graphql_flutter/graphql_flutter.dart';
-
 import 'package:tryme/Auth0API.dart';
 import 'package:tryme/Globals.dart';
 import 'package:tryme/Request.dart';
