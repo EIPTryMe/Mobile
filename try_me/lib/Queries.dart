@@ -60,6 +60,7 @@ class QueryParse {
     shoppingCard.clear();
     result.forEach((element) {
       Product product = Product();
+      product.id = element['product']['id'];
       product.name = element['product']['name'];
       product.pricePerDay = element['product']['price_per_day'] != null
           ? element['product']['price_per_day'].toDouble()
@@ -143,6 +144,7 @@ class Queries {
     user(where: {uid: {_eq: "$uid"}}) {
       carts {
         product {
+          id
           name
           price_per_week
           price_per_month
