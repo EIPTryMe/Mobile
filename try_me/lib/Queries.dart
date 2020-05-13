@@ -26,9 +26,15 @@ class QueryParse {
     Product product = Product();
     product.id = result['id'];
     product.name = result['name'];
-    product.pricePerDay = result['price_per_day'] != null ? result['price_per_day'].toDouble() : null;
-    product.pricePerWeek = result['price_per_week'] != null ? result['price_per_week'].toDouble() : null;
-    product.pricePerMonth = result['price_per_month'] != null ? result['price_per_month'].toDouble() : null;
+    product.pricePerDay = result['price_per_day'] != null
+        ? result['price_per_day'].toDouble()
+        : null;
+    product.pricePerWeek = result['price_per_week'] != null
+        ? result['price_per_week'].toDouble()
+        : null;
+    product.pricePerMonth = result['price_per_month'] != null
+        ? result['price_per_month'].toDouble()
+        : null;
     product.descriptions = result['product_descriptions'];
     product.specifications = result['product_specifications'];
     return (product);
@@ -38,9 +44,15 @@ class QueryParse {
     Product product = Product();
     product.id = result['id'];
     product.name = result['name'];
-    product.pricePerDay = result['price_per_day'] != null ? result['price_per_day'].toDouble() : null;
-    product.pricePerWeek = result['price_per_week'] != null ? result['price_per_week'].toDouble() : null;
-    product.pricePerMonth = result['price_per_month'] != null ? result['price_per_month'].toDouble() : null;
+    product.pricePerDay = result['price_per_day'] != null
+        ? result['price_per_day'].toDouble()
+        : null;
+    product.pricePerWeek = result['price_per_week'] != null
+        ? result['price_per_week'].toDouble()
+        : null;
+    product.pricePerMonth = result['price_per_month'] != null
+        ? result['price_per_month'].toDouble()
+        : null;
     return (product);
   }
 
@@ -49,9 +61,15 @@ class QueryParse {
     result.forEach((element) {
       Product product = Product();
       product.name = element['product']['name'];
-      product.pricePerDay = element['product']['price_per_day'] != null ? element['product']['price_per_day'].toDouble() : null;
-      product.pricePerWeek = element['product']['price_per_week'] != null ? element['product']['price_per_week'].toDouble() : null;
-      product.pricePerMonth = element['product']['price_per_month'] != null ? element['product']['price_per_month'].toDouble() : null;
+      product.pricePerDay = element['product']['price_per_day'] != null
+          ? element['product']['price_per_day'].toDouble()
+          : null;
+      product.pricePerWeek = element['product']['price_per_week'] != null
+          ? element['product']['price_per_week'].toDouble()
+          : null;
+      product.pricePerMonth = element['product']['price_per_month'] != null
+          ? element['product']['price_per_month'].toDouble()
+          : null;
       Cart cart = Cart(product: product);
       shoppingCard.add(cart);
     });
@@ -63,6 +81,21 @@ class Mutations {
   mutation {
     createCartItem(product_id: $id) {
       id
+    }
+  }
+  ''';
+
+  static String modifyUser(int id, String lastName, String firstName, String address, String email, String phoneNumber, String birthDate) => '''
+  mutation {
+    update_user(_set: {name: "$lastName", first_name: "$firstName", email: "$email", address: "$address", phone: 0, birth_date: "$birthDate"}, where: {id: {_eq: $id}}) {
+     returning {
+        address
+        birth_date
+        email
+        first_name
+        name
+        phone
+      }
     }
   }
   ''';

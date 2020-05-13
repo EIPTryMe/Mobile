@@ -25,4 +25,10 @@ class Request {
     result = await graphQLConfiguration.clientToQuery.query(queryOption);
     QueryParse.getCompany(result.data['user'][0]);
   }
+
+  static Future modifyUser() async {
+    QueryResult result;
+    QueryOptions queryOption = QueryOptions(documentNode: gql(Mutations.modifyUser(user.id, user.lastName, user.firstName, user.address, user.email, user.phoneNumber, user.birthDate)));
+    result = await graphQLConfiguration.clientToQuery.query(queryOption);
+  }
 }

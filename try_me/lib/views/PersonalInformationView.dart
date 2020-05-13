@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:tryme/Globals.dart';
+import 'package:tryme/Request.dart';
 
 class PersonalInformationView extends StatefulWidget {
   @override
@@ -745,8 +746,7 @@ class _PersonalInformationViewState extends State<PersonalInformationView> {
                 onPressed: () {
                   setState(() {
                     if (!edit[0]) {
-                      //fonction de sauvegarde en bdd + quitter la View
-                      print('Save and quit');
+                      Request.modifyUser().whenComplete(() => Navigator.pushNamed(context, "home"));
                     }
                   });
                 },
