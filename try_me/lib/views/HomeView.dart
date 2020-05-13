@@ -18,7 +18,8 @@ class _HomeViewState extends State<HomeView> {
 
   void getData() async {
     QueryResult result;
-    QueryOptions queryOption = QueryOptions(documentNode: gql(Queries.products()));
+    QueryOptions queryOption =
+        QueryOptions(documentNode: gql(Queries.products()));
     result = await graphQLConfiguration.clientToQuery.query(queryOption);
     if (this.mounted)
       setState(() {
@@ -45,22 +46,20 @@ class _HomeViewState extends State<HomeView> {
 
   @override
   Widget build(BuildContext context) {
-    if (!isACompany) {
-      return Scaffold(
-        appBar: MyAppBar(),
-        drawer: isLoggedIn ? DrawerIsConnected() : DrawerNotConnected(),
-        body: ListView(
-          children: products
-              .map((product) => Padding(
-                    padding: const EdgeInsets.fromLTRB(2, 2, 2, 2),
-                    child: ProductCard(
-                      product: product,
-                    ),
-                  ))
-              .toList(),
-        ),
-        backgroundColor: Colors.grey[200],
-      );
-    }
+    return Scaffold(
+      appBar: MyAppBar(),
+      drawer: isLoggedIn ? DrawerIsConnected() : DrawerNotConnected(),
+      body: ListView(
+        children: products
+            .map((product) => Padding(
+                  padding: const EdgeInsets.fromLTRB(2, 2, 2, 2),
+                  child: ProductCard(
+                    product: product,
+                  ),
+                ))
+            .toList(),
+      ),
+      backgroundColor: Colors.grey[200],
+    );
   }
 }

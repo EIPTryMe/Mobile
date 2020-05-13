@@ -40,6 +40,17 @@ class Product {
   List specifications = List();
 }
 
+class ProductOrder {
+  int id = 0;
+  String name = '';
+  String status = '';
+  int pricePerDay = 0;
+  int pricePerWeek = 0;
+  int pricePerMonth = 0;
+  List descriptions = List();
+  List specifications = List();
+}
+
 GraphQLConfiguration graphQLConfiguration = GraphQLConfiguration();
 
 bool isLoggedIn = false;

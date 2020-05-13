@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:tryme/widgets/ProductCard.dart';
+import 'package:tryme/widgets/ProductUserOrderCard.dart';
 import 'package:tryme/Globals.dart';
 
 class UserOrdersView extends StatefulWidget {
@@ -18,20 +19,22 @@ class _UserOrdersViewState extends State<UserOrdersView> {
   List productsExpedited = List();
   List productsDelivered = List();
 
-  Product product1 = Product();
+  ProductOrder product1;
 
   @override
   void initState() {
-    product1.name = 'tom';
-    initList(productsAll, 6);
-    initList(productsOnHold, 1);
-    initList(productsExpedited, 2);
-    initList(productsDelivered, 3);
+    initList(productsAll, 6, "");
+    initList(productsOnHold, 1,"En attente");
+    initList(productsExpedited, 2, "Expédiée");
+    initList(productsDelivered, 3, "Livrée");
     super.initState();
   }
 
-  initList(List products, int n) {
+  initList(List products, int n, String status) {
     for (int i = 0; i < n; i++) {
+      product1 = ProductOrder();
+      product1.name = "Test";
+      product1.status = status;
       products.add(product1);
     }
   }
@@ -95,7 +98,7 @@ class _UserOrdersViewState extends State<UserOrdersView> {
           children: products
               .map((product) => Padding(
                     padding: const EdgeInsets.fromLTRB(8, 4, 8, 4),
-                    child: ProductCard(
+                    child: ProductUserOrderCard(
                       product: product,
                     ),
                   ))

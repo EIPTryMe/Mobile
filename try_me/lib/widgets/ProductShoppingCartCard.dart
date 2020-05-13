@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'package:tryme/views/ProductView.dart';
 import 'package:tryme/Globals.dart';
 
 class ProductShoppingCartCard extends StatelessWidget {
