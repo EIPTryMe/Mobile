@@ -1,9 +1,12 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 
 import 'package:tryme/Globals.dart';
+import 'package:tryme/GraphQLConfiguration.dart';
 import 'package:tryme/Queries.dart';
 import 'package:tryme/Request.dart';
 
@@ -26,10 +29,12 @@ class ProductView extends StatefulWidget {
 
 class _ProductViewState extends State<ProductView> {
   Product product = Product();
+  bool gotData = false;
 
-  void getData() async {
+  Future getData() async {
     QueryResult result;
     QueryOptions queryOption = QueryOptions(documentNode: gql(Queries.product(int.parse(widget.id))));
+    graphQLConfiguration = GraphQLConfiguration();
     result = await graphQLConfiguration.clientToQuery.query(queryOption);
     if (this.mounted) {
       setState(() {
@@ -42,7 +47,7 @@ class _ProductViewState extends State<ProductView> {
     if (auth0User.uid == null) return;
     QueryResult result;
     QueryOptions queryOption = QueryOptions(documentNode: gql(Mutations.addProduct(int.parse(widget.id))));
-    result = await graphQLConfiguration.getClientToQuery(user.id.toString()).query(queryOption);
+    result = await graphQLConfiguration.getClientToQuery(auth0User.uid).query(queryOption);
     addedToCardOverlay(context);
     Request.getShoppingCard();
   }
@@ -77,7 +82,11 @@ class _ProductViewState extends State<ProductView> {
   @override
   void initState() {
     super.initState();
-    getData();
+    getData().whenComplete(() {
+      setState(() {
+        gotData = true;
+      });
+    });
   }
 
   @override
@@ -85,12 +94,22 @@ class _ProductViewState extends State<ProductView> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color(0xfff99e38),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.shopping_cart),
-            onPressed: () => Navigator.pushNamed(context, 'shoppingCard'),
-          )
-        ],
+        actions: !isLoggedIn
+            ? null
+            : [
+                (() {
+                  if (isACompany)
+                    return IconButton(
+                      icon: Icon(Icons.edit),
+                      onPressed: () => Navigator.pushNamed(context, 'productEdit/${widget.id}'),
+                    );
+                  else
+                    return IconButton(
+                      icon: Icon(Icons.shopping_cart),
+                      onPressed: () => Navigator.pushNamed(context, 'shoppingCard'),
+                    );
+                }())
+              ],
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -134,6 +153,10 @@ class _ProductViewState extends State<ProductView> {
                         product.name == null ? '' : product.name,
                         style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
                       ),
+                      Text(
+                        product.brand == null ? '' : product.brand,
+                        style: TextStyle(fontSize: 14.0),
+                      ),
                       SizedBox(
                         height: 20,
                       ),
@@ -150,7 +173,7 @@ class _ProductViewState extends State<ProductView> {
                         style: TextStyle(color: Colors.green, fontSize: 18.0, fontWeight: FontWeight.bold),
                       ),
                       SizedBox(
-                        height: 50,
+                        height: 30,
                       ),
                       Text(
                         'Description',
@@ -179,20 +202,32 @@ class _ProductViewState extends State<ProductView> {
               ],
             ),
           ),
-          Expanded(
-            flex: 1,
-            child: FlatButton(
-              color: Color(0xfff99e38),
-              onPressed: () => addProduct(),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text('Ajouter au panier  ', style: TextStyle(color: Colors.white, fontSize: 18)),
-                  Icon(Icons.add_shopping_cart, color: Colors.white),
-                ],
-              ),
-            ),
-          ),
+          if (isLoggedIn && !isACompany && gotData)
+            (() {
+              if (product.stock > 0)
+                return Expanded(
+                  flex: 1,
+                  child: FlatButton(
+                    color: Color(0xfff99e38),
+                    onPressed: () => addProduct(),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text('Ajouter au panier  ', style: TextStyle(color: Colors.white, fontSize: 18)),
+                        Icon(Icons.add_shopping_cart, color: Colors.white),
+                      ],
+                    ),
+                  ),
+                );
+              else
+                return Expanded(
+                  flex: 1,
+                  child: Container(
+                    color: Colors.grey[400],
+                    child: Center(child: Text('Indisponible', style: TextStyle(color: Colors.white, fontSize: 18))),
+                  ),
+                );
+            }())
         ],
       ),
     );

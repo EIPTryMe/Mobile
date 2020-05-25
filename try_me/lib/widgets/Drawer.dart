@@ -186,7 +186,7 @@ class DrawerCompany extends StatelessWidget {
           ),
           accountEmail: Text(company.email),
           currentAccountPicture: CircleAvatar(
-            backgroundImage: company.pathToAvatar != null ? NetworkImage(company.pathToAvatar) : AssetImage("assets/company_logo_temp.jpg"),
+            backgroundImage: user.pathToAvatar != null ? NetworkImage(user.pathToAvatar) : AssetImage("assets/company_logo_temp.jpg"),
           ),
         ),
         ListTile(

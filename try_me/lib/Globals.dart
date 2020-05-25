@@ -14,7 +14,7 @@ class Auth0User {
 }
 
 class Company {
-  Company({this.id, this.name, this.email, this.phoneNumber, this.address, this.siret, this.pathToAvatar});
+  Company({this.id, this.name, this.email, this.phoneNumber, this.address, this.siret, this.siren});
 
   int id;
   String name;
@@ -22,7 +22,7 @@ class Company {
   String phoneNumber;
   String address;
   String siret;
-  String pathToAvatar;
+  String siren;
 }
 
 class User {
@@ -36,16 +36,19 @@ class User {
   String email;
   String birthDate;
   String pathToAvatar;
+  int companyId;
 }
 
 class Product {
-  Product({this.id, this.name, this.pricePerDay, this.pricePerWeek, this.pricePerMonth, this.descriptions, this.specifications});
+  Product({this.id, this.name, this.brand, this.pricePerDay, this.pricePerWeek, this.pricePerMonth, this.stock, this.descriptions, this.specifications});
 
   int id;
   String name;
+  String brand;
   double pricePerDay;
   double pricePerWeek;
   double pricePerMonth;
+  int stock;
   List descriptions;
   List specifications;
 }

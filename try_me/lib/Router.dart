@@ -6,6 +6,7 @@ import 'package:tryme/views/AuthentificationView.dart';
 import 'package:tryme/views/CompanyHomeView.dart';
 import 'package:tryme/views/CompanyInformationView.dart';
 import 'package:tryme/views/CompanyOrdersView.dart';
+import 'package:tryme/views/ProductEditView.dart';
 import 'package:tryme/views/CompanySignInView.dart';
 import 'package:tryme/views/HomeView.dart';
 import 'package:tryme/views/PersonalInformationView.dart';
@@ -25,6 +26,7 @@ class FluroRouter {
   static Handler _homeHandler = Handler(handlerFunc: (BuildContext context, Map<String, dynamic> params) => HomeView());
   static Handler _personalInformationHandler = Handler(handlerFunc: (BuildContext context, Map<String, dynamic> params) => PersonalInformationView());
   static Handler _productHandler = Handler(handlerFunc: (BuildContext context, Map<String, dynamic> params) => ProductView(id: params['id'][0]));
+  static Handler _productEditHandler = Handler(handlerFunc: (BuildContext context, Map<String, dynamic> params) => ProductEditView(id: params['id'][0]));
   static Handler _shoppingCardHandler = Handler(handlerFunc: (BuildContext context, Map<String, dynamic> params) => ShoppingCardView());
   static Handler _signInHandler = Handler(handlerFunc: (BuildContext context, Map<String, dynamic> params) => SignInView());
   static Handler _signUpHandler = Handler(handlerFunc: (BuildContext context, Map<String, dynamic> params) => SignUpView());
@@ -49,6 +51,11 @@ class FluroRouter {
     router.define(
       'companyOrders/:orderStatus',
       handler: _companyOrdersHandler,
+      transitionType: TransitionType.cupertino,
+    );
+    router.define(
+      'productEdit/:id',
+      handler: _productEditHandler,
       transitionType: TransitionType.cupertino,
     );
     router.define(

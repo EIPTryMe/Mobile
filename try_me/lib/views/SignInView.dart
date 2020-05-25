@@ -56,6 +56,7 @@ class _SignInViewState extends State<SignInView> {
   final _formKeyPassword = GlobalKey<FormState>();
   var _email;
   var _password;
+  String error = '';
 
   Widget _backButton() {
     return InkWell(
@@ -157,10 +158,20 @@ class _SignInViewState extends State<SignInView> {
           Auth0API.login(_email, _password).then((isConnected) {
             if (isConnected) {
               Request.getUser().whenComplete(() {
-                Request.getShoppingCard();
-                isLoggedIn = true;
-                isACompany = false;
-                Navigator.pushNamedAndRemoveUntil(context, 'home', ModalRoute.withName('/'));
+                if (user.companyId == null) {
+                  Request.getShoppingCard();
+                  isLoggedIn = true;
+                  isACompany = false;
+                  Navigator.pushNamedAndRemoveUntil(context, 'home', ModalRoute.withName('/'));
+                } else {
+                  setState(() {
+                    error = 'Connectez-vous en tant qu\'entreprise';
+                  });
+                }
+              });
+            } else {
+              setState(() {
+                error = 'Email ou mot de passe invalide';
               });
             }
           });
@@ -218,8 +229,6 @@ class _SignInViewState extends State<SignInView> {
   Widget _facebookButton() {
     return FlatButton(
       onPressed: () {
-        //print('Facebook co');
-        Auth0API.webAuth();
       },
       child: Container(
         height: 50,
@@ -379,6 +388,15 @@ class _SignInViewState extends State<SignInView> {
                     height: 50,
                   ),
                   _emailPasswordWidget(),
+                  Align(
+                      alignment: Alignment.centerLeft,
+                      child: Padding(
+                        padding: EdgeInsets.fromLTRB(10.0, 0.0, 0.0, 0.0),
+                        child: Text(
+                          error,
+                          style: TextStyle(color: Colors.red),
+                        ),
+                      )),
                   SizedBox(
                     height: 20,
                   ),

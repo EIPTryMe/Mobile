@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:tryme/Globals.dart';
+import 'package:tryme/Request.dart';
 
 class ProductShoppingCartCard extends StatefulWidget {
   ProductShoppingCartCard({this.cart, this.callback});
@@ -107,10 +108,11 @@ class _ProductShoppingCartCardState extends State<ProductShoppingCartCard> {
                 SizedBox(width: 75),
                 IconButton(
                   icon: Icon(Icons.delete_outline),
-                  /*onPressed: () {
-                    shoppingCard.remove(widget.cart.product);
+                  onPressed: () {
+                    Request.deleteShoppingCard(widget.cart.product.id);
+                    shoppingCard.remove(widget.cart);
                     widget.callback();
-                  },*/
+                  },
                 ),
               ],
             ),

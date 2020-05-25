@@ -9,6 +9,7 @@ class QueryParse {
     //user.phoneNumber = result['phone'];
     user.email = result['email'];
     user.birthDate = result['birth_date'];
+    user.companyId = result['company_id'];
     user.pathToAvatar = auth0User.picture;
   }
 
@@ -19,22 +20,18 @@ class QueryParse {
     //company.phoneNumber = result['phone'];
     company.email = result['email'];
     company.siret = result['siret'];
-    company.pathToAvatar = auth0User.picture;
+    company.siren = result['siren'];
   }
 
   static Product getProduct(Map result) {
     Product product = Product();
     product.id = result['id'];
     product.name = result['name'];
-    product.pricePerDay = result['price_per_day'] != null
-        ? result['price_per_day'].toDouble()
-        : null;
-    product.pricePerWeek = result['price_per_week'] != null
-        ? result['price_per_week'].toDouble()
-        : null;
-    product.pricePerMonth = result['price_per_month'] != null
-        ? result['price_per_month'].toDouble()
-        : null;
+    product.brand = result['brand'];
+    product.pricePerDay = result['price_per_day'] != null ? result['price_per_day'].toDouble() : null;
+    product.pricePerWeek = result['price_per_week'] != null ? result['price_per_week'].toDouble() : null;
+    product.pricePerMonth = result['price_per_month'] != null ? result['price_per_month'].toDouble() : null;
+    product.stock = result['stock'];
     product.descriptions = result['product_descriptions'];
     product.specifications = result['product_specifications'];
     return (product);
@@ -44,15 +41,9 @@ class QueryParse {
     Product product = Product();
     product.id = result['id'];
     product.name = result['name'];
-    product.pricePerDay = result['price_per_day'] != null
-        ? result['price_per_day'].toDouble()
-        : null;
-    product.pricePerWeek = result['price_per_week'] != null
-        ? result['price_per_week'].toDouble()
-        : null;
-    product.pricePerMonth = result['price_per_month'] != null
-        ? result['price_per_month'].toDouble()
-        : null;
+    product.pricePerDay = result['price_per_day'] != null ? result['price_per_day'].toDouble() : null;
+    product.pricePerWeek = result['price_per_week'] != null ? result['price_per_week'].toDouble() : null;
+    product.pricePerMonth = result['price_per_month'] != null ? result['price_per_month'].toDouble() : null;
     return (product);
   }
 
@@ -62,15 +53,9 @@ class QueryParse {
       Product product = Product();
       product.id = element['product']['id'];
       product.name = element['product']['name'];
-      product.pricePerDay = element['product']['price_per_day'] != null
-          ? element['product']['price_per_day'].toDouble()
-          : null;
-      product.pricePerWeek = element['product']['price_per_week'] != null
-          ? element['product']['price_per_week'].toDouble()
-          : null;
-      product.pricePerMonth = element['product']['price_per_month'] != null
-          ? element['product']['price_per_month'].toDouble()
-          : null;
+      product.pricePerDay = element['product']['price_per_day'] != null ? element['product']['price_per_day'].toDouble() : null;
+      product.pricePerWeek = element['product']['price_per_week'] != null ? element['product']['price_per_week'].toDouble() : null;
+      product.pricePerMonth = element['product']['price_per_month'] != null ? element['product']['price_per_month'].toDouble() : null;
       Cart cart = Cart(product: product);
       shoppingCard.add(cart);
     });
@@ -82,6 +67,14 @@ class Mutations {
   mutation {
     createCartItem(product_id: $id) {
       id
+    }
+  }
+  ''';
+
+  static String deleteShoppingCard(String user_uid, int product_id) => '''
+  mutation {
+    delete_cart(where: {product_id: {_eq: $product_id}, user_uid: {_eq: "$user_uid"}}) {
+      affected_rows
     }
   }
   ''';
@@ -100,15 +93,69 @@ class Mutations {
     }
   }
   ''';
+
+  static String modifyProduct(int id, String title, String brand, double monthPrice, double weekPrice, double dayPrice, int stock/*, String description, String specification*/) => '''
+  mutation {
+    update_product(_set: {name: "$title", brand: "$brand", price_per_month: "$monthPrice", price_per_week: "$weekPrice", price_per_day: "$dayPrice", stock: $stock}, where: {id: {_eq: $id}}) {
+      affected_rows
+    }
+  }
+  ''';
+
+  static String orderPayment(String currency, String city, String country, String address, int postalCode) => '''
+  mutation {
+    orderPayment(currency: "$currency", addressDetails: {address_city: "$city", address_country: "$country", address_line_1: "$address", address_postal_code: $postalCode}) {
+      order_id
+      clientSecret
+      publishableKey
+    }
+  }
+  ''';
+
+  static String payOrder(int orderId) => '''
+  mutation {
+    payOrder(order_id: $orderId) {
+      stripe_id
+    }
+  }
+  ''';
 }
 
 class Queries {
-  static String products() => '''
+  static String productsName(bool asc) => '''
   query {
-    product {
+    product(order_by: {name:  ''' + (asc ? 'asc' : 'desc') + '''}) {
       name
       id
+      price_per_week
       price_per_month
+      price_per_day
+    }
+  }
+  ''';
+
+  static String productsPrice(bool asc) => '''
+  query {
+    product(order_by: {price_per_month: ''' + (asc ? 'asc' : 'desc') + ''', name: asc}) {
+      name
+      id
+      price_per_week
+      price_per_month
+      price_per_day
+    }
+  }
+  ''';
+
+  static String productsCompany(int id) => '''
+  query {
+    company(where: {id: {_eq: $id}}) {
+      products {
+        name
+        id
+        price_per_week
+        price_per_month
+        price_per_day
+      }
     }
   }
   ''';
@@ -123,18 +170,21 @@ class Queries {
       birth_date
       phone
       email
+      company_id
     }
   }
   ''';
 
-  static String company(String uid) => '''
+  static String company(int id) => '''
   query {
-    user(where: {uid: {_eq: "$uid"}}) {
+    company(where: {id: {_eq: $id}}) {
+      address
+      email
       id
       name
-      address
       phone
-      email
+      siret
+      siren
     }
   }
   ''';
@@ -142,7 +192,7 @@ class Queries {
   static String shoppingCard(String uid) => '''
   query {
     user(where: {uid: {_eq: "$uid"}}) {
-      carts {
+      cartsUid {
         product {
           id
           name
@@ -160,9 +210,11 @@ class Queries {
     product(where: {id: {_eq: $id}}) {
       id
       name
+      brand
       price_per_day
       price_per_week
       price_per_month
+      stock
       product_descriptions {
         name
       }
