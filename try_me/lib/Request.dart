@@ -34,7 +34,7 @@ class Request {
 
   static Future modifyUser() async {
     QueryResult result;
-    QueryOptions queryOption = QueryOptions(documentNode: gql(Mutations.modifyUser(user.id, user.lastName, user.firstName, user.address, user.email, user.phoneNumber, user.birthDate)));
+    QueryOptions queryOption = QueryOptions(documentNode: gql(Mutations.modifyUser(auth0User.uid, user.lastName, user.firstName, user.address, user.email, user.phoneNumber, user.birthDate)));
     result = await graphQLConfiguration.clientToQuery.query(queryOption);
   }
 

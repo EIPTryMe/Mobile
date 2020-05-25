@@ -79,9 +79,9 @@ class Mutations {
   }
   ''';
 
-  static String modifyUser(int id, String lastName, String firstName, String address, String email, String phoneNumber, String birthDate) => '''
+  static String modifyUser(String uid, String lastName, String firstName, String address, String email, String phoneNumber, String birthDate) => '''
   mutation {
-    update_user(_set: {name: "$lastName", first_name: "$firstName", email: "$email", address: "$address", phone: 0, birth_date: "$birthDate"}, where: {id: {_eq: $id}}) {
+    update_user(_set: {name: "$lastName", first_name: "$firstName", email: "$email", address: "$address", phone: 0, birth_date: "$birthDate"}, where: {uid: {_eq: "$uid"}}) {
      returning {
         address
         birth_date
