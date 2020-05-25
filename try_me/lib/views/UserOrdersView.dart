@@ -21,14 +21,17 @@ class _UserOrdersViewState extends State<UserOrdersView> {
 
   void getData() async {
     QueryResult result;
-    String status;
+    QueryOptions queryOptions;
 
-    if (widget.orderStatus == 'En attente')
-      status = 'waiting for payment';
-    else if (widget.orderStatus == 'Payées') status = 'paid';
-    QueryOptions queryOption = QueryOptions(documentNode: gql(Queries.orders(status)));
+    if (widget.orderStatus == 'Non payées')
+      queryOptions = QueryOptions(
+          documentNode: gql(Queries.orders('waiting for payment')));
+    else if (widget.orderStatus == 'Payées')
+      queryOptions = QueryOptions(documentNode: gql(Queries.orders('paid')));
+    else if (widget.orderStatus == 'Mes Commandes')
+      queryOptions = QueryOptions(documentNode: gql(Queries.ordersAll()));
     graphQLConfiguration = GraphQLConfiguration();
-    result = await graphQLConfiguration.clientToQuery.query(queryOption);
+    result = await graphQLConfiguration.clientToQuery.query(queryOptions);
     if (this.mounted)
       setState(() {
         orders.clear();

@@ -171,6 +171,17 @@ class Queries {
   }
   ''';
 
+  static String ordersAll() => '''
+  {
+    order(where: {user_uid: {_eq: "${auth0User.uid}"}}) {
+      order_items {
+        price
+      }
+      id
+    }
+  }
+  ''';
+
   static String user(String uid) => '''
   query {
     user(where: {uid: {_eq: "$uid"}}) {
