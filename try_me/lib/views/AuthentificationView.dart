@@ -19,9 +19,9 @@ class _AuthentificationViewState extends State<AuthentificationView> {
           children: <Widget>[
             Container(
               padding: EdgeInsets.only(left: 0, top: 10, bottom: 10),
-              child: Icon(Icons.keyboard_arrow_left, color: Colors.black),
+              child: Icon(Icons.keyboard_arrow_left, color: Colors.white),
             ),
-            Text('Retour', style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500))
+            Text('Retour', style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500, color: Colors.white))
           ],
         ),
       ),
@@ -37,11 +37,11 @@ class _AuthentificationViewState extends State<AuthentificationView> {
         alignment: Alignment.center,
         decoration: BoxDecoration(
             borderRadius: BorderRadius.all(Radius.circular(5)),
-            boxShadow: <BoxShadow>[BoxShadow(color: Color(0xffdf8e33).withAlpha(100), offset: Offset(2, 4), blurRadius: 8, spreadRadius: 2)],
+            boxShadow: <BoxShadow>[BoxShadow(color: Color(0xff1F2C47).withAlpha(100), offset: Offset(2, 4), blurRadius: 8, spreadRadius: 2)],
             color: Colors.white),
         child: Text(
           'Connexion',
-          style: TextStyle(fontSize: 20, color: Color(0xfff7892b)),
+          style: TextStyle(fontSize: 20, color: Color(0xff1F2C47)),
         ),
       ),
     );
@@ -93,7 +93,7 @@ class _AuthentificationViewState extends State<AuthentificationView> {
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.all(Radius.circular(5)),
                   boxShadow: <BoxShadow>[BoxShadow(color: Colors.grey.shade200, offset: Offset(2, 4), blurRadius: 5, spreadRadius: 2)],
-                  gradient: LinearGradient(begin: Alignment.topCenter, end: Alignment.bottomCenter, colors: [Color(0xfffbb448), Color(0xffe46b10)])),
+                  gradient: LinearGradient(begin: Alignment.topCenter, end: Alignment.bottomCenter, colors: [Color(0xff1f2c76), Color(0xff1F2C47)])),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,

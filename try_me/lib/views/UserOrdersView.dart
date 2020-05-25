@@ -23,7 +23,7 @@ class _UserOrdersViewState extends State<UserOrdersView> {
   @override
   void initState() {
     initList(productsAll, 6, "");
-    initList(productsOnHold, 1,"En attente");
+    initList(productsOnHold, 1, "En attente");
     initList(productsExpedited, 2, "Expédiée");
     initList(productsDelivered, 3, "Livrée");
     super.initState();
@@ -43,20 +43,27 @@ class _UserOrdersViewState extends State<UserOrdersView> {
     String title;
     title = widget.orderStatus;
 
-      switch (title) {
-    case 'Mes Commandes':
-      products = productsAll;
-      break;
-    case 'En attente':
-      products = productsOnHold;
-      break;
-    case 'Expédiées':
-      products = productsExpedited;
-      break;
-    case 'Livrées':
-      products = productsDelivered;
-      break;
-  }
+    switch (title) {
+      case 'Mes Commandes':
+        products = productsAll;
+        break;
+      case 'En attente':
+        products = productsOnHold;
+        break;
+      case 'Expédiées':
+        products = productsExpedited;
+        break;
+      case 'Livrées':
+        products = productsDelivered;
+        break;
+      case 'Non payées':
+        products = productsDelivered; ///A modifier
+        break;
+      case 'Payées':
+        products = productsDelivered; ///A modifier
+        break;
+
+    }
 
     if (products.length == 0) {
       return Scaffold(
@@ -91,7 +98,7 @@ class _UserOrdersViewState extends State<UserOrdersView> {
         appBar: AppBar(
           title: Text(title),
           centerTitle: true,
-          backgroundColor: Color(0xfff99e38),
+          backgroundColor: Color(0xff1F2C47),
         ),
         body: ListView(
           children: products

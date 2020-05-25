@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:tryme/Globals.dart';
 import 'package:tryme/Request.dart';
 
-class PersonalInformationView extends StatefulWidget {
+class UserInformationAfterInscriptionView extends StatefulWidget {
   @override
-  _PersonalInformationViewState createState() =>
-      _PersonalInformationViewState();
+  _UserInformationAfterInscriptionViewState createState() =>
+      _UserInformationAfterInscriptionViewState();
 }
 
 String modifyPhoneNumber(String phoneNumber) {
@@ -17,14 +17,15 @@ String modifyPhoneNumber(String phoneNumber) {
   return (phoneNumber);
 }
 
-class _PersonalInformationViewState extends State<PersonalInformationView> {
+class _UserInformationAfterInscriptionViewState
+    extends State<UserInformationAfterInscriptionView> {
   var edit = new List(7);
   double _widthScreen;
   double _heightScreen;
   bool _infoValid;
   final _formKey = GlobalKey<FormState>();
 
-  String buttonText = 'Save';
+  String buttonText = 'Sauvegarder';
   String tmp;
 
   @override
@@ -32,55 +33,11 @@ class _PersonalInformationViewState extends State<PersonalInformationView> {
     initBool(edit);
     super.initState();
   }
-  
+
   void initBool(var list) {
     for (int i = 0; i < 7; i++) {
       list[i] = false;
     }
-  }
-
-  Widget _presentation(double widthScreen) {
-    return Row(
-      children: <Widget>[
-        Padding(
-          padding: EdgeInsets.all(widthScreen / 20),
-          child: CircleAvatar(
-            backgroundImage: user.pathToAvatar != null ? NetworkImage(user.pathToAvatar) : AssetImage("assets/company_logo_temp.jpg"),
-            radius: widthScreen / 10,
-          ),
-        ),
-        Expanded(
-          child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: <Widget>[
-                Container(
-                  //get first name here
-                  child: Text(
-                    user.firstName != null ? user.firstName : "Pas de prénom défini",
-                    style: TextStyle(
-                      letterSpacing: 2.0,
-                      color: Colors.black,
-                    ),
-                  ),
-                ),
-                SizedBox(height: 10.0),
-                Container(
-                  //get last name here
-                  child: Text(
-                    user.lastName != null ? user.lastName :  "Pas de nom de famille défini",
-                    style: TextStyle(
-                      letterSpacing: 2.0,
-                      color: Colors.black,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ],
-    );
   }
 
   Widget _personalFirstName(var edit) {
@@ -105,23 +62,25 @@ class _PersonalInformationViewState extends State<PersonalInformationView> {
                     child: Form(
                       key: _formKey,
                       child: TextFormField(
-                        initialValue:  user.firstName != null ? user.firstName : "Pas de prénom défini",
+                        initialValue: user.firstName != null
+                            ? user.firstName
+                            : "Pas de prénom défini",
                         decoration: InputDecoration(
                           border: InputBorder.none,
                           focusedBorder: InputBorder.none,
                           enabledBorder: InputBorder.none,
                           errorBorder: InputBorder.none,
                           disabledBorder: InputBorder.none,
-                          labelText: "Enter First Name",
+                          labelText: "Entrer votre prénom",
                         ),
                         keyboardType: TextInputType.text,
                         validator: (value) {
                           _infoValid =
                               RegExp(r"^[a-zA-Z-]{2,16}$").hasMatch(value);
                           if (value.isEmpty) {
-                            return "You didn\'t write your first name";
+                            return "Vous n\'avez pas rentré votre prénom";
                           } else if (!_infoValid) {
-                            return "Your first name is incorrect";
+                            return "Le format de votre prénom est incorrect";
                           }
                           tmp = value;
                           return null;
@@ -138,7 +97,7 @@ class _PersonalInformationViewState extends State<PersonalInformationView> {
                   if (_formKey.currentState.validate()) {
                     edit[1] = false;
                     edit[0] = false;
-                    buttonText = 'Save';
+                    buttonText = 'Sauvegarder';
                     user.firstName = tmp;
                   }
                 });
@@ -158,7 +117,9 @@ class _PersonalInformationViewState extends State<PersonalInformationView> {
           children: <Widget>[
             Expanded(
               child: Text(
-                user.firstName != null ? user.firstName : "Pas de prénom défini",
+                user.firstName != null
+                    ? user.firstName
+                    : "Pas de prénom défini",
                 style: TextStyle(
                   color: Colors.black,
                 ),
@@ -207,23 +168,25 @@ class _PersonalInformationViewState extends State<PersonalInformationView> {
                     child: Form(
                       key: _formKey,
                       child: TextFormField(
-                        initialValue: user.lastName != null ? user.lastName : "Pas de nom de famille défini",
+                        initialValue: user.lastName != null
+                            ? user.lastName
+                            : "Pas de nom de famille défini",
                         decoration: InputDecoration(
                           border: InputBorder.none,
                           focusedBorder: InputBorder.none,
                           enabledBorder: InputBorder.none,
                           errorBorder: InputBorder.none,
                           disabledBorder: InputBorder.none,
-                          labelText: "Enter Last Name",
+                          labelText: "Entrer votre nom de famille",
                         ),
                         keyboardType: TextInputType.text,
                         validator: (value) {
                           _infoValid =
                               RegExp(r"^[a-zA-Z-' ]{2,20}$").hasMatch(value);
                           if (value.isEmpty) {
-                            return "You didn\'t write your last name";
+                            return "Vous n\'avez pas rentré votre nom de famille";
                           } else if (!_infoValid) {
-                            return "Your last name is incorrect";
+                            return "Le format de votre nom de famille est incorrect";
                           }
                           tmp = value;
                           return null;
@@ -240,7 +203,7 @@ class _PersonalInformationViewState extends State<PersonalInformationView> {
                   if (_formKey.currentState.validate()) {
                     edit[2] = false;
                     edit[0] = false;
-                    buttonText = 'Save';
+                    buttonText = 'Sauvegarder';
                     user.lastName = tmp;
                   }
                 });
@@ -260,7 +223,9 @@ class _PersonalInformationViewState extends State<PersonalInformationView> {
           children: <Widget>[
             Expanded(
               child: Text(
-                user.lastName != null ? user.lastName : "Pas de nom de famille défini",
+                user.lastName != null
+                    ? user.lastName
+                    : "Pas de nom de famille défini",
                 style: TextStyle(
                   color: Colors.black,
                 ),
@@ -309,23 +274,25 @@ class _PersonalInformationViewState extends State<PersonalInformationView> {
                     child: Form(
                       key: _formKey,
                       child: TextFormField(
-                        initialValue: user.address != null ? user.address : "Pas d'adresse définie",
+                        initialValue: user.address != null
+                            ? user.address
+                            : "Pas d'adresse définie",
                         decoration: InputDecoration(
                           border: InputBorder.none,
                           focusedBorder: InputBorder.none,
                           enabledBorder: InputBorder.none,
                           errorBorder: InputBorder.none,
                           disabledBorder: InputBorder.none,
-                          labelText: "Enter Address",
+                          labelText: "Entrer votre adresse",
                         ),
                         keyboardType: TextInputType.text,
                         validator: (value) {
                           _infoValid = RegExp(r"^[a-zA-Z0-9-', ]{2,100}$")
                               .hasMatch(value);
                           if (value.isEmpty) {
-                            return "You didn\'t write your address";
+                            return "Vous n\'avez pas rentré votre adresse";
                           } else if (!_infoValid) {
-                            return "Your address is incorrect";
+                            return "Le format de votre adresse est incorrect";
                           }
                           tmp = value;
                           return null;
@@ -342,7 +309,7 @@ class _PersonalInformationViewState extends State<PersonalInformationView> {
                   if (_formKey.currentState.validate()) {
                     edit[3] = false;
                     edit[0] = false;
-                    buttonText = 'Save';
+                    buttonText = 'Sauvegarder';
                     user.address = tmp;
                   }
                 });
@@ -411,23 +378,25 @@ class _PersonalInformationViewState extends State<PersonalInformationView> {
                     child: Form(
                       key: _formKey,
                       child: TextFormField(
-                        initialValue: user.phoneNumber != null ? user.phoneNumber : "Pas de numéro de téléphone défini",
+                        initialValue: user.phoneNumber != null
+                            ? user.phoneNumber
+                            : "Pas de numéro de téléphone défini",
                         decoration: InputDecoration(
                           border: InputBorder.none,
                           focusedBorder: InputBorder.none,
                           enabledBorder: InputBorder.none,
                           errorBorder: InputBorder.none,
                           disabledBorder: InputBorder.none,
-                          labelText: "Enter Phone Number",
+                          labelText: "Entrer votre numéro de téléphone",
                         ),
                         keyboardType: TextInputType.phone,
                         validator: (value) {
                           _infoValid =
                               RegExp(r"^[0-9 ]{10,10}$").hasMatch(value);
                           if (value.isEmpty) {
-                            return "You didn\'t write your phone number";
+                            return "Vous n\'avez pas rentré votre numéro de téléphone";
                           } else if (!_infoValid) {
-                            return "Your phone number is incorrect";
+                            return "Le format de votre numéro de téléphone est incorrect";
                           }
                           tmp = value;
                           return null;
@@ -444,7 +413,7 @@ class _PersonalInformationViewState extends State<PersonalInformationView> {
                   if (_formKey.currentState.validate()) {
                     edit[4] = false;
                     edit[0] = false;
-                    buttonText = 'Save';
+                    buttonText = 'Sauvegarder';
                     tmp = modifyPhoneNumber(tmp);
                     user.phoneNumber = tmp;
                   }
@@ -465,7 +434,9 @@ class _PersonalInformationViewState extends State<PersonalInformationView> {
           children: <Widget>[
             Expanded(
               child: Text(
-                user.phoneNumber != null ? user.phoneNumber : "Pas de numéro de téléphone défini",
+                user.phoneNumber != null
+                    ? user.phoneNumber
+                    : "Pas de numéro de téléphone défini",
                 style: TextStyle(
                   color: Colors.black,
                 ),
@@ -514,14 +485,16 @@ class _PersonalInformationViewState extends State<PersonalInformationView> {
                     child: Form(
                       key: _formKey,
                       child: TextFormField(
-                        initialValue: user.email != null ? user.email : "Pas d'email défini",
+                        initialValue: user.email != null
+                            ? user.email
+                            : "Pas d'email défini",
                         decoration: InputDecoration(
                           border: InputBorder.none,
                           focusedBorder: InputBorder.none,
                           enabledBorder: InputBorder.none,
                           errorBorder: InputBorder.none,
                           disabledBorder: InputBorder.none,
-                          labelText: "Enter Email",
+                          labelText: "Entre votre email",
                         ),
                         keyboardType: TextInputType.emailAddress,
                         validator: (value) {
@@ -529,9 +502,9 @@ class _PersonalInformationViewState extends State<PersonalInformationView> {
                                   r"^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$")
                               .hasMatch(value);
                           if (value.isEmpty) {
-                            return "You didn\'t write your email";
+                            return "Vous n\'avez pas rentré votre email";
                           } else if (!_infoValid) {
-                            return "Your email is incorrect";
+                            return "Le format de votre email est incorrect";
                           }
                           tmp = value;
                           return null;
@@ -548,7 +521,7 @@ class _PersonalInformationViewState extends State<PersonalInformationView> {
                   if (_formKey.currentState.validate()) {
                     edit[5] = false;
                     edit[0] = false;
-                    buttonText = 'Save';
+                    buttonText = 'Sauvegarder';
                     user.email = tmp;
                   }
                 });
@@ -617,14 +590,16 @@ class _PersonalInformationViewState extends State<PersonalInformationView> {
                     child: Form(
                       key: _formKey,
                       child: TextFormField(
-                        initialValue: user.birthDate != null ? user.birthDate : "Pas de date de naissance définie",
+                        initialValue: user.birthDate != null
+                            ? user.birthDate
+                            : "Pas de date de naissance définie",
                         decoration: InputDecoration(
                           border: InputBorder.none,
                           focusedBorder: InputBorder.none,
                           enabledBorder: InputBorder.none,
                           errorBorder: InputBorder.none,
                           disabledBorder: InputBorder.none,
-                          labelText: "Enter BirthDate",
+                          labelText: "Entrer votre date de naissance",
                         ),
                         keyboardType: TextInputType.datetime,
                         validator: (value) {
@@ -632,9 +607,9 @@ class _PersonalInformationViewState extends State<PersonalInformationView> {
                                   r"^([0-2][0-9]|(3)[0-1])(\/)(((0)[0-9])|((1)[0-2]))(\/)\d{4}$")
                               .hasMatch(value);
                           if (value.isEmpty) {
-                            return "You didn\'t write your birth date";
+                            return "Vous n\'avez pas rentré votre date de naissance";
                           } else if (!_infoValid) {
-                            return "Your birth date is incorrect";
+                            return "Votre date de naissance est incorrect";
                           }
                           tmp = value;
                           return null;
@@ -651,7 +626,7 @@ class _PersonalInformationViewState extends State<PersonalInformationView> {
                   if (_formKey.currentState.validate()) {
                     edit[6] = false;
                     edit[0] = false;
-                    buttonText = 'Save';
+                    buttonText = 'Sauvegarder';
                     user.birthDate = tmp;
                   }
                 });
@@ -671,7 +646,9 @@ class _PersonalInformationViewState extends State<PersonalInformationView> {
           children: <Widget>[
             Expanded(
               child: Text(
-                user.birthDate != null ? user.birthDate : "Pas de date de naissance définie",
+                user.birthDate != null
+                    ? user.birthDate
+                    : "Pas de date de naissance définie",
                 style: TextStyle(
                   color: Colors.black,
                 ),
@@ -721,7 +698,7 @@ class _PersonalInformationViewState extends State<PersonalInformationView> {
       appBar: AppBar(
         title: Text('Informations personnelles'),
         centerTitle: true,
-        backgroundColor: Color(0xfff99e38),
+        backgroundColor: Color(0xff1F2C47),
       ),
       body: SingleChildScrollView(
         child: Container(
@@ -729,8 +706,6 @@ class _PersonalInformationViewState extends State<PersonalInformationView> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
-              _presentation(_widthScreen),
-              _myDivider(),
               _personalFirstName(edit),
               _myDivider(),
               _personalLastName(edit),
@@ -742,21 +717,43 @@ class _PersonalInformationViewState extends State<PersonalInformationView> {
               _personalEmail(edit),
               _myDivider(),
               _personalBirthDate(edit),
-              RaisedButton(
-                onPressed: () {
-                  setState(() {
-                    if (!edit[0]) {
-                      Request.modifyUser().whenComplete(() => Navigator.pushNamed(context, "home"));
-                    }
-                  });
-                },
-                child: Text(
-                  buttonText,
-                  style: TextStyle(
-                    color: Colors.white,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  RaisedButton(
+                    onPressed: () {
+                      setState(() {
+                        if (!edit[0]) {
+                          Navigator.pushNamed(context, "home");
+                        }
+                      });
+                    },
+                    child: Text(
+                      "Passer",
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),
+                    ),
+                    color: Color(0xfff99e38),
                   ),
-                ),
-                color: Color(0xfff99e38),
+                  RaisedButton(
+                    onPressed: () {
+                      setState(() {
+                        if (!edit[0]) {
+                          Request.modifyUser().whenComplete(
+                              () => Navigator.pushNamed(context, "home"));
+                        }
+                      });
+                    },
+                    child: Text(
+                      buttonText,
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),
+                    ),
+                    color: Color(0xff1F2C47),
+                  ),
+                ],
               ),
             ],
           ),

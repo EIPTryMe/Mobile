@@ -20,7 +20,7 @@ class CurvePainter extends CustomPainter {
     var path = Path();
 
     paint.style = PaintingStyle.fill;
-    paint.color = Color(0xfff7892b);
+    paint.color = Color(0xff1F2C47);
 
     path.moveTo(0, size.height * 0.05);
     path.quadraticBezierTo(size.width * 0.08, size.height * 0.33, size.width * 0.32, size.height * 0.20);
@@ -33,7 +33,7 @@ class CurvePainter extends CustomPainter {
     var path2 = Path();
 
     paint2.style = PaintingStyle.fill;
-    paint2.color = Color(0xfffbb448);
+    paint2.color = Color(0xff1f2c76);
 
     path2.moveTo(size.width * 0.02, size.height * 0.03);
     path2.quadraticBezierTo(size.width * 0.08, size.height * 0.21, size.width * 0.32, size.height * 0.12);
@@ -109,9 +109,9 @@ class _SignUpViewState extends State<SignUpView> {
               validator: (value) {
                 _emailValid = RegExp(r"^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$").hasMatch(value);
                 if (value.isEmpty) {
-                  return "You didn\'t write your email";
+                  return "Vous n\'avez pas rentré votre email";
                 } else if (!_emailValid) {
-                  return "Your email address is incorrect";
+                  return "Votre email est incorrect";
                 }
                 _email = value;
                 return null;
@@ -149,9 +149,9 @@ class _SignUpViewState extends State<SignUpView> {
               validator: (value) {
                 _passwordValid = RegExp(r"^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,20})").hasMatch(value);
                 if (value.isEmpty) {
-                  return "You didn't write your password";
+                  return "Vous n\'avez pas rentré votre mot de passe";
                 } else if (!_passwordValid) {
-                  return "Your password is incorrect";
+                  return "Le format de votre mot de passe est incorrect";
                 }
                 _firstPassword = value;
                 return null;
@@ -188,9 +188,9 @@ class _SignUpViewState extends State<SignUpView> {
               obscureText: true,
               validator: (value) {
                 if (value.isEmpty) {
-                  return "You didn't confirm your password";
+                  return "Vous n\'avez pas confirmé votre mot de passe";
                 } else if (value != _firstPassword) {
-                  return "Your passwords do not match";
+                  return "Vos mots de passe ne correspondent pas";
                 }
                 _password = value;
                 return null;
@@ -210,11 +210,9 @@ class _SignUpViewState extends State<SignUpView> {
             if (isConnected) {
               isLoggedIn = true;
               isACompany = false;
-              Navigator.pushNamedAndRemoveUntil(context, 'home', ModalRoute.withName('/'));
+              Navigator.pushNamedAndRemoveUntil(context, 'personalInformationAfterInscription', ModalRoute.withName('/'));
             }
           });
-          print(_email);
-          print(_password);
         }
       },
       child: Container(
@@ -225,7 +223,7 @@ class _SignUpViewState extends State<SignUpView> {
         decoration: BoxDecoration(
             borderRadius: BorderRadius.all(Radius.circular(5)),
             boxShadow: <BoxShadow>[BoxShadow(color: Colors.grey.shade200, offset: Offset(2, 4), blurRadius: 5, spreadRadius: 2)],
-            gradient: LinearGradient(begin: Alignment.centerLeft, end: Alignment.centerRight, colors: [Color(0xfffbb448), Color(0xfff7892b)])),
+            gradient: LinearGradient(begin: Alignment.centerLeft, end: Alignment.centerRight, colors: [Color(0xff1f2c76), Color(0xff1F2C47)])),
         child: Text(
           "S\'inscrire maintenant",
           style: TextStyle(fontSize: 20, color: Colors.white),
@@ -337,7 +335,7 @@ class _SignUpViewState extends State<SignUpView> {
             },
             child: Text(
               'Connectez-vous ici',
-              style: TextStyle(color: Color(0xfff79c4f), fontSize: 13, fontWeight: FontWeight.w600),
+              style: TextStyle(color: Color(0xff1F2C47), fontSize: 13, fontWeight: FontWeight.w600),
             ),
           )
         ],
@@ -353,7 +351,7 @@ class _SignUpViewState extends State<SignUpView> {
         style: TextStyle(
           fontSize: 30,
           fontWeight: FontWeight.w700,
-          color: Color(0xffe46b10),
+          color: Color(0xffFCA311),
         ),
       ),
     );

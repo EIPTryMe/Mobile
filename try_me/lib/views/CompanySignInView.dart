@@ -20,7 +20,7 @@ class CurvePainter extends CustomPainter {
     var path = Path();
 
     paint.style = PaintingStyle.fill;
-    paint.color = Color(0xfff7892b);
+    paint.color = Color(0xff1F2C47);
 
     path.moveTo(0, size.height * 0.05);
     path.quadraticBezierTo(size.width * 0.08, size.height * 0.33, size.width * 0.32, size.height * 0.20);
@@ -33,7 +33,7 @@ class CurvePainter extends CustomPainter {
     var path2 = Path();
 
     paint2.style = PaintingStyle.fill;
-    paint2.color = Color(0xfffbb448);
+    paint2.color = Color(0xff1f2c76);
 
     path2.moveTo(size.width * 0.02, size.height * 0.03);
     path2.quadraticBezierTo(size.width * 0.08, size.height * 0.21, size.width * 0.32, size.height * 0.12);
@@ -67,9 +67,9 @@ class _CompanySignInViewState extends State<CompanySignInView> {
           children: <Widget>[
             Container(
               padding: EdgeInsets.only(left: 0, top: 10, bottom: 10),
-              child: Icon(Icons.keyboard_arrow_left, color: Colors.black),
+              child: Icon(Icons.keyboard_arrow_left, color: Colors.white),
             ),
-            Text('Retour', style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500))
+            Text('Retour', style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500, color: Colors.white))
           ],
         ),
       ),
@@ -171,7 +171,7 @@ class _CompanySignInViewState extends State<CompanySignInView> {
         decoration: BoxDecoration(
             borderRadius: BorderRadius.all(Radius.circular(5)),
             boxShadow: <BoxShadow>[BoxShadow(color: Colors.grey.shade200, offset: Offset(2, 4), blurRadius: 5, spreadRadius: 2)],
-            gradient: LinearGradient(begin: Alignment.centerLeft, end: Alignment.centerRight, colors: [Color(0xfffbb448), Color(0xfff7892b)])),
+            gradient: LinearGradient(begin: Alignment.centerLeft, end: Alignment.centerRight, colors: [Color(0xff1f2c76), Color(0xff1F2C47)])),
         child: Text(
           'Connexion',
           style: TextStyle(fontSize: 20, color: Colors.white),
@@ -188,7 +188,7 @@ class _CompanySignInViewState extends State<CompanySignInView> {
         style: TextStyle(
           fontSize: 30,
           fontWeight: FontWeight.w700,
-          color: Color(0xffe46b10),
+          color: Color(0xffFCA311),
         ),
       ),
     );

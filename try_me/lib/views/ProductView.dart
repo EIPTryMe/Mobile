@@ -84,7 +84,7 @@ class _ProductViewState extends State<ProductView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color(0xfff99e38),
+        backgroundColor: Color(0xff1F2C47),
         actions: [
           IconButton(
             icon: Icon(Icons.shopping_cart),
@@ -182,7 +182,7 @@ class _ProductViewState extends State<ProductView> {
           Expanded(
             flex: 1,
             child: FlatButton(
-              color: Color(0xfff99e38),
+              color: Color(0xff58c24c),
               onPressed: () => addProduct(),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,

@@ -32,7 +32,7 @@ class DrawerNotConnected extends StatelessWidget {
               ),
             ),
             decoration: BoxDecoration(
-              color: Color(0xfff99e38),
+              color: Color(0xff1F2C47),
             ),
           ),
         ),
@@ -62,7 +62,7 @@ class DrawerIsConnected extends StatelessWidget {
       children: <Widget>[
         UserAccountsDrawerHeader(
           decoration: BoxDecoration(
-            gradient: LinearGradient(begin: Alignment.centerLeft, end: Alignment.centerRight, colors: [Color(0xfff7892b), Color(0xfffbb448)]),
+            gradient: LinearGradient(begin: Alignment.centerLeft, end: Alignment.centerRight, colors: [Color(0xff1F2C47), Color(0xff1f2c76)]),
           ),
           accountName: Text(
             user.firstName != null ? user.firstName : 'Pas de prénom défini',
@@ -94,8 +94,21 @@ class DrawerIsConnected extends StatelessWidget {
                 ),
               )),
         ),
+
         Column(
           children: <Widget>[
+            ListTile(
+              title: Text(
+                'Non payées',
+              ),
+              onTap: () => Navigator.pushNamed(context, 'userOrders/Non payées'),
+            ),
+            ListTile(
+              title: Text(
+                'Payées',
+              ),
+              onTap: () => Navigator.pushNamed(context, 'userOrders/Payées'),
+            ),
             ListTile(
               title: Text(
                 'En attente',
@@ -175,7 +188,7 @@ class DrawerCompany extends StatelessWidget {
       children: <Widget>[
         UserAccountsDrawerHeader(
           decoration: BoxDecoration(
-            gradient: LinearGradient(begin: Alignment.centerLeft, end: Alignment.centerRight, colors: [Color(0xfff7892b), Color(0xfffbb448)]),
+            gradient: LinearGradient(begin: Alignment.centerLeft, end: Alignment.centerRight, colors: [Color(0xff1F2C47), Color(0xfffbb448)]),
           ),
           accountName: Text(
             company.name,

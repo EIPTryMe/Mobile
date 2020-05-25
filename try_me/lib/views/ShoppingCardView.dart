@@ -19,7 +19,7 @@ class _ShoppingCardViewState extends State<ShoppingCardView> {
       appBar: AppBar(
         title: Text('Mon Panier'),
         centerTitle: true,
-        backgroundColor: Color(0xfff99e38),
+        backgroundColor: Color(0xff1F2C47),
       ),
       body: (() {
         if (shoppingCard.isNotEmpty)
@@ -50,7 +50,7 @@ class _ShoppingCardViewState extends State<ShoppingCardView> {
                     Expanded(
                       flex: 3,
                       child: FlatButton(
-                        color: Color(0xfff99e38),
+                        color: Color(0xff1F2C47),
                         onPressed: () {},
                         child: Text('Commander', style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold, color: Colors.white)),
                       ),

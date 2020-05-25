@@ -64,7 +64,7 @@ class _CompanyOrdersViewState extends State<CompanyOrdersView> {
         appBar: AppBar(
           title: Text(title),
           centerTitle: true,
-          backgroundColor: Color(0xfff99e38),
+          backgroundColor: Color(0xff1F2C47),
         ),
         body: Center(
           child: Column(
@@ -92,7 +92,7 @@ class _CompanyOrdersViewState extends State<CompanyOrdersView> {
         appBar: AppBar(
           title: Text(title),
           centerTitle: true,
-          backgroundColor: Color(0xfff99e38),
+          backgroundColor: Color(0xff1F2C47),
         ),
         body: ListView(
           children: products

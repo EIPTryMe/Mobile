@@ -53,7 +53,7 @@ class _MyAppBarState extends State<MyAppBar> {
       ],
       title: customSearchBar,
       centerTitle: true,
-      backgroundColor: Color(0xfff99e38),
+      backgroundColor: Color(0xff1F2C47),
     );
   }
 }

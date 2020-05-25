@@ -8,7 +8,8 @@ import 'package:tryme/views/CompanyInformationView.dart';
 import 'package:tryme/views/CompanyOrdersView.dart';
 import 'package:tryme/views/CompanySignInView.dart';
 import 'package:tryme/views/HomeView.dart';
-import 'package:tryme/views/PersonalInformationView.dart';
+import 'package:tryme/views/UserInformationAfterInscriptionView.dart';
+import 'package:tryme/views/UserInformationView.dart';
 import 'package:tryme/views/ProductView.dart';
 import 'package:tryme/views/ShoppingCardView.dart';
 import 'package:tryme/views/SignInView.dart';
@@ -23,7 +24,8 @@ class FluroRouter {
   static Handler _companyOrdersHandler = Handler(handlerFunc: (BuildContext context, Map<String, dynamic> params) => CompanyOrdersView(orderStatus: params['orderStatus'][0]));
   static Handler _companySignInHandler = Handler(handlerFunc: (BuildContext context, Map<String, dynamic> params) => CompanySignInView());
   static Handler _homeHandler = Handler(handlerFunc: (BuildContext context, Map<String, dynamic> params) => HomeView());
-  static Handler _personalInformationHandler = Handler(handlerFunc: (BuildContext context, Map<String, dynamic> params) => PersonalInformationView());
+  static Handler _userInformationAfterInscriptionHandler = Handler(handlerFunc: (BuildContext context, Map<String, dynamic> params) => UserInformationAfterInscriptionView());
+  static Handler _userInformationHandler = Handler(handlerFunc: (BuildContext context, Map<String, dynamic> params) => UserInformationView());
   static Handler _productHandler = Handler(handlerFunc: (BuildContext context, Map<String, dynamic> params) => ProductView(id: params['id'][0]));
   static Handler _shoppingCardHandler = Handler(handlerFunc: (BuildContext context, Map<String, dynamic> params) => ShoppingCardView());
   static Handler _signInHandler = Handler(handlerFunc: (BuildContext context, Map<String, dynamic> params) => SignInView());
@@ -63,7 +65,12 @@ class FluroRouter {
     );
     router.define(
       'personalInformation',
-      handler: _personalInformationHandler,
+      handler: _userInformationHandler,
+      transitionType: TransitionType.cupertino,
+    );
+    router.define(
+      'personalInformationAfterInscription',
+      handler: _userInformationAfterInscriptionHandler,
       transitionType: TransitionType.cupertino,
     );
     router.define(

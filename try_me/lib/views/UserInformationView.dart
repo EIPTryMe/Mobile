@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 
 import 'package:tryme/Globals.dart';
+import 'package:tryme/Request.dart';
 
-class CompanyInformationView extends StatefulWidget {
+class UserInformationView extends StatefulWidget {
   @override
-  _CompanyInformationViewState createState() => _CompanyInformationViewState();
+  _UserInformationViewState createState() =>
+      _UserInformationViewState();
 }
 
 String modifyPhoneNumber(String phoneNumber) {
@@ -15,15 +17,8 @@ String modifyPhoneNumber(String phoneNumber) {
   return (phoneNumber);
 }
 
-String modifySiret(String siret) {
-  String tmp = siret;
-  siret = tmp.replaceAllMapped(RegExp(r".{3}"), (match) => "${match.group(0)} ");
-  var parts = siret.split(" ");
-  siret = parts[0] + ' ' + parts[1] + ' ' + parts[2] + ' ' + parts[3] + parts[4];
-  return (siret);
-}
-class _CompanyInformationViewState extends State<CompanyInformationView> {
-  var edit = new List(6);
+class _UserInformationViewState extends State<UserInformationView> {
+  var edit = new List(7);
   double _widthScreen;
   double _heightScreen;
   bool _infoValid;
@@ -37,9 +32,9 @@ class _CompanyInformationViewState extends State<CompanyInformationView> {
     initBool(edit);
     super.initState();
   }
-
+  
   void initBool(var list) {
-    for (int i = 0; i < 6; i++) {
+    for (int i = 0; i < 7; i++) {
       list[i] = false;
     }
   }
@@ -50,7 +45,7 @@ class _CompanyInformationViewState extends State<CompanyInformationView> {
         Padding(
           padding: EdgeInsets.all(widthScreen / 20),
           child: CircleAvatar(
-            backgroundImage: NetworkImage(company.pathToAvatar),
+            backgroundImage: user.pathToAvatar != null ? NetworkImage(user.pathToAvatar) : AssetImage("assets/company_logo_temp.jpg"),
             radius: widthScreen / 10,
           ),
         ),
@@ -62,7 +57,7 @@ class _CompanyInformationViewState extends State<CompanyInformationView> {
                 Container(
                   //get first name here
                   child: Text(
-                    company.name,
+                    user.firstName != null ? user.firstName : "Pas de prénom défini",
                     style: TextStyle(
                       letterSpacing: 2.0,
                       color: Colors.black,
@@ -73,7 +68,7 @@ class _CompanyInformationViewState extends State<CompanyInformationView> {
                 Container(
                   //get last name here
                   child: Text(
-                    company.email,
+                    user.lastName != null ? user.lastName :  "Pas de nom de famille défini",
                     style: TextStyle(
                       letterSpacing: 2.0,
                       color: Colors.black,
@@ -88,7 +83,7 @@ class _CompanyInformationViewState extends State<CompanyInformationView> {
     );
   }
 
-  Widget _companyName(var edit) {
+  Widget _personalFirstName(var edit) {
     if (edit[1]) {
       return Container(
         margin: EdgeInsets.only(left: 10.0, right: 10.0),
@@ -110,26 +105,23 @@ class _CompanyInformationViewState extends State<CompanyInformationView> {
                     child: Form(
                       key: _formKey,
                       child: TextFormField(
-                        initialValue: company.name,
+                        initialValue:  user.firstName != null ? user.firstName : "Pas de prénom défini",
                         decoration: InputDecoration(
                           border: InputBorder.none,
                           focusedBorder: InputBorder.none,
                           enabledBorder: InputBorder.none,
                           errorBorder: InputBorder.none,
                           disabledBorder: InputBorder.none,
-                          labelText: "Entrer le nom de votre entreprise",
-                          labelStyle: TextStyle(
-                            fontSize: 15.0,
-                          ),
+                          labelText: "Entrer votre prénom",
                         ),
                         keyboardType: TextInputType.text,
                         validator: (value) {
                           _infoValid =
-                              RegExp(r"^[a-zA-Z0-9-]{2,16}$").hasMatch(value);
+                              RegExp(r"^[a-zA-Z-]{2,16}$").hasMatch(value);
                           if (value.isEmpty) {
-                            return "Vous n\'avez pas rentré le nom de votre entreprise";
+                            return "Vous n\'avez pas rentré votre prénom";
                           } else if (!_infoValid) {
-                            return "Le nom de votre entreprise est incorrect";
+                            return "Le format de votre prénom est incorrect";
                           }
                           tmp = value;
                           return null;
@@ -147,9 +139,7 @@ class _CompanyInformationViewState extends State<CompanyInformationView> {
                     edit[1] = false;
                     edit[0] = false;
                     buttonText = 'Sauvegarder';
-                    print(tmp);
-                    company.name = tmp;
-                    print(company.name);
+                    user.firstName = tmp;
                   }
                 });
               },
@@ -168,7 +158,7 @@ class _CompanyInformationViewState extends State<CompanyInformationView> {
           children: <Widget>[
             Expanded(
               child: Text(
-                company.name,
+                user.firstName != null ? user.firstName : "Pas de prénom défini",
                 style: TextStyle(
                   color: Colors.black,
                 ),
@@ -195,7 +185,7 @@ class _CompanyInformationViewState extends State<CompanyInformationView> {
     }
   }
 
-  Widget _companyEmail(var edit) {
+  Widget _personalLastName(var edit) {
     if (edit[2]) {
       return Container(
         margin: EdgeInsets.only(left: 10.0, right: 10.0),
@@ -217,26 +207,23 @@ class _CompanyInformationViewState extends State<CompanyInformationView> {
                     child: Form(
                       key: _formKey,
                       child: TextFormField(
-                        initialValue: company.email,
+                        initialValue: user.lastName != null ? user.lastName : "Pas de nom de famille défini",
                         decoration: InputDecoration(
                           border: InputBorder.none,
                           focusedBorder: InputBorder.none,
                           enabledBorder: InputBorder.none,
                           errorBorder: InputBorder.none,
                           disabledBorder: InputBorder.none,
-                          labelText: "Entrer l'email de la entreprise",
-                          labelStyle: TextStyle(
-                            fontSize: 15.0,
-                          ),
+                          labelText: "Entrer votre nom de famille",
                         ),
-                        keyboardType: TextInputType.emailAddress,
+                        keyboardType: TextInputType.text,
                         validator: (value) {
                           _infoValid =
-                              RegExp(r"^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$").hasMatch(value);
+                              RegExp(r"^[a-zA-Z-' ]{2,20}$").hasMatch(value);
                           if (value.isEmpty) {
-                            return "Vous n\'avez pas rentrer l\'email de la entreprise";
+                            return "Vous n\'avez pas rentré votre nom de famille";
                           } else if (!_infoValid) {
-                            return "L\'email de votre entreprise est incorrect";
+                            return "Le format de votre nom de famille est incorrect";
                           }
                           tmp = value;
                           return null;
@@ -254,7 +241,7 @@ class _CompanyInformationViewState extends State<CompanyInformationView> {
                     edit[2] = false;
                     edit[0] = false;
                     buttonText = 'Sauvegarder';
-                    company.email = tmp;
+                    user.lastName = tmp;
                   }
                 });
               },
@@ -273,7 +260,7 @@ class _CompanyInformationViewState extends State<CompanyInformationView> {
           children: <Widget>[
             Expanded(
               child: Text(
-                company.email,
+                user.lastName != null ? user.lastName : "Pas de nom de famille défini",
                 style: TextStyle(
                   color: Colors.black,
                 ),
@@ -300,7 +287,7 @@ class _CompanyInformationViewState extends State<CompanyInformationView> {
     }
   }
 
-  Widget _companyPhoneNumber(var edit) {
+  Widget _personalAddress(var edit) {
     if (edit[3]) {
       return Container(
         margin: EdgeInsets.only(left: 10.0, right: 10.0),
@@ -310,7 +297,6 @@ class _CompanyInformationViewState extends State<CompanyInformationView> {
               child: Form(
                 child: Theme(
                   data: ThemeData(
-                    
                     primarySwatch: Colors.orange,
                     inputDecorationTheme: InputDecorationTheme(
                       labelStyle: TextStyle(
@@ -323,26 +309,23 @@ class _CompanyInformationViewState extends State<CompanyInformationView> {
                     child: Form(
                       key: _formKey,
                       child: TextFormField(
-                        initialValue: company.phoneNumber,
+                        initialValue: user.address != null ? user.address : "Pas d'adresse définie",
                         decoration: InputDecoration(
                           border: InputBorder.none,
                           focusedBorder: InputBorder.none,
                           enabledBorder: InputBorder.none,
                           errorBorder: InputBorder.none,
                           disabledBorder: InputBorder.none,
-                          labelText: "Entrer le numéro de téléphone de votre entreprise",
-                          labelStyle: TextStyle(
-                            fontSize: 15.0,
-                          ),
+                          labelText: "Entrer votre adresse",
                         ),
-                        keyboardType: TextInputType.phone,
+                        keyboardType: TextInputType.text,
                         validator: (value) {
-                          _infoValid = RegExp(r"^[0-9]{10,10}$")
+                          _infoValid = RegExp(r"^[a-zA-Z0-9-', ]{2,100}$")
                               .hasMatch(value);
                           if (value.isEmpty) {
-                            return "Vous n\'avez pas rentré le numéro de téléphone de votre entreprise";
+                            return "Vous n\'avez pas rentré votre adresse";
                           } else if (!_infoValid) {
-                            return "Le numéro de téléphone de votre entreprise est incorrect";
+                            return "Le format de votre adresse est incorrect";
                           }
                           tmp = value;
                           return null;
@@ -360,8 +343,7 @@ class _CompanyInformationViewState extends State<CompanyInformationView> {
                     edit[3] = false;
                     edit[0] = false;
                     buttonText = 'Sauvegarder';
-                    tmp = modifyPhoneNumber(tmp);
-                    company.phoneNumber = tmp;
+                    user.address = tmp;
                   }
                 });
               },
@@ -380,7 +362,7 @@ class _CompanyInformationViewState extends State<CompanyInformationView> {
           children: <Widget>[
             Expanded(
               child: Text(
-                company.phoneNumber,
+                user.address != null ? user.address : "Pas d'adresse définie",
                 style: TextStyle(
                   color: Colors.black,
                 ),
@@ -407,7 +389,7 @@ class _CompanyInformationViewState extends State<CompanyInformationView> {
     }
   }
 
-  Widget _companyAddress(var edit) {
+  Widget _personalPhoneNumber(var edit) {
     if (edit[4]) {
       return Container(
         margin: EdgeInsets.only(left: 10.0, right: 10.0),
@@ -429,26 +411,23 @@ class _CompanyInformationViewState extends State<CompanyInformationView> {
                     child: Form(
                       key: _formKey,
                       child: TextFormField(
-                        initialValue: company.address,
+                        initialValue: user.phoneNumber != null ? user.phoneNumber : "Pas de numéro de téléphone défini",
                         decoration: InputDecoration(
                           border: InputBorder.none,
                           focusedBorder: InputBorder.none,
                           enabledBorder: InputBorder.none,
                           errorBorder: InputBorder.none,
                           disabledBorder: InputBorder.none,
-                          labelText: "Entrer l'addresse de votre entreprise",
-                          labelStyle: TextStyle(
-                            fontSize: 15.0,
-                          ),
+                          labelText: "Entrer votre numéro de téléphone",
                         ),
-                        keyboardType: TextInputType.text,
+                        keyboardType: TextInputType.phone,
                         validator: (value) {
                           _infoValid =
-                              RegExp(r"^[a-zA-Z0-9-', ]{2,100}$").hasMatch(value);
+                              RegExp(r"^[0-9 ]{10,10}$").hasMatch(value);
                           if (value.isEmpty) {
-                            return "Vous n\'avez pas rentré l\'adresse de votre entreprise";
+                            return "Vous n\'avez pas rentré votre numéro de téléphone";
                           } else if (!_infoValid) {
-                            return "L\'adresse de votre entreprise est incorrect";
+                            return "Le format de votre numéro de téléphone est incorrect";
                           }
                           tmp = value;
                           return null;
@@ -466,7 +445,8 @@ class _CompanyInformationViewState extends State<CompanyInformationView> {
                     edit[4] = false;
                     edit[0] = false;
                     buttonText = 'Sauvegarder';
-                    company.address = tmp;
+                    tmp = modifyPhoneNumber(tmp);
+                    user.phoneNumber = tmp;
                   }
                 });
               },
@@ -485,7 +465,7 @@ class _CompanyInformationViewState extends State<CompanyInformationView> {
           children: <Widget>[
             Expanded(
               child: Text(
-                company.address,
+                user.phoneNumber != null ? user.phoneNumber : "Pas de numéro de téléphone défini",
                 style: TextStyle(
                   color: Colors.black,
                 ),
@@ -512,7 +492,7 @@ class _CompanyInformationViewState extends State<CompanyInformationView> {
     }
   }
 
-  Widget _companySiret(var edit) {
+  Widget _personalEmail(var edit) {
     if (edit[5]) {
       return Container(
         margin: EdgeInsets.only(left: 10.0, right: 10.0),
@@ -534,26 +514,24 @@ class _CompanyInformationViewState extends State<CompanyInformationView> {
                     child: Form(
                       key: _formKey,
                       child: TextFormField(
-                        initialValue: company.siret,
+                        initialValue: user.email != null ? user.email : "Pas d'email défini",
                         decoration: InputDecoration(
                           border: InputBorder.none,
                           focusedBorder: InputBorder.none,
                           enabledBorder: InputBorder.none,
                           errorBorder: InputBorder.none,
                           disabledBorder: InputBorder.none,
-                          labelText: "Entrer le SIRET de votre entreprise",
-                          labelStyle: TextStyle(
-                            fontSize: 15.0,
-                          ),
+                          labelText: "Entre votre email",
                         ),
                         keyboardType: TextInputType.emailAddress,
                         validator: (value) {
-                          _infoValid = RegExp(r"^[0-9]{14,14}$")
+                          _infoValid = RegExp(
+                                  r"^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$")
                               .hasMatch(value);
                           if (value.isEmpty) {
-                            return "Vous n\'avez pas rentré le SIRET de votre entreprise";
+                            return "Vous n\'avez pas rentré votre email";
                           } else if (!_infoValid) {
-                            return "Le format du SIRET de votre entreprise est incorrect";
+                            return "Le format de votre email est incorrect";
                           }
                           tmp = value;
                           return null;
@@ -571,8 +549,7 @@ class _CompanyInformationViewState extends State<CompanyInformationView> {
                     edit[5] = false;
                     edit[0] = false;
                     buttonText = 'Sauvegarder';
-                    tmp = modifySiret(tmp);
-                    company.siret = tmp;
+                    user.email = tmp;
                   }
                 });
               },
@@ -591,7 +568,7 @@ class _CompanyInformationViewState extends State<CompanyInformationView> {
           children: <Widget>[
             Expanded(
               child: Text(
-                company.siret,
+                user.email != null ? user.email : "Pas d'email défini",
                 style: TextStyle(
                   color: Colors.black,
                 ),
@@ -617,7 +594,109 @@ class _CompanyInformationViewState extends State<CompanyInformationView> {
       );
     }
   }
-  
+
+  Widget _personalBirthDate(var edit) {
+    if (edit[6]) {
+      return Container(
+        margin: EdgeInsets.only(left: 10.0, right: 10.0),
+        child: Row(
+          children: <Widget>[
+            Expanded(
+              child: Form(
+                child: Theme(
+                  data: ThemeData(
+                    primarySwatch: Colors.orange,
+                    inputDecorationTheme: InputDecorationTheme(
+                      labelStyle: TextStyle(
+                        color: Color(0xfff99e38),
+                        fontSize: 10.0,
+                      ),
+                    ),
+                  ),
+                  child: Container(
+                    child: Form(
+                      key: _formKey,
+                      child: TextFormField(
+                        initialValue: user.birthDate != null ? user.birthDate : "Pas de date de naissance définie",
+                        decoration: InputDecoration(
+                          border: InputBorder.none,
+                          focusedBorder: InputBorder.none,
+                          enabledBorder: InputBorder.none,
+                          errorBorder: InputBorder.none,
+                          disabledBorder: InputBorder.none,
+                          labelText: "Entrer votre date de naissance",
+                        ),
+                        keyboardType: TextInputType.datetime,
+                        validator: (value) {
+                          _infoValid = RegExp(
+                                  r"^([0-2][0-9]|(3)[0-1])(\/)(((0)[0-9])|((1)[0-2]))(\/)\d{4}$")
+                              .hasMatch(value);
+                          if (value.isEmpty) {
+                            return "Vous n\'avez pas rentré votre date de naissance";
+                          } else if (!_infoValid) {
+                            return "Votre date de naissance est incorrect";
+                          }
+                          tmp = value;
+                          return null;
+                        },
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            IconButton(
+              onPressed: () {
+                setState(() {
+                  if (_formKey.currentState.validate()) {
+                    edit[6] = false;
+                    edit[0] = false;
+                    buttonText = 'Sauvegarder';
+                    user.birthDate = tmp;
+                  }
+                });
+              },
+              icon: Icon(
+                Icons.check,
+                color: Colors.black,
+              ),
+            )
+          ],
+        ),
+      );
+    } else {
+      return Container(
+        margin: EdgeInsets.only(left: 10.0, right: 10.0),
+        child: Row(
+          children: <Widget>[
+            Expanded(
+              child: Text(
+                user.birthDate != null ? user.birthDate : "Pas de date de naissance définie",
+                style: TextStyle(
+                  color: Colors.black,
+                ),
+              ),
+            ),
+            IconButton(
+              onPressed: () {
+                setState(() {
+                  if (!edit[0]) {
+                    edit[6] = true;
+                    edit[0] = true;
+                    buttonText = '';
+                  }
+                });
+              },
+              icon: Icon(
+                Icons.edit,
+                color: Colors.black,
+              ),
+            ),
+          ],
+        ),
+      );
+    }
+  }
 
   Widget _myDivider() {
     return Container(
@@ -640,9 +719,9 @@ class _CompanyInformationViewState extends State<CompanyInformationView> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Informations entreprise'),
+        title: Text('Informations personnelles'),
         centerTitle: true,
-        backgroundColor: Color(0xfff99e38),
+        backgroundColor: Color(0xff1F2C47),
       ),
       body: SingleChildScrollView(
         child: Container(
@@ -652,21 +731,22 @@ class _CompanyInformationViewState extends State<CompanyInformationView> {
             children: <Widget>[
               _presentation(_widthScreen),
               _myDivider(),
-              _companyName(edit),
+              _personalFirstName(edit),
               _myDivider(),
-              _companyEmail(edit),
+              _personalLastName(edit),
               _myDivider(),
-              _companyPhoneNumber(edit),
+              _personalAddress(edit),
               _myDivider(),
-              _companyAddress(edit),
+              _personalPhoneNumber(edit),
               _myDivider(),
-              _companySiret(edit),
+              _personalEmail(edit),
+              _myDivider(),
+              _personalBirthDate(edit),
               RaisedButton(
                 onPressed: () {
                   setState(() {
                     if (!edit[0]) {
-                      //fonction de sauvegarde en bdd + quitter la View
-                      print('Sauvegarder and quit');
+                      Request.modifyUser().whenComplete(() => Navigator.pushNamed(context, "home"));
                     }
                   });
                 },
@@ -676,7 +756,7 @@ class _CompanyInformationViewState extends State<CompanyInformationView> {
                     color: Colors.white,
                   ),
                 ),
-                color: Color(0xfff99e38),
+                color: Color(0xff1F2C47),
               ),
             ],
           ),

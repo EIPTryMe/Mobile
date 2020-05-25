@@ -51,7 +51,7 @@ class _HomeViewState extends State<HomeView> {
                 ))
             .toList(),
       ),
-      backgroundColor: Colors.grey[200],
+      backgroundColor: Colors.white,
     );
   }
 }
