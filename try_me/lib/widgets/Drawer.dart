@@ -188,7 +188,7 @@ class DrawerCompany extends StatelessWidget {
       children: <Widget>[
         UserAccountsDrawerHeader(
           decoration: BoxDecoration(
-            gradient: LinearGradient(begin: Alignment.centerLeft, end: Alignment.centerRight, colors: [Color(0xff1F2C47), Color(0xfffbb448)]),
+            gradient: LinearGradient(begin: Alignment.centerLeft, end: Alignment.centerRight, colors: [Color(0xff1F2C47), Color(0xff1f2c76)]),
           ),
           accountName: Text(
             company.name,
@@ -199,7 +199,7 @@ class DrawerCompany extends StatelessWidget {
           ),
           accountEmail: Text(company.email),
           currentAccountPicture: CircleAvatar(
-            backgroundImage: company.pathToAvatar != null ? NetworkImage(company.pathToAvatar) : AssetImage("assets/company_logo_temp.jpg"),
+            backgroundImage: user.pathToAvatar != null ? NetworkImage(user.pathToAvatar) : AssetImage("assets/company_logo_temp.jpg"),
           ),
         ),
         ListTile(

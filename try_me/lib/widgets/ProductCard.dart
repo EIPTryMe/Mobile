@@ -34,7 +34,10 @@ class ProductCard extends StatelessWidget {
                   Expanded(
                     flex: 3,
                     child: Container(
-                      child: Image.network('https://i.redd.it/ugaauduw5ks31.png', fit: BoxFit.cover,),
+                      child: Image.network(
+                        'https://i.redd.it/ugaauduw5ks31.png',
+                        fit: BoxFit.cover,
+                      ),
                     ),
                   ),
                   Expanded(

@@ -50,7 +50,7 @@ class _CompanyInformationViewState extends State<CompanyInformationView> {
         Padding(
           padding: EdgeInsets.all(widthScreen / 20),
           child: CircleAvatar(
-            backgroundImage: NetworkImage(company.pathToAvatar),
+            backgroundImage: NetworkImage(user.pathToAvatar),
             radius: widthScreen / 10,
           ),
         ),
@@ -62,7 +62,7 @@ class _CompanyInformationViewState extends State<CompanyInformationView> {
                 Container(
                   //get first name here
                   child: Text(
-                    company.name,
+                    company.name != null ? company.name : "Pas de nom défini",
                     style: TextStyle(
                       letterSpacing: 2.0,
                       color: Colors.black,
@@ -73,7 +73,7 @@ class _CompanyInformationViewState extends State<CompanyInformationView> {
                 Container(
                   //get last name here
                   child: Text(
-                    company.email,
+                    company.email != null ? company.email : "Pas d'email défini",
                     style: TextStyle(
                       letterSpacing: 2.0,
                       color: Colors.black,
@@ -168,7 +168,7 @@ class _CompanyInformationViewState extends State<CompanyInformationView> {
           children: <Widget>[
             Expanded(
               child: Text(
-                company.name,
+                company.name != null ? company.name : "Pas de nom défini",
                 style: TextStyle(
                   color: Colors.black,
                 ),
@@ -273,7 +273,7 @@ class _CompanyInformationViewState extends State<CompanyInformationView> {
           children: <Widget>[
             Expanded(
               child: Text(
-                company.email,
+                company.email != null ? company.email : "Pas d'email défini",
                 style: TextStyle(
                   color: Colors.black,
                 ),
@@ -380,7 +380,7 @@ class _CompanyInformationViewState extends State<CompanyInformationView> {
           children: <Widget>[
             Expanded(
               child: Text(
-                company.phoneNumber,
+                company.phoneNumber != null ? company.phoneNumber : "Pas de numéro de téléphone défini",
                 style: TextStyle(
                   color: Colors.black,
                 ),
@@ -485,7 +485,7 @@ class _CompanyInformationViewState extends State<CompanyInformationView> {
           children: <Widget>[
             Expanded(
               child: Text(
-                company.address,
+                company.address != null ? company.address : "Pas d'adresse définie",
                 style: TextStyle(
                   color: Colors.black,
                 ),
@@ -591,7 +591,7 @@ class _CompanyInformationViewState extends State<CompanyInformationView> {
           children: <Widget>[
             Expanded(
               child: Text(
-                company.siret,
+                company.siret != null ? company.siret : "Pas de siret défini",
                 style: TextStyle(
                   color: Colors.black,
                 ),

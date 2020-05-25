@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
 
-import 'package:tryme/widgets/ProductUserOrderCard.dart';
+import 'package:graphql_flutter/graphql_flutter.dart';
+
+import 'package:tryme/GraphQLConfiguration.dart';
+import 'package:tryme/widgets/OrderCard.dart';
+
 import 'package:tryme/Globals.dart';
+import 'package:tryme/Queries.dart';
 
 class UserOrdersView extends StatefulWidget {
   UserOrdersView({Key key, this.orderStatus}) : super(key: key);
@@ -12,65 +17,45 @@ class UserOrdersView extends StatefulWidget {
 }
 
 class _UserOrdersViewState extends State<UserOrdersView> {
-  List products = List();
-  List productsAll = List();
-  List productsOnHold = List();
-  List productsExpedited = List();
-  List productsDelivered = List();
+  List<Order> orders = List();
 
-  ProductOrder product1;
+  void getData() async {
+    QueryResult result;
+    String status;
+
+    if (widget.orderStatus == 'En attente')
+      status = 'waiting for payment';
+    else if (widget.orderStatus == 'Payées') status = 'paid';
+    QueryOptions queryOption = QueryOptions(documentNode: gql(Queries.orders(status)));
+    graphQLConfiguration = GraphQLConfiguration();
+    result = await graphQLConfiguration.clientToQuery.query(queryOption);
+    if (this.mounted)
+      setState(() {
+        orders.clear();
+        (result.data['order'] as List).forEach((order) {
+          double total = 0;
+          (order['order_items'] as List).forEach((item) {
+            total += item['price'].toDouble();
+          });
+          orders.add(Order(id: order['id'], total: total));
+        });
+      });
+  }
 
   @override
   void initState() {
-    initList(productsAll, 6, "");
-    initList(productsOnHold, 1, "En attente");
-    initList(productsExpedited, 2, "Expédiée");
-    initList(productsDelivered, 3, "Livrée");
     super.initState();
-  }
-
-  initList(List products, int n, String status) {
-    for (int i = 0; i < n; i++) {
-      product1 = ProductOrder();
-      product1.name = "Test";
-      product1.status = status;
-      products.add(product1);
-    }
+    getData();
   }
 
   @override
   Widget build(BuildContext context) {
-    String title;
-    title = widget.orderStatus;
-
-    switch (title) {
-      case 'Mes Commandes':
-        products = productsAll;
-        break;
-      case 'En attente':
-        products = productsOnHold;
-        break;
-      case 'Expédiées':
-        products = productsExpedited;
-        break;
-      case 'Livrées':
-        products = productsDelivered;
-        break;
-      case 'Non payées':
-        products = productsDelivered; ///A modifier
-        break;
-      case 'Payées':
-        products = productsDelivered; ///A modifier
-        break;
-
-    }
-
-    if (products.length == 0) {
+    if (orders.length == 0) {
       return Scaffold(
         appBar: AppBar(
-          title: Text(title),
+          title: Text(widget.orderStatus),
           centerTitle: true,
-          backgroundColor: Color(0xfff99e38),
+          backgroundColor: Color(0xff1F2C47),
         ),
         body: Center(
           child: Column(
@@ -96,16 +81,16 @@ class _UserOrdersViewState extends State<UserOrdersView> {
     } else {
       return Scaffold(
         appBar: AppBar(
-          title: Text(title),
+          title: Text(widget.orderStatus),
           centerTitle: true,
           backgroundColor: Color(0xff1F2C47),
         ),
         body: ListView(
-          children: products
-              .map((product) => Padding(
+          children: orders
+              .map((order) => Padding(
                     padding: const EdgeInsets.fromLTRB(8, 4, 8, 4),
-                    child: ProductUserOrderCard(
-                      product: product,
+                    child: OrderCard(
+                      order: order,
                     ),
                   ))
               .toList(),

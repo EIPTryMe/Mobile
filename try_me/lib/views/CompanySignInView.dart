@@ -55,6 +55,7 @@ class _CompanySignInViewState extends State<CompanySignInView> {
   final _formKeyPassword = GlobalKey<FormState>();
   var _email;
   var _password;
+  String error = '';
 
   Widget _backButton() {
     return InkWell(
@@ -155,10 +156,22 @@ class _CompanySignInViewState extends State<CompanySignInView> {
         if (_formKeyEmail.currentState.validate() && _formKeyPassword.currentState.validate()) {
           Auth0API.login(_email, _password).then((isConnected) {
             if (isConnected) {
-              Request.getCompany().whenComplete(() {
-                isLoggedIn = true;
-                isACompany = true;
-                Navigator.pushNamedAndRemoveUntil(context, 'companyHome', ModalRoute.withName('/'));
+              Request.getUser().whenComplete(() {
+                if (user.companyId != null) {
+                  Request.getCompany().whenComplete(() {
+                    isLoggedIn = true;
+                    isACompany = true;
+                    Navigator.pushNamedAndRemoveUntil(context, 'companyHome', ModalRoute.withName('/'));
+                  });
+                } else {
+                  setState(() {
+                    error = 'Connectez-vous en tant que client';
+                  });
+                }
+              });
+            } else {
+              setState(() {
+                error = 'Email ou mot de passe invalide';
               });
             }
           });
@@ -228,6 +241,15 @@ class _CompanySignInViewState extends State<CompanySignInView> {
                     height: 50,
                   ),
                   _emailPasswordWidget(),
+                  Align(
+                      alignment: Alignment.centerLeft,
+                      child: Padding(
+                        padding: EdgeInsets.fromLTRB(10.0, 0.0, 0.0, 0.0),
+                        child: Text(
+                          error,
+                          style: TextStyle(color: Colors.red),
+                        ),
+                      )),
                   SizedBox(
                     height: 20,
                   ),

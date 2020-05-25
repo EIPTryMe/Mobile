@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
+import 'package:tryme/Globals.dart';
 import 'package:tryme/widgets/ProductCard.dart';
 
 class CompanyOrdersView extends StatefulWidget {
   CompanyOrdersView({Key key, this.orderStatus}) : super(key: key);
   final String orderStatus;
-
 
   @override
   _CompanyOrdersViewState createState() => _CompanyOrdersViewState();
@@ -14,27 +14,25 @@ class CompanyOrdersView extends StatefulWidget {
 class _CompanyOrdersViewState extends State<CompanyOrdersView> {
   List products = List();
   List productsAll = List();
-  List productsInProgress = List();
+  List productsOnHold = List();
   List productsExpedited = List();
   List productsDelivered = List();
 
-  //Product product1;
-  var product1 = {
-    'name': 'tom',
-    'image': 'https://i.redd.it/ugaauduw5ks31.png'
-  };
+  Product product1;
 
   @override
   void initState() {
-    initList(productsAll, 6);
-    initList(productsInProgress, 1);
-    initList(productsExpedited, 2);
-    initList(productsDelivered, 3);
+    //initList(productsAll, 6, "");
+    initList(productsOnHold, 0, "En attente");
+    initList(productsExpedited, 0, "Expédiée");
+    initList(productsDelivered, 0, "Livrée");
     super.initState();
   }
 
-  initList(List products, int n) {
+  initList(List products, int n, String status) {
     for (int i = 0; i < n; i++) {
+      product1 = Product();
+      product1.name = "Test";
       products.add(product1);
     }
   }
@@ -49,7 +47,7 @@ class _CompanyOrdersViewState extends State<CompanyOrdersView> {
         products = productsAll;
         break;
       case 'En cours':
-        products = productsInProgress;
+        products = productsOnHold;
         break;
       case 'Expédiées':
         products = productsExpedited;
@@ -97,11 +95,11 @@ class _CompanyOrdersViewState extends State<CompanyOrdersView> {
         body: ListView(
           children: products
               .map((product) => Padding(
-            padding: const EdgeInsets.fromLTRB(8, 4, 8, 4),
-            child: ProductCard(
-              product: product,
-            ),
-          ))
+                    padding: const EdgeInsets.fromLTRB(8, 4, 8, 4),
+                    child: ProductCard(
+                      product: product,
+                    ),
+                  ))
               .toList(),
         ),
       );
