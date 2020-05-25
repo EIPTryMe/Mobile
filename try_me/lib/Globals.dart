@@ -61,10 +61,11 @@ class Cart {
 }
 
 class Order {
-  Order({this.id, this.total, this.products});
+  Order({this.id, this.total, this.status, this.products});
 
   int id;
   double total;
+  String status;
   List<Product> products;
 }
 

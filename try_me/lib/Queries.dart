@@ -173,9 +173,12 @@ class Queries {
 
   static String ordersAll() => '''
   {
-    order(where: {user_uid: {_eq: "${auth0User.uid}"}}) {
+    order(where: {user_uid: {_eq: "${auth0User.uid}"}}, order_by: {created_at: desc}) {
       order_items {
         price
+      }
+      order_statuses {
+        status
       }
       id
     }

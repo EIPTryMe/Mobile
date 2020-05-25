@@ -38,16 +38,36 @@ class OrderCard extends StatelessWidget {
                         alignment: Alignment.topLeft,
                         child: Text(
                           'Commande n° ',
-                          style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
+                          style: TextStyle(
+                              fontSize: 18.0, fontWeight: FontWeight.bold),
                         ),
                       ),
+                    ),
+                    Expanded(
+                      child: Align(
+                          alignment: Alignment.center,
+                          child: (order.status == 'paid')
+                              ? Text(
+                                  "Payée",
+                                  style: TextStyle(color: Colors.green[400]),
+                                )
+                              : (order.status == 'waiting for payment')
+                                  ? Text(
+                                      "Non payée",
+                                      style:
+                                          TextStyle(color: Colors.orange[400]),
+                                    )
+                                  : Text('')),
                     ),
                     Expanded(
                       child: Align(
                         alignment: Alignment.bottomRight,
                         child: Text(
                           'Total: ' + order.total.toString() + '€',
-                          style: TextStyle(color: Colors.green, fontSize: 18.0, fontWeight: FontWeight.bold),
+                          style: TextStyle(
+                              color: Colors.green,
+                              fontSize: 18.0,
+                              fontWeight: FontWeight.bold),
                         ),
                       ),
                     ),
