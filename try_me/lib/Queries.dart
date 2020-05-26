@@ -81,15 +81,16 @@ class Mutations {
 
   static String modifyUser(String uid, String lastName, String firstName, String address, String email, String phoneNumber, String birthDate) => '''
   mutation {
-    update_user(_set: {name: "$lastName", first_name: "$firstName", email: "$email", address: "$address", phone: 0, birth_date: "$birthDate"}, where: {uid: {_eq: "$uid"}}) {
-     returning {
-        address
-        birth_date
-        email
-        first_name
-        name
-        phone
-      }
+    update_user(where: {uid: {_eq: "auth0|5eaa9d7931f8610bde1a17e4"}}, _set: {name: "$lastName", first_name: "$firstName", email: "$email", address: "$address", birth_date: '''+ (birthDate == null ? "null" : "\""+birthDate+"\"") +'''}) {
+      affected_rows
+    }
+  }
+  ''';
+
+  static String modifyCompany(int id, String address, String email, String name, String phone, String siren, String siret) => '''
+  mutation {
+    update_company(where: {id: {_eq: $id}}, _set: {address: "$address", email: "$email", name: "$name", phone: "$phone", siren: "$siren", siret: "$siret"}) {
+      affected_rows
     }
   }
   ''';

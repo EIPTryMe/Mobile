@@ -756,7 +756,7 @@ class _UserInformationViewState extends State<UserInformationView> {
                     color: Colors.white,
                   ),
                 ),
-                color: Color(0xff1F2C47),
+                color: Color(0xff58c24c),
               ),
             ],
           ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:tryme/Globals.dart';
+import 'package:tryme/Request.dart';
 
 class CompanyInformationView extends StatefulWidget {
   @override
@@ -9,19 +10,19 @@ class CompanyInformationView extends StatefulWidget {
 
 String modifyPhoneNumber(String phoneNumber) {
   String tmp = phoneNumber;
-  phoneNumber =
-      tmp.replaceAllMapped(RegExp(r".{2}"), (match) => "${match.group(0)} ");
+  phoneNumber = tmp.replaceAllMapped(RegExp(r".{2}"), (match) => "${match.group(0)} ");
   phoneNumber = phoneNumber.substring(0, phoneNumber.length - 1);
   return (phoneNumber);
 }
 
-String modifySiret(String siret) {
-  String tmp = siret;
-  siret = tmp.replaceAllMapped(RegExp(r".{3}"), (match) => "${match.group(0)} ");
-  var parts = siret.split(" ");
-  siret = parts[0] + ' ' + parts[1] + ' ' + parts[2] + ' ' + parts[3] + parts[4];
-  return (siret);
+String modifySiretSiren(String siretSiren) {
+  String tmp = siretSiren;
+  siretSiren = tmp.replaceAllMapped(RegExp(r".{3}"), (match) => "${match.group(0)} ");
+  var parts = siretSiren.split(" ");
+  siretSiren = parts[0] + ' ' + parts[1] + ' ' + parts[2] + ' ' + parts[3] + parts[4];
+  return (siretSiren);
 }
+
 class _CompanyInformationViewState extends State<CompanyInformationView> {
   var edit = new List(6);
   double _widthScreen;
@@ -124,8 +125,7 @@ class _CompanyInformationViewState extends State<CompanyInformationView> {
                         ),
                         keyboardType: TextInputType.text,
                         validator: (value) {
-                          _infoValid =
-                              RegExp(r"^[a-zA-Z0-9-]{2,16}$").hasMatch(value);
+                          _infoValid = RegExp(r"^[a-zA-Z0-9-]{2,16}$").hasMatch(value);
                           if (value.isEmpty) {
                             return "Vous n\'avez pas rentré le nom de votre entreprise";
                           } else if (!_infoValid) {
@@ -231,8 +231,7 @@ class _CompanyInformationViewState extends State<CompanyInformationView> {
                         ),
                         keyboardType: TextInputType.emailAddress,
                         validator: (value) {
-                          _infoValid =
-                              RegExp(r"^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$").hasMatch(value);
+                          _infoValid = RegExp(r"^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$").hasMatch(value);
                           if (value.isEmpty) {
                             return "Vous n\'avez pas rentrer l\'email de la entreprise";
                           } else if (!_infoValid) {
@@ -310,7 +309,6 @@ class _CompanyInformationViewState extends State<CompanyInformationView> {
               child: Form(
                 child: Theme(
                   data: ThemeData(
-                    
                     primarySwatch: Colors.orange,
                     inputDecorationTheme: InputDecorationTheme(
                       labelStyle: TextStyle(
@@ -337,8 +335,7 @@ class _CompanyInformationViewState extends State<CompanyInformationView> {
                         ),
                         keyboardType: TextInputType.phone,
                         validator: (value) {
-                          _infoValid = RegExp(r"^[0-9]{10,10}$")
-                              .hasMatch(value);
+                          _infoValid = RegExp(r"^[0-9]{10,10}$").hasMatch(value);
                           if (value.isEmpty) {
                             return "Vous n\'avez pas rentré le numéro de téléphone de votre entreprise";
                           } else if (!_infoValid) {
@@ -443,8 +440,7 @@ class _CompanyInformationViewState extends State<CompanyInformationView> {
                         ),
                         keyboardType: TextInputType.text,
                         validator: (value) {
-                          _infoValid =
-                              RegExp(r"^[a-zA-Z0-9-', ]{2,100}$").hasMatch(value);
+                          _infoValid = RegExp(r"^[a-zA-Z0-9-', ]{2,100}$").hasMatch(value);
                           if (value.isEmpty) {
                             return "Vous n\'avez pas rentré l\'adresse de votre entreprise";
                           } else if (!_infoValid) {
@@ -512,6 +508,111 @@ class _CompanyInformationViewState extends State<CompanyInformationView> {
     }
   }
 
+  Widget _companySiren(var edit) {
+    if (edit[5]) {
+      return Container(
+        margin: EdgeInsets.only(left: 10.0, right: 10.0),
+        child: Row(
+          children: <Widget>[
+            Expanded(
+              child: Form(
+                child: Theme(
+                  data: ThemeData(
+                    primarySwatch: Colors.orange,
+                    inputDecorationTheme: InputDecorationTheme(
+                      labelStyle: TextStyle(
+                        color: Color(0xfff99e38),
+                        fontSize: 10.0,
+                      ),
+                    ),
+                  ),
+                  child: Container(
+                    child: Form(
+                      key: _formKey,
+                      child: TextFormField(
+                        initialValue: company.siren,
+                        decoration: InputDecoration(
+                          border: InputBorder.none,
+                          focusedBorder: InputBorder.none,
+                          enabledBorder: InputBorder.none,
+                          errorBorder: InputBorder.none,
+                          disabledBorder: InputBorder.none,
+                          labelText: "Entrer le SIREN de votre entreprise",
+                          labelStyle: TextStyle(
+                            fontSize: 15.0,
+                          ),
+                        ),
+                        keyboardType: TextInputType.emailAddress,
+                        validator: (value) {
+                          _infoValid = RegExp(r"^[0-9]{14,14}$").hasMatch(value);
+                          if (value.isEmpty) {
+                            return "Vous n\'avez pas rentré le SIREN de votre entreprise";
+                          } else if (!_infoValid) {
+                            return "Le format du SIREN de votre entreprise est incorrect";
+                          }
+                          tmp = value;
+                          return null;
+                        },
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            IconButton(
+              onPressed: () {
+                setState(() {
+                  if (_formKey.currentState.validate()) {
+                    edit[5] = false;
+                    edit[0] = false;
+                    buttonText = 'Sauvegarder';
+                    tmp = modifySiretSiren(tmp);
+                    company.siren = tmp;
+                  }
+                });
+              },
+              icon: Icon(
+                Icons.check,
+                color: Colors.black,
+              ),
+            )
+          ],
+        ),
+      );
+    } else {
+      return Container(
+        margin: EdgeInsets.only(left: 10.0, right: 10.0),
+        child: Row(
+          children: <Widget>[
+            Expanded(
+              child: Text(
+                company.siren != null ? company.siren : "Pas de siren défini",
+                style: TextStyle(
+                  color: Colors.black,
+                ),
+              ),
+            ),
+            IconButton(
+              onPressed: () {
+                setState(() {
+                  if (!edit[0]) {
+                    edit[5] = true;
+                    edit[0] = true;
+                    buttonText = '';
+                  }
+                });
+              },
+              icon: Icon(
+                Icons.edit,
+                color: Colors.black,
+              ),
+            ),
+          ],
+        ),
+      );
+    }
+  }
+
   Widget _companySiret(var edit) {
     if (edit[5]) {
       return Container(
@@ -548,8 +649,7 @@ class _CompanyInformationViewState extends State<CompanyInformationView> {
                         ),
                         keyboardType: TextInputType.emailAddress,
                         validator: (value) {
-                          _infoValid = RegExp(r"^[0-9]{14,14}$")
-                              .hasMatch(value);
+                          _infoValid = RegExp(r"^[0-9]{14,14}$").hasMatch(value);
                           if (value.isEmpty) {
                             return "Vous n\'avez pas rentré le SIRET de votre entreprise";
                           } else if (!_infoValid) {
@@ -571,7 +671,7 @@ class _CompanyInformationViewState extends State<CompanyInformationView> {
                     edit[5] = false;
                     edit[0] = false;
                     buttonText = 'Sauvegarder';
-                    tmp = modifySiret(tmp);
+                    tmp = modifySiretSiren(tmp);
                     company.siret = tmp;
                   }
                 });
@@ -617,12 +717,10 @@ class _CompanyInformationViewState extends State<CompanyInformationView> {
       );
     }
   }
-  
 
   Widget _myDivider() {
     return Container(
-      margin:
-          EdgeInsets.only(left: _widthScreen / 10, right: _widthScreen / 10),
+      margin: EdgeInsets.only(left: _widthScreen / 10, right: _widthScreen / 10),
       child: Divider(
         height: 1,
         color: Colors.black,
@@ -642,7 +740,7 @@ class _CompanyInformationViewState extends State<CompanyInformationView> {
       appBar: AppBar(
         title: Text('Informations entreprise'),
         centerTitle: true,
-        backgroundColor: Color(0xfff99e38),
+        backgroundColor: Color(0xff1F2C47),
       ),
       body: SingleChildScrollView(
         child: Container(
@@ -661,12 +759,13 @@ class _CompanyInformationViewState extends State<CompanyInformationView> {
               _companyAddress(edit),
               _myDivider(),
               _companySiret(edit),
+              _myDivider(),
+              _companySiren(edit),
               RaisedButton(
                 onPressed: () {
                   setState(() {
                     if (!edit[0]) {
-                      //fonction de sauvegarde en bdd + quitter la View
-                      print('Sauvegarder and quit');
+                      Request.modifyCompany().whenComplete(() => Navigator.pushNamed(context, "companyHome"));
                     }
                   });
                 },
@@ -676,7 +775,7 @@ class _CompanyInformationViewState extends State<CompanyInformationView> {
                     color: Colors.white,
                   ),
                 ),
-                color: Color(0xfff99e38),
+                color: Color(0xff58c24c),
               ),
             ],
           ),
