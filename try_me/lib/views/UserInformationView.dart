@@ -23,6 +23,7 @@ class _UserInformationViewState extends State<UserInformationView> {
   double _heightScreen;
   bool _infoValid;
   final _formKey = GlobalKey<FormState>();
+  String birthDateDisplay;
 
   String buttonText = 'Sauvegarder';
   String tmp;
@@ -30,6 +31,8 @@ class _UserInformationViewState extends State<UserInformationView> {
   @override
   void initState() {
     initBool(edit);
+    birthDateDisplay = modifyBirthDateDisplay(user.birthDate);
+    print("birthdatedisplay" +birthDateDisplay);
     super.initState();
   }
   
@@ -37,6 +40,15 @@ class _UserInformationViewState extends State<UserInformationView> {
     for (int i = 0; i < 7; i++) {
       list[i] = false;
     }
+  }
+
+  String modifyBirthDateDisplay(String userBirthdate) {
+    String tmp = "";
+    if (userBirthdate != null) {
+      var parts = userBirthdate.split("-");
+      tmp += parts[2] + '/' + parts[1] + '/' + parts[0];
+    }
+    return(tmp);
   }
 
   Widget _presentation(double widthScreen) {
@@ -617,7 +629,7 @@ class _UserInformationViewState extends State<UserInformationView> {
                     child: Form(
                       key: _formKey,
                       child: TextFormField(
-                        initialValue: user.birthDate != null ? user.birthDate : "Pas de date de naissance définie",
+                        initialValue: user.birthDate != null ? birthDateDisplay : "Pas de date de naissance définie",
                         decoration: InputDecoration(
                           border: InputBorder.none,
                           focusedBorder: InputBorder.none,
@@ -634,7 +646,7 @@ class _UserInformationViewState extends State<UserInformationView> {
                           if (value.isEmpty) {
                             return "Vous n\'avez pas rentré votre date de naissance";
                           } else if (!_infoValid) {
-                            return "Votre date de naissance est incorrect";
+                            return "Votre date de naissance est incorrect format attendu yyyy-mm-dd";
                           }
                           tmp = value;
                           return null;
