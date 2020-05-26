@@ -42,6 +42,15 @@ class _UserInformationViewState extends State<UserInformationView> {
     }
   }
 
+  String timeStamp(String userBirthdate) {
+    String tmp = "";
+    if (userBirthdate != null) {
+      var parts = userBirthdate.split("/");
+      tmp += parts[2] + '-' + parts[1] + '-' + parts[0];
+    }
+    return(tmp);
+  }
+
   String modifyBirthDateDisplay(String userBirthdate) {
     String tmp = "";
     if (userBirthdate != null) {
@@ -646,9 +655,12 @@ class _UserInformationViewState extends State<UserInformationView> {
                           if (value.isEmpty) {
                             return "Vous n\'avez pas rentré votre date de naissance";
                           } else if (!_infoValid) {
-                            return "Votre date de naissance est incorrect format attendu yyyy-mm-dd";
+                            return "Votre date de naissance est incorrect format attendu dd/mm/yyyy";
                           }
                           tmp = value;
+                          setState(() {
+                            birthDateDisplay = value;
+                          });
                           return null;
                         },
                       ),
@@ -664,7 +676,7 @@ class _UserInformationViewState extends State<UserInformationView> {
                     edit[6] = false;
                     edit[0] = false;
                     buttonText = 'Sauvegarder';
-                    user.birthDate = tmp;
+                    user.birthDate = timeStamp(tmp);
                   }
                 });
               },
@@ -683,7 +695,7 @@ class _UserInformationViewState extends State<UserInformationView> {
           children: <Widget>[
             Expanded(
               child: Text(
-                user.birthDate != null ? user.birthDate : "Pas de date de naissance définie",
+                user.birthDate != null ? birthDateDisplay : "Pas de date de naissance définie",
                 style: TextStyle(
                   color: Colors.black,
                 ),

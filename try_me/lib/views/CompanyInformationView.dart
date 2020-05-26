@@ -15,16 +15,16 @@ String modifyPhoneNumber(String phoneNumber) {
   return (phoneNumber);
 }
 
-String modifySiretSiren(String siretSiren) {
+/*String modifySiretSiren(String siretSiren) {
   String tmp = siretSiren;
   siretSiren = tmp.replaceAllMapped(RegExp(r".{3}"), (match) => "${match.group(0)} ");
   var parts = siretSiren.split(" ");
   siretSiren = parts[0] + ' ' + parts[1] + ' ' + parts[2] + ' ' + parts[3] + parts[4];
   return (siretSiren);
-}
+}*/
 
 class _CompanyInformationViewState extends State<CompanyInformationView> {
-  var edit = new List(6);
+  var edit = new List(7);
   double _widthScreen;
   double _heightScreen;
   bool _infoValid;
@@ -40,7 +40,7 @@ class _CompanyInformationViewState extends State<CompanyInformationView> {
   }
 
   void initBool(var list) {
-    for (int i = 0; i < 6; i++) {
+    for (int i = 0; i < 7; i++) {
       list[i] = false;
     }
   }
@@ -509,7 +509,7 @@ class _CompanyInformationViewState extends State<CompanyInformationView> {
   }
 
   Widget _companySiren(var edit) {
-    if (edit[5]) {
+    if (edit[6]) {
       return Container(
         margin: EdgeInsets.only(left: 10.0, right: 10.0),
         child: Row(
@@ -544,7 +544,7 @@ class _CompanyInformationViewState extends State<CompanyInformationView> {
                         ),
                         keyboardType: TextInputType.emailAddress,
                         validator: (value) {
-                          _infoValid = RegExp(r"^[0-9]{14,14}$").hasMatch(value);
+                          _infoValid = RegExp(r"^[0-9]{9,9}$").hasMatch(value);
                           if (value.isEmpty) {
                             return "Vous n\'avez pas rentré le SIREN de votre entreprise";
                           } else if (!_infoValid) {
@@ -563,10 +563,10 @@ class _CompanyInformationViewState extends State<CompanyInformationView> {
               onPressed: () {
                 setState(() {
                   if (_formKey.currentState.validate()) {
-                    edit[5] = false;
+                    edit[6] = false;
                     edit[0] = false;
                     buttonText = 'Sauvegarder';
-                    tmp = modifySiretSiren(tmp);
+                    //tmp = modifySiretSiren(tmp);
                     company.siren = tmp;
                   }
                 });
@@ -596,7 +596,7 @@ class _CompanyInformationViewState extends State<CompanyInformationView> {
               onPressed: () {
                 setState(() {
                   if (!edit[0]) {
-                    edit[5] = true;
+                    edit[6] = true;
                     edit[0] = true;
                     buttonText = '';
                   }
@@ -671,7 +671,7 @@ class _CompanyInformationViewState extends State<CompanyInformationView> {
                     edit[5] = false;
                     edit[0] = false;
                     buttonText = 'Sauvegarder';
-                    tmp = modifySiretSiren(tmp);
+                    //tmp = modifySiretSiren(tmp);
                     company.siret = tmp;
                   }
                 });
