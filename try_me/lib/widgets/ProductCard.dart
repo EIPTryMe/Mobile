@@ -13,16 +13,7 @@ class ProductCard extends StatelessWidget {
     return Stack(
       children: <Widget>[
         Container(
-          /*decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(borderRadius),
-            boxShadow: [
-              BoxShadow(
-                offset: Offset(1.0, 2.0),
-                spreadRadius: 0.0,
-                blurRadius: 1.0,
-              ),
-            ],
-          ),*/
+          margin: EdgeInsets.only(top: 15.0),
           child: ClipRRect(
             borderRadius: BorderRadius.circular(borderRadius),
             child: (Container(

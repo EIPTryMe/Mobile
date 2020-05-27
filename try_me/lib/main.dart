@@ -15,6 +15,7 @@ void main() {
   runApp(GraphQLProvider(
     child: CacheProvider(
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         initialRoute: 'home',
         onGenerateRoute: FluroRouter.router.generator,
       ),

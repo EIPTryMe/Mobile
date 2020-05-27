@@ -50,7 +50,15 @@ class OrderCard extends StatelessWidget {
                             : Text(''),
                   ],
                 ),
-                Column(children: order.products.map((e) => ProductCard(product: e)).toList()),
+                Column(
+                    children: order.products.map((e) => ProductCard(product: e)).toList()),
+                Padding(
+                  padding: const EdgeInsets.only(right: 20.0, left: 20.0),
+                  child: Divider(
+                    height: 50,
+                    color: Colors.grey[800],
+                  ),
+                ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -58,7 +66,7 @@ class OrderCard extends StatelessWidget {
                       'Nombres d\'articles',
                       style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
                     ),
-                    Text(''),
+                    Text(order.products.length.toString()),
                   ],
                 ),
                 Row(
@@ -70,42 +78,10 @@ class OrderCard extends StatelessWidget {
                     ),
                     Text(
                       order.total.toString() + '€',
-                      style: TextStyle(fontSize: 28.0, fontWeight: FontWeight.bold),
+                      style: TextStyle(fontSize: 25.0, fontWeight: FontWeight.bold),
                     ),
                   ],
                 ),
-//                Expanded(
-//                  child: Align(
-//                    alignment: Alignment.topLeft,
-//                    child:
-//                ),
-//                Expanded(
-//                  child: Align(
-//                      alignment: Alignment.center,
-//                      child: (order.status == 'paid')
-//                          ? Text(
-//                              "Payée",
-//                              style: TextStyle(color: Colors.green[400]),
-//                            )
-//                          : (order.status == 'waiting for payment')
-//                              ? Text(
-//                                  "Non payée",
-//                                  style: TextStyle(color: Colors.orange[400]),
-//                                )
-//                              : Text('')),
-//                ),
-//                Expanded(
-//                  child: Align(
-//                    alignment: Alignment.bottomRight,
-//                    child: Text(
-//                      'Total: ' + order.total.toString() + '€',
-//                      style: TextStyle(
-//                          color: Colors.green,
-//                          fontSize: 18.0,
-//                          fontWeight: FontWeight.bold),
-//                    ),
-//                  ),
-//                ),
               ],
             ),
           ),
