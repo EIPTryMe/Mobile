@@ -32,7 +32,6 @@ class _UserInformationViewState extends State<UserInformationView> {
   void initState() {
     initBool(edit);
     birthDateDisplay = modifyBirthDateDisplay(user.birthDate);
-    print("birthdatedisplay" +birthDateDisplay);
     super.initState();
   }
   
