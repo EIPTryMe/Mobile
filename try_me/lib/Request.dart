@@ -38,15 +38,15 @@ class Request {
     QueryResult result;
     QueryOptions queryOption = QueryOptions(
         documentNode:
-        gql(Mutations.modifyUser(auth0User.uid, user.lastName, user.firstName, user.address, user.email, user.phoneNumber, user.birthDate)));
+            gql(Mutations.modifyUser(auth0User.uid, user.lastName, user.firstName, user.address, user.email, user.phoneNumber, user.birthDate)));
     result = await graphQLConfiguration.clientToQuery.query(queryOption);
   }
 
   static Future modifyCompany() async {
     QueryResult result;
     QueryOptions queryOption = QueryOptions(
-        documentNode:
-        gql(Mutations.modifyCompany(company.id, company.address, company.email, company.name, company.phoneNumber, company.siren, company.siret)));
+        documentNode: gql(
+            Mutations.modifyCompany(company.id, company.address, company.email, company.name, company.phoneNumber, company.siren, company.siret)));
     result = await graphQLConfiguration.clientToQuery.query(queryOption);
   }
 
@@ -54,7 +54,7 @@ class Request {
     QueryResult result;
     QueryOptions queryOption = QueryOptions(
         documentNode: gql(Mutations.modifyProduct(product.id, product.name, product.brand, product.pricePerMonth, product.pricePerWeek,
-            product.pricePerDay, product.stock /*, product.description, product.specification*/)));
+            product.pricePerDay, product.stock, product.description.replaceAll('\n', '\\n'))));
     result = await graphQLConfiguration.clientToQuery.query(queryOption);
   }
 

@@ -9,13 +9,13 @@ class UserInformationView extends StatefulWidget {
       _UserInformationViewState();
 }
 
-String modifyPhoneNumber(String phoneNumber) {
+/*String modifyPhoneNumber(String phoneNumber) {
   String tmp = phoneNumber;
   phoneNumber =
       tmp.replaceAllMapped(RegExp(r".{2}"), (match) => "${match.group(0)} ");
   phoneNumber = phoneNumber.substring(0, phoneNumber.length - 1);
   return (phoneNumber);
-}
+}*/
 
 class _UserInformationViewState extends State<UserInformationView> {
   var edit = new List(7);
@@ -466,7 +466,7 @@ class _UserInformationViewState extends State<UserInformationView> {
                     edit[4] = false;
                     edit[0] = false;
                     buttonText = 'Sauvegarder';
-                    tmp = modifyPhoneNumber(tmp);
+                    //tmp = modifyPhoneNumber(tmp);
                     user.phoneNumber = tmp;
                   }
                 });

@@ -8,13 +8,13 @@ import 'package:tryme/GraphQLConfiguration.dart';
 import 'package:tryme/Queries.dart';
 import 'package:tryme/Request.dart';
 
-List images = [
+/*List images = [
   'https://cdn.futura-sciences.com/buildsv6/images/mediumoriginal/6/5/2/652a7adb1b_98148_01-intro-773.jpg',
   'https://i.redd.it/ugaauduw5ks31.png',
   'https://media.ldlc.com/r1600/ld/products/00/05/44/01/LD0005440118_2_0005440195_0005440280.jpg',
   'https://media.ldlc.com/r1600/ld/products/00/05/44/01/LD0005440128_2_0005440203_0005440288.jpg',
   'https://media.ldlc.com/r1600/ld/products/00/05/44/01/LD0005440123_2_0005440199_0005440284.jpg'
-];
+];*/
 
 class ProductView extends StatefulWidget {
   ProductView({this.id});
@@ -117,18 +117,19 @@ class _ProductViewState extends State<ProductView> {
             child: ListView(
               children: <Widget>[
                 Container(
+                  color: Colors.grey[300],
                   height: 400,
-                  child: Builder(builder: (context) {
+                  child: product.pictures == null ? null : Builder(builder: (context) {
                     double width = MediaQuery.of(context).size.width;
                     double height = MediaQuery.of(context).size.height;
                     return CarouselSlider(
-                      items: images
+                      items: product.pictures == null ? null : product.pictures
                           .asMap()
                           .map((i, item) => MapEntry(
                                 i,
                                 GestureDetector(
                                   onTap: () => Navigator.push(
-                                      context, MaterialPageRoute(builder: (context) => CarouselFullscreen(images: images, current: i))),
+                                      context, MaterialPageRoute(builder: (context) => CarouselFullscreen(images: product.pictures, current: i))),
                                   child: Image.network(
                                     item,
                                     fit: BoxFit.cover,
@@ -158,14 +159,14 @@ class _ProductViewState extends State<ProductView> {
                       SizedBox(
                         height: 20,
                       ),
-                      Text(
+                      /*Text(
                         product.pricePerDay == null ? '' : product.pricePerDay.toString() + '€/Jour',
                         style: TextStyle(color: Colors.green, fontSize: 18.0, fontWeight: FontWeight.bold),
                       ),
                       Text(
                         product.pricePerWeek == null ? '' : product.pricePerWeek.toString() + '€/Semaine',
                         style: TextStyle(color: Colors.green, fontSize: 18.0, fontWeight: FontWeight.bold),
-                      ),
+                      ),*/
                       Text(
                         product.pricePerMonth == null ? '' : product.pricePerMonth.toString() + '€/Mois',
                         style: TextStyle(color: Colors.green, fontSize: 18.0, fontWeight: FontWeight.bold),
@@ -177,10 +178,9 @@ class _ProductViewState extends State<ProductView> {
                         'Description',
                         style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
                       ),
-                      if (product.descriptions != null)
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: product.descriptions.map((value) => Text(value['name'])).toList(),
+                      if (product.description != null)
+                        Text(
+                          product.description
                         ),
                       SizedBox(
                         height: 20,

@@ -6,7 +6,7 @@ class QueryParse {
     user.firstName = result['first_name'];
     user.lastName = result['name'];
     user.address = result['address'];
-    //user.phoneNumber = result['phone'];
+    user.phoneNumber = result['phone'];
     user.email = result['email'];
     user.birthDate = result['birth_date'];
     user.companyId = result['company_id'];
@@ -17,7 +17,7 @@ class QueryParse {
     company.id = result['id'];
     company.name = result['name'];
     company.address = result['address'];
-    //company.phoneNumber = result['phone'];
+    company.phoneNumber = result['phone'];
     company.email = result['email'];
     company.siret = result['siret'];
     company.siren = result['siren'];
@@ -32,8 +32,12 @@ class QueryParse {
     product.pricePerWeek = result['price_per_week'] != null ? result['price_per_week'].toDouble() : null;
     product.pricePerMonth = result['price_per_month'] != null ? result['price_per_month'].toDouble() : null;
     product.stock = result['stock'];
-    product.descriptions = result['product_descriptions'];
+    product.description = result['description'];
     product.specifications = result['product_specifications'];
+    if (result['picture'] != null) {
+      product.pictures = List();
+      product.pictures.add(result['picture']['url']);
+    }
     return (product);
   }
 
@@ -44,6 +48,10 @@ class QueryParse {
     product.pricePerDay = result['price_per_day'] != null ? result['price_per_day'].toDouble() : null;
     product.pricePerWeek = result['price_per_week'] != null ? result['price_per_week'].toDouble() : null;
     product.pricePerMonth = result['price_per_month'] != null ? result['price_per_month'].toDouble() : null;
+    if (result['picture'] != null) {
+      product.pictures = List();
+      product.pictures.add(result['picture']['url']);
+    }
     return (product);
   }
 
@@ -56,6 +64,10 @@ class QueryParse {
       product.pricePerDay = element['product']['price_per_day'] != null ? element['product']['price_per_day'].toDouble() : null;
       product.pricePerWeek = element['product']['price_per_week'] != null ? element['product']['price_per_week'].toDouble() : null;
       product.pricePerMonth = element['product']['price_per_month'] != null ? element['product']['price_per_month'].toDouble() : null;
+      if (element['product']['picture'] != null) {
+        product.pictures = List();
+        product.pictures.add(element['product']['picture']['url']);
+      }
       Cart cart = Cart(product: product);
       shoppingCard.add(cart);
     });
@@ -79,9 +91,12 @@ class Mutations {
   }
   ''';
 
-  static String modifyUser(String uid, String lastName, String firstName, String address, String email, String phoneNumber, String birthDate) => '''
+  static String modifyUser(String uid, String lastName, String firstName, String address, String email, String phoneNumber, String birthDate) =>
+      '''
   mutation {
-    update_user(where: {uid: {_eq: "auth0|5eaa9d7931f8610bde1a17e4"}}, _set: {name: "$lastName", first_name: "$firstName", email: "$email", address: "$address", birth_date: '''+ (birthDate == null ? "null" : "\""+birthDate+"\"") +'''}) {
+    update_user(where: {uid: {_eq: "auth0|5eaa9d7931f8610bde1a17e4"}}, _set: {name: "$lastName", first_name: "$firstName", email: "$email", phone: "$phoneNumber", address: "$address", birth_date: ''' +
+      (birthDate == null ? "null" : "\"" + birthDate + "\"") +
+      '''}) {
       affected_rows
     }
   }
@@ -95,9 +110,11 @@ class Mutations {
   }
   ''';
 
-  static String modifyProduct(int id, String title, String brand, double monthPrice, double weekPrice, double dayPrice, int stock/*, String description, String specification*/) => '''
+  static String modifyProduct(
+          int id, String title, String brand, double monthPrice, double weekPrice, double dayPrice, int stock, String description) =>
+      '''
   mutation {
-    update_product(_set: {name: "$title", brand: "$brand", price_per_month: "$monthPrice", price_per_week: "$weekPrice", price_per_day: "$dayPrice", stock: $stock}, where: {id: {_eq: $id}}) {
+    update_product(_set: {name: "$title", brand: "$brand", price_per_month: "$monthPrice", price_per_week: "$weekPrice", price_per_day: "$dayPrice", stock: $stock, description: "$description"}, where: {id: {_eq: $id}}) {
       affected_rows
     }
   }
@@ -123,26 +140,59 @@ class Mutations {
 }
 
 class Queries {
-  static String productsName(bool asc) => '''
+  static String product(int id) => '''
   query {
-    product(order_by: {name:  ''' + (asc ? 'asc' : 'desc') + '''}) {
-      name
+    product(where: {id: {_eq: $id}}) {
       id
+      name
+      brand
+      price_per_day
       price_per_week
       price_per_month
-      price_per_day
+      stock
+      description
+      product_specifications {
+        name
+      }
+      picture {
+        url
+      }
     }
   }
   ''';
 
-  static String productsPrice(bool asc) => '''
+  static String productsName(bool asc) =>
+      '''
   query {
-    product(order_by: {price_per_month: ''' + (asc ? 'asc' : 'desc') + ''', name: asc}) {
+    product(order_by: {name:  ''' +
+      (asc ? 'asc' : 'desc') +
+      '''}) {
       name
       id
       price_per_week
       price_per_month
       price_per_day
+      picture {
+        url
+      }
+    }
+  }
+  ''';
+
+  static String productsPrice(bool asc) =>
+      '''
+  query {
+    product(order_by: {price_per_month: ''' +
+      (asc ? 'asc' : 'desc') +
+      ''', name: asc}) {
+      name
+      id
+      price_per_week
+      price_per_month
+      price_per_day
+      picture {
+        url
+      }
     }
   }
   ''';
@@ -156,6 +206,28 @@ class Queries {
         price_per_week
         price_per_month
         price_per_day
+        picture {
+          url
+        }
+      }
+    }
+  }
+  ''';
+
+  static String shoppingCard(String uid) => '''
+  query {
+    user(where: {uid: {_eq: "$uid"}}) {
+      cartsUid {
+        product {
+          id
+          name
+          price_per_week
+          price_per_month
+          price_per_day
+          picture {
+            url
+          }
+        }
       }
     }
   }
@@ -211,42 +283,6 @@ class Queries {
       phone
       siret
       siren
-    }
-  }
-  ''';
-
-  static String shoppingCard(String uid) => '''
-  query {
-    user(where: {uid: {_eq: "$uid"}}) {
-      cartsUid {
-        product {
-          id
-          name
-          price_per_week
-          price_per_month
-          price_per_day
-        }
-      }
-    }
-  }
-  ''';
-
-  static String product(int id) => '''
-  query {
-    product(where: {id: {_eq: $id}}) {
-      id
-      name
-      brand
-      price_per_day
-      price_per_week
-      price_per_month
-      stock
-      product_descriptions {
-        name
-      }
-      product_specifications {
-        name
-      }
     }
   }
   ''';

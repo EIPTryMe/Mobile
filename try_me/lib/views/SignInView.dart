@@ -271,7 +271,7 @@ class _SignInViewState extends State<SignInView> {
   Widget _googleButton() {
     return FlatButton(
       onPressed: () {
-        print('google co');
+        //Auth0API.webAuth().whenComplete(() => Navigator.pushNamed(context, 'home'));
       },
       child: Container(
         height: 50,

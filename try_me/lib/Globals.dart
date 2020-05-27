@@ -40,7 +40,7 @@ class User {
 }
 
 class Product {
-  Product({this.id, this.name, this.brand, this.pricePerDay, this.pricePerWeek, this.pricePerMonth, this.stock, this.descriptions, this.specifications});
+  Product({this.id, this.name, this.brand, this.pricePerDay, this.pricePerWeek, this.pricePerMonth, this.stock, this.description, this.specifications, this.pictures});
 
   int id;
   String name;
@@ -49,8 +49,9 @@ class Product {
   double pricePerWeek;
   double pricePerMonth;
   int stock;
-  List descriptions;
+  String description;
   List specifications;
+  List pictures;
 }
 
 class Cart {
@@ -71,8 +72,8 @@ class Order {
 
 GraphQLConfiguration graphQLConfiguration = GraphQLConfiguration();
 
-bool isLoggedIn = false;
-bool isACompany = false;
+bool isLoggedIn = true;
+bool isACompany = true;
 
 Auth0User auth0User = Auth0User();
 User user = User();

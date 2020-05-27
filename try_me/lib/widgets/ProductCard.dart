@@ -34,8 +34,9 @@ class ProductCard extends StatelessWidget {
                   Expanded(
                     flex: 3,
                     child: Container(
-                      child: Image.network(
-                        'https://i.redd.it/ugaauduw5ks31.png',
+                      color: Colors.grey[300],
+                      child: product.pictures == null ? null : Image.network(
+                        product.pictures[0],
                         fit: BoxFit.cover,
                       ),
                     ),

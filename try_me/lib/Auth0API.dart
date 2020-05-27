@@ -43,7 +43,7 @@ class Auth0API {
     }
   }
 
-  static void webAuth() async {
+  static Future<bool> webAuth() async {
     try {
       var response = await auth0.webAuth.authorize({
         'audience': 'https://$domain/userinfo',
@@ -58,8 +58,10 @@ class Auth0API {
     ''');
       //webLogged = true;
       //currentWebAuth = Map.from(response);
+      return (true);
     } catch (e) {
       print('Error: $e');
+      return (false);
     }
   }
 

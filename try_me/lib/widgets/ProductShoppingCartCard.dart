@@ -27,8 +27,9 @@ class _ProductShoppingCartCardState extends State<ProductShoppingCartCard> {
               Expanded(
                 flex: 3,
                 child: Container(
-                  child: Image.network(
-                    'https://i.redd.it/ugaauduw5ks31.png',
+                  color: Colors.grey[300],
+                  child: widget.cart.product.pictures == null ? null : Image.network(
+                    widget.cart.product.pictures[0],
                     fit: BoxFit.cover,
                   ),
                 ),

@@ -27,7 +27,6 @@ class _ProductEditViewState extends State<ProductEditView> {
   TextEditingController dayPriceController = TextEditingController();
   TextEditingController stockController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
-  TextEditingController specificationController = TextEditingController();
 
   void saveInfo() {
     product.name = titleController.text;
@@ -36,8 +35,7 @@ class _ProductEditViewState extends State<ProductEditView> {
     product.pricePerWeek = weekPriceController.text != null ? double.parse(weekPriceController.text) : 0.0;
     product.pricePerDay = dayPriceController.text != null ? double.parse(dayPriceController.text) : 0.0;
     product.stock = stockController.text != null ? int.parse(stockController.text) : 0.0;
-    //product.description = descriptionController.text;
-    //product.specification = specificationController.text;
+    product.description = descriptionController.text;
     Request.modifyProduct(product).whenComplete(() => Navigator.pushNamedAndRemoveUntil(context, 'companyHome', ModalRoute.withName('/')));
   }
 
@@ -62,8 +60,7 @@ class _ProductEditViewState extends State<ProductEditView> {
       weekPriceController.text = product.pricePerWeek.toString();
       monthPriceController.text = product.pricePerMonth.toString();
       stockController.text = product.stock.toString();
-      //descriptionController.text = product.description;
-      //specificationController.text = product.specification;
+      descriptionController.text = product.description;
       gotData = true;
     });
   }
@@ -121,11 +118,6 @@ class _ProductEditViewState extends State<ProductEditView> {
                     decoration: InputDecoration(labelText: 'Description'),
                     maxLines: null,
                     controller: descriptionController,
-                  ),
-                  TextField(
-                    decoration: InputDecoration(labelText: 'Spécification'),
-                    maxLines: null,
-                    controller: specificationController,
                   ),
                 ],
               ),

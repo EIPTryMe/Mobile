@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 
 import 'package:tryme/GraphQLConfiguration.dart';
+import 'package:tryme/Request.dart';
 
 import 'package:tryme/widgets/AppBar.dart';
 import 'package:tryme/widgets/Drawer.dart';
@@ -32,8 +33,7 @@ class _HomeViewState extends State<HomeView> {
       query = Queries.productsName(false);
     else if (option == 'Prix croissant')
       query = Queries.productsPrice(true);
-    else if (option == 'Prix décroissant')
-      query = Queries.productsPrice(false);
+    else if (option == 'Prix décroissant') query = Queries.productsPrice(false);
     QueryOptions queryOption = QueryOptions(documentNode: gql(query));
     graphQLConfiguration = GraphQLConfiguration();
     result = await graphQLConfiguration.clientToQuery.query(queryOption);
@@ -68,12 +68,13 @@ class _HomeViewState extends State<HomeView> {
             flex: 15,
             child: ListView(
               children: products
-                  .map((product) => Padding(
-                        padding: const EdgeInsets.fromLTRB(2, 2, 2, 2),
-                        child: ProductCard(
-                          product: product,
-                        ),
-                      ))
+                  .map((product) =>
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(2, 2, 2, 2),
+                    child: ProductCard(
+                      product: product,
+                    ),
+                  ))
                   .toList(),
             ),
           ),
