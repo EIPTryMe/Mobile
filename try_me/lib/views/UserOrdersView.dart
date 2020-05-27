@@ -36,14 +36,14 @@ class _UserOrdersViewState extends State<UserOrdersView> {
       setState(() {
         orders.clear();
         (result.data['order'] as List).forEach((order) {
+          List<Product> products = List();
           String status = order['order_statuses'] != null ? order['order_statuses'][0]['status'] : null;
           double total = 0;
           (order['order_items'] as List).forEach((item) {
-            Product product = Product();
-            product = QueryParse.getProduct(item['product']);
+            products.add(QueryParse.getProduct(item['product']));
             total += item['price'].toDouble();
           });
-          orders.add(Order(id: order['id'], status: status, total: total));
+          orders.add(Order(id: order['id'], status: status, total: total, products: products));
         });
       });
   }

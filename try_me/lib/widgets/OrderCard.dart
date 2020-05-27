@@ -15,7 +15,6 @@ class OrderCard extends StatelessWidget {
       child: ClipRRect(
         borderRadius: BorderRadius.circular(borderRadius),
         child: (Container(
-          height: 160,
           color: Colors.grey[100],
           child: Padding(
             padding: const EdgeInsets.all(8.0),
@@ -27,8 +26,7 @@ class OrderCard extends StatelessWidget {
                   children: [
                     Text(
                       'Commande n° ',
-                      style: TextStyle(
-                          fontSize: 18.0, fontWeight: FontWeight.bold),
+                      style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
                     ),
                   ],
                 ),
@@ -37,8 +35,7 @@ class OrderCard extends StatelessWidget {
                   children: [
                     Text(
                       'Statut',
-                      style: TextStyle(
-                          fontSize: 18.0, fontWeight: FontWeight.bold),
+                      style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
                     ),
                     (order.status == 'paid')
                         ? Text(
@@ -53,29 +50,28 @@ class OrderCard extends StatelessWidget {
                             : Text(''),
                   ],
                 ),
-                  Column(
-                    children: order.products.map((e) => ProductCard(product: e)).toList()
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'Nombres d\'articles',
-                        style: TextStyle(
-                            fontSize: 18.0, fontWeight: FontWeight.bold),
-                      ),
-                      Text(''),
-                    ],
-                  ),
+                Column(children: order.products.map((e) => ProductCard(product: e)).toList()),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'Nombres d\'articles',
+                      style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
+                    ),
+                    Text(''),
+                  ],
+                ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
                       'Prix total',
-                      style: TextStyle(
-                          fontSize: 18.0, fontWeight: FontWeight.bold),
+                      style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
                     ),
-                    Text(''),
+                    Text(
+                      order.total.toString() + '€',
+                      style: TextStyle(fontSize: 28.0, fontWeight: FontWeight.bold),
+                    ),
                   ],
                 ),
 //                Expanded(

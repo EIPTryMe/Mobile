@@ -238,6 +238,7 @@ class Queries {
     order(where: {order_statuses: {status: {_eq: "$status"}}, user_uid: {_eq: "${auth0User.uid}"}}) {
       order_items {
          product {
+          id
           name
           price_per_month
           picture {
@@ -255,6 +256,14 @@ class Queries {
   {
     order(where: {user_uid: {_eq: "${auth0User.uid}"}}, order_by: {created_at: desc}) {
       order_items {
+         product {
+          id
+          name
+          price_per_month
+          picture {
+            url
+          }
+        }
         price
       }
       order_statuses {
