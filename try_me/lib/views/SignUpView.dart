@@ -22,9 +22,11 @@ class CurvePainter extends CustomPainter {
     paint.style = PaintingStyle.fill;
     paint.color = Color(0xff1F2C47);
 
-    path.moveTo(0, size.height * 0.05);
-    path.quadraticBezierTo(size.width * 0.08, size.height * 0.33, size.width * 0.32, size.height * 0.20);
-    path.quadraticBezierTo(size.width * 0.70, size.height * 0.00, size.width * 1.0, size.height * 0.10);
+    path.moveTo(0, size.height * 0.02);
+    path.quadraticBezierTo(size.width * 0.08, size.height * 0.17,
+        size.width * 0.32, size.height * 0.10);
+    path.quadraticBezierTo(size.width * 0.70, size.height * 0.00,
+        size.width * 1.0, size.height * 0.05);
     path.lineTo(size.width, 0);
     path.lineTo(0, 0);
     canvas.drawPath(path, paint);
@@ -35,9 +37,11 @@ class CurvePainter extends CustomPainter {
     paint2.style = PaintingStyle.fill;
     paint2.color = Color(0xff1f2c76);
 
-    path2.moveTo(size.width * 0.02, size.height * 0.03);
-    path2.quadraticBezierTo(size.width * 0.08, size.height * 0.21, size.width * 0.32, size.height * 0.12);
-    path2.quadraticBezierTo(size.width * 0.70, size.height * 0.00, size.width * 1.0, size.height * 0.06);
+    path2.moveTo(size.width * 0.02, size.height * 0.01);
+    path2.quadraticBezierTo(size.width * 0.08, size.height * 0.10,
+        size.width * 0.32, size.height * 0.06);
+    path2.quadraticBezierTo(size.width * 0.70, size.height * 0.00,
+        size.width * 1.0, size.height * 0.03);
     path2.lineTo(size.width, 0);
     path2.lineTo(0, 0);
 
@@ -74,10 +78,10 @@ class _SignUpViewState extends State<SignUpView> {
               padding: EdgeInsets.only(left: 0, top: 10, bottom: 10),
               child: Icon(
                 Icons.keyboard_arrow_left,
-                color: Colors.black,
+                color: Colors.white,
               ),
             ),
-            Text('Retour', style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500))
+            Text('Retour', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w500, color: Colors.white))
           ],
         ),
       ),
@@ -370,6 +374,7 @@ class _SignUpViewState extends State<SignUpView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color(0xffE5E5E5),
         body: CustomPaint(
       painter: CurvePainter(),
       child: SingleChildScrollView(

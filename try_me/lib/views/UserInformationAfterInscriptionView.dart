@@ -9,14 +9,6 @@ class UserInformationAfterInscriptionView extends StatefulWidget {
       _UserInformationAfterInscriptionViewState();
 }
 
-String modifyPhoneNumber(String phoneNumber) {
-  String tmp = phoneNumber;
-  phoneNumber =
-      tmp.replaceAllMapped(RegExp(r".{2}"), (match) => "${match.group(0)} ");
-  phoneNumber = phoneNumber.substring(0, phoneNumber.length - 1);
-  return (phoneNumber);
-}
-
 class _UserInformationAfterInscriptionViewState
     extends State<UserInformationAfterInscriptionView> {
   var edit = new List(7);
@@ -38,6 +30,15 @@ class _UserInformationAfterInscriptionViewState
     for (int i = 0; i < 7; i++) {
       list[i] = false;
     }
+  }
+
+  String timeStamp(String userBirthdate) {
+    String tmp = "";
+    if (userBirthdate != null) {
+      var parts = userBirthdate.split("/");
+      tmp += parts[2] + '-' + parts[1] + '-' + parts[0];
+    }
+    return(tmp);
   }
 
   Widget _personalFirstName(var edit) {
@@ -414,7 +415,6 @@ class _UserInformationAfterInscriptionViewState
                     edit[4] = false;
                     edit[0] = false;
                     buttonText = 'Sauvegarder';
-                    tmp = modifyPhoneNumber(tmp);
                     user.phoneNumber = tmp;
                   }
                 });
@@ -627,7 +627,7 @@ class _UserInformationAfterInscriptionViewState
                     edit[6] = false;
                     edit[0] = false;
                     buttonText = 'Sauvegarder';
-                    user.birthDate = tmp;
+                    user.birthDate = timeStamp(tmp);
                   }
                 });
               },

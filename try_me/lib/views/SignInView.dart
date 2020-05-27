@@ -23,9 +23,11 @@ class CurvePainter extends CustomPainter {
     paint.style = PaintingStyle.fill;
     paint.color = Color(0xff1F2C47);
 
-    path.moveTo(0, size.height * 0.05);
-    path.quadraticBezierTo(size.width * 0.08, size.height * 0.33, size.width * 0.32, size.height * 0.20);
-    path.quadraticBezierTo(size.width * 0.70, size.height * 0.00, size.width * 1.0, size.height * 0.10);
+    path.moveTo(0, size.height * 0.02);
+    path.quadraticBezierTo(size.width * 0.08, size.height * 0.17,
+        size.width * 0.32, size.height * 0.10);
+    path.quadraticBezierTo(size.width * 0.70, size.height * 0.00,
+        size.width * 1.0, size.height * 0.05);
     path.lineTo(size.width, 0);
     path.lineTo(0, 0);
     canvas.drawPath(path, paint);
@@ -36,9 +38,11 @@ class CurvePainter extends CustomPainter {
     paint2.style = PaintingStyle.fill;
     paint2.color = Color(0xff1f2c76);
 
-    path2.moveTo(size.width * 0.02, size.height * 0.03);
-    path2.quadraticBezierTo(size.width * 0.08, size.height * 0.21, size.width * 0.32, size.height * 0.12);
-    path2.quadraticBezierTo(size.width * 0.70, size.height * 0.00, size.width * 1.0, size.height * 0.06);
+    path2.moveTo(size.width * 0.02, size.height * 0.01);
+    path2.quadraticBezierTo(size.width * 0.08, size.height * 0.10,
+        size.width * 0.32, size.height * 0.06);
+    path2.quadraticBezierTo(size.width * 0.70, size.height * 0.00,
+        size.width * 1.0, size.height * 0.03);
     path2.lineTo(size.width, 0);
     path2.lineTo(0, 0);
 
@@ -68,10 +72,14 @@ class _SignInViewState extends State<SignInView> {
         child: Row(
           children: <Widget>[
             Container(
-              padding: EdgeInsets.only(left: 0, top: 10, bottom: 10),
+              padding: EdgeInsets.only(left: 15, top: 10, bottom: 10),
               child: Icon(Icons.keyboard_arrow_left, color: Colors.white),
             ),
-            Text('Retour', style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500, color: Colors.white))
+            Text('Retour',
+                style: TextStyle(
+                    fontSize: 13,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.white))
           ],
         ),
       ),
@@ -154,7 +162,8 @@ class _SignInViewState extends State<SignInView> {
   Widget _submitButton() {
     return FlatButton(
       onPressed: () {
-        if (_formKeyEmail.currentState.validate() && _formKeyPassword.currentState.validate()) {
+        if (_formKeyEmail.currentState.validate() &&
+            _formKeyPassword.currentState.validate()) {
           Auth0API.login(_email, _password).then((isConnected) {
             if (isConnected) {
               Request.getUser().whenComplete(() {
@@ -162,7 +171,8 @@ class _SignInViewState extends State<SignInView> {
                   Request.getShoppingCard();
                   isLoggedIn = true;
                   isACompany = false;
-                  Navigator.pushNamedAndRemoveUntil(context, 'home', ModalRoute.withName('/'));
+                  Navigator.pushNamedAndRemoveUntil(
+                      context, 'home', ModalRoute.withName('/'));
                 } else {
                   setState(() {
                     error = 'Connectez-vous en tant qu\'entreprise';
@@ -183,8 +193,17 @@ class _SignInViewState extends State<SignInView> {
         alignment: Alignment.center,
         decoration: BoxDecoration(
             borderRadius: BorderRadius.all(Radius.circular(5)),
-            boxShadow: <BoxShadow>[BoxShadow(color: Colors.grey.shade200, offset: Offset(2, 4), blurRadius: 5, spreadRadius: 2)],
-            gradient: LinearGradient(begin: Alignment.centerLeft, end: Alignment.centerRight, colors: [Color(0xff1f2c76), Color(0xff1F2C47)])),
+            boxShadow: <BoxShadow>[
+              BoxShadow(
+                  color: Colors.grey.shade200,
+                  offset: Offset(2, 4),
+                  blurRadius: 5,
+                  spreadRadius: 2)
+            ],
+            gradient: LinearGradient(
+                begin: Alignment.centerLeft,
+                end: Alignment.centerRight,
+                colors: [Color(0xff1f2c76), Color(0xff1F2C47)])),
         child: Text(
           'Connexion',
           style: TextStyle(fontSize: 20, color: Colors.white),
@@ -228,8 +247,7 @@ class _SignInViewState extends State<SignInView> {
 
   Widget _facebookButton() {
     return FlatButton(
-      onPressed: () {
-      },
+      onPressed: () {},
       child: Container(
         height: 50,
         margin: EdgeInsets.symmetric(vertical: 10),
@@ -243,7 +261,9 @@ class _SignInViewState extends State<SignInView> {
               child: Container(
                 decoration: BoxDecoration(
                   color: Color(0xff1959a9),
-                  borderRadius: BorderRadius.only(bottomLeft: Radius.circular(5), topLeft: Radius.circular(5)),
+                  borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(5),
+                      topLeft: Radius.circular(5)),
                 ),
                 alignment: Alignment.center,
                 child: Image(
@@ -256,10 +276,16 @@ class _SignInViewState extends State<SignInView> {
               child: Container(
                 decoration: BoxDecoration(
                   color: Color(0xff2872ba),
-                  borderRadius: BorderRadius.only(bottomRight: Radius.circular(5), topRight: Radius.circular(5)),
+                  borderRadius: BorderRadius.only(
+                      bottomRight: Radius.circular(5),
+                      topRight: Radius.circular(5)),
                 ),
                 alignment: Alignment.center,
-                child: Text('Se connecter avec Facebook', style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.w400)),
+                child: Text('Se connecter avec Facebook',
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 18,
+                        fontWeight: FontWeight.w400)),
               ),
             ),
           ],
@@ -286,7 +312,9 @@ class _SignInViewState extends State<SignInView> {
               child: Container(
                 decoration: BoxDecoration(
                   color: Color(0xffffffff),
-                  borderRadius: BorderRadius.only(bottomLeft: Radius.circular(5), topLeft: Radius.circular(5)),
+                  borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(5),
+                      topLeft: Radius.circular(5)),
                 ),
                 alignment: Alignment.center,
                 child: Image(
@@ -299,10 +327,16 @@ class _SignInViewState extends State<SignInView> {
               child: Container(
                 decoration: BoxDecoration(
                   color: Color(0xffff3d00),
-                  borderRadius: BorderRadius.only(bottomRight: Radius.circular(5), topRight: Radius.circular(5)),
+                  borderRadius: BorderRadius.only(
+                      bottomRight: Radius.circular(5),
+                      topRight: Radius.circular(5)),
                 ),
                 alignment: Alignment.center,
-                child: Text('Se connecter avec Google', style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.w400)),
+                child: Text('Se connecter avec Google',
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 18,
+                        fontWeight: FontWeight.w400)),
               ),
             ),
           ],
@@ -328,11 +362,15 @@ class _SignInViewState extends State<SignInView> {
           InkWell(
             onTap: () {
               Navigator.pop(context);
-              Navigator.push(context, MaterialPageRoute(builder: (context) => SignUpView()));
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => SignUpView()));
             },
             child: Text(
               'Inscrivez-vous',
-              style: TextStyle(color: Color(0xff1F2C47), fontSize: 13, fontWeight: FontWeight.w600),
+              style: TextStyle(
+                  color: Color(0xff1F2C47),
+                  fontSize: 13,
+                  fontWeight: FontWeight.w600),
             ),
           )
         ],
@@ -366,6 +404,7 @@ class _SignInViewState extends State<SignInView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color(0xffE5E5E5),
         body: CustomPaint(
       painter: CurvePainter(),
       child: SingleChildScrollView(
@@ -404,7 +443,9 @@ class _SignInViewState extends State<SignInView> {
                   Container(
                     padding: EdgeInsets.symmetric(vertical: 10),
                     alignment: Alignment.centerRight,
-                    child: Text('Mot de Passe oublié ?', style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500)),
+                    child: Text('Mot de Passe oublié ?',
+                        style: TextStyle(
+                            fontSize: 14, fontWeight: FontWeight.w500)),
                   ),
                   _divider(),
                   _facebookButton(),
