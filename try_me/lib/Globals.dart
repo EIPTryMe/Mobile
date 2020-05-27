@@ -72,8 +72,8 @@ class Order {
 
 GraphQLConfiguration graphQLConfiguration = GraphQLConfiguration();
 
-bool isLoggedIn = true;
-bool isACompany = true;
+bool isLoggedIn = false;
+bool isACompany = false;
 
 Auth0User auth0User = Auth0User();
 User user = User();
