@@ -46,7 +46,7 @@ class Auth0API {
   static Future<bool> webAuth() async {
     try {
       var response = await auth0.webAuth.authorize({
-        'audience': 'https://$domain/userinfo',
+        'audience': 'https://$domain/',
         'scope': 'openid email offline_access',
       });
       DateTime now = DateTime.now();
