@@ -3,7 +3,10 @@ import 'dart:io';
 import 'package:graphql_flutter/graphql_flutter.dart';
 
 import 'package:tryme/Globals.dart';
+import 'package:tryme/GraphQLConfiguration.dart';
 import 'package:tryme/Queries.dart';
+
+enum OrderBy { PRICE, NEW, NAME }
 
 class Request {
   static void getShoppingCard() async {
@@ -69,5 +72,23 @@ class Request {
     QueryResult result;
     QueryOptions queryOption = QueryOptions(documentNode: gql(Mutations.payOrder(orderId)));
     result = await graphQLConfiguration.getClientToQuery(auth0User.uid).query(queryOption);
+  }
+
+  static Future getProducts(OrderBy orderBy, bool asc) async {
+    List<Product> products = List();
+    String sort = '';
+
+    if (orderBy == OrderBy.PRICE) sort = 'order_by: {price_per_month: ' + (asc ? 'asc' : 'desc') + ', name: asc}';
+    else if (orderBy == OrderBy.NEW) sort = 'order_by: {created_at: ' + (asc ? 'asc' : 'desc') + '}';
+    else if (orderBy == OrderBy.NAME) sort = 'order_by: {name: ' + (asc ? 'asc' : 'desc') + '}';
+
+    QueryResult result;
+    QueryOptions queryOption = QueryOptions(documentNode: gql(Queries.products(sort)));
+    graphQLConfiguration = GraphQLConfiguration();
+    result = await graphQLConfiguration.clientToQuery.query(queryOption);
+    (result.data['product'] as List).forEach((element) {
+      products.add(QueryParse.getProductHome(element));
+    });
+    return (products);
   }
 }

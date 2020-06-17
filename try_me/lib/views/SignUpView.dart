@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tryme/Request.dart';
 
 import 'package:tryme/views/SignInView.dart';
 import 'package:tryme/Auth0API.dart';
@@ -23,10 +24,8 @@ class CurvePainter extends CustomPainter {
     paint.color = Color(0xff1F2C47);
 
     path.moveTo(0, size.height * 0.02);
-    path.quadraticBezierTo(size.width * 0.08, size.height * 0.17,
-        size.width * 0.32, size.height * 0.10);
-    path.quadraticBezierTo(size.width * 0.70, size.height * 0.00,
-        size.width * 1.0, size.height * 0.05);
+    path.quadraticBezierTo(size.width * 0.08, size.height * 0.17, size.width * 0.32, size.height * 0.10);
+    path.quadraticBezierTo(size.width * 0.70, size.height * 0.00, size.width * 1.0, size.height * 0.05);
     path.lineTo(size.width, 0);
     path.lineTo(0, 0);
     canvas.drawPath(path, paint);
@@ -38,10 +37,8 @@ class CurvePainter extends CustomPainter {
     paint2.color = Color(0xff1f2c76);
 
     path2.moveTo(size.width * 0.02, size.height * 0.01);
-    path2.quadraticBezierTo(size.width * 0.08, size.height * 0.10,
-        size.width * 0.32, size.height * 0.06);
-    path2.quadraticBezierTo(size.width * 0.70, size.height * 0.00,
-        size.width * 1.0, size.height * 0.03);
+    path2.quadraticBezierTo(size.width * 0.08, size.height * 0.10, size.width * 0.32, size.height * 0.06);
+    path2.quadraticBezierTo(size.width * 0.70, size.height * 0.00, size.width * 1.0, size.height * 0.03);
     path2.lineTo(size.width, 0);
     path2.lineTo(0, 0);
 
@@ -212,9 +209,11 @@ class _SignUpViewState extends State<SignUpView> {
         if (_formKeyEmail.currentState.validate() && _formKeyPassword.currentState.validate() && _formKeyConfirm.currentState.validate()) {
           Auth0API.register(_email, _password).then((isConnected) {
             if (isConnected) {
-              isLoggedIn = true;
-              isACompany = false;
-              Navigator.pushNamedAndRemoveUntil(context, 'personalInformationAfterInscription', ModalRoute.withName('/'));
+              Request.getUser().whenComplete(() {
+                isLoggedIn = true;
+                isACompany = false;
+                Navigator.pushNamedAndRemoveUntil(context, 'personalInformationAfterInscription', ModalRoute.withName('/'));
+              });
             }
           });
         }
@@ -374,50 +373,50 @@ class _SignUpViewState extends State<SignUpView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xffE5E5E5),
+        backgroundColor: Color(0xffE5E5E5),
         body: CustomPaint(
-      painter: CurvePainter(),
-      child: SingleChildScrollView(
-          child: Container(
-        height: MediaQuery.of(context).size.height,
-        child: Stack(
-          children: <Widget>[
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 20),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Expanded(
-                    flex: 3,
-                    child: SizedBox(),
+          painter: CurvePainter(),
+          child: SingleChildScrollView(
+              child: Container(
+            height: MediaQuery.of(context).size.height,
+            child: Stack(
+              children: <Widget>[
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: 20),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Expanded(
+                        flex: 3,
+                        child: SizedBox(),
+                      ),
+                      _title(),
+                      SizedBox(
+                        height: 50,
+                      ),
+                      _emailPasswordWidget(),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      _submitButton(),
+                      _facebookButton(),
+                      _googleButton(),
+                      Expanded(
+                        flex: 2,
+                        child: SizedBox(),
+                      )
+                    ],
                   ),
-                  _title(),
-                  SizedBox(
-                    height: 50,
-                  ),
-                  _emailPasswordWidget(),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  _submitButton(),
-                  _facebookButton(),
-                  _googleButton(),
-                  Expanded(
-                    flex: 2,
-                    child: SizedBox(),
-                  )
-                ],
-              ),
+                ),
+                Align(
+                  alignment: Alignment.bottomCenter,
+                  child: _loginAccountLabel(),
+                ),
+                Positioned(top: 40, left: 10, child: _backButton()),
+              ],
             ),
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: _loginAccountLabel(),
-            ),
-            Positioned(top: 40, left: 10, child: _backButton()),
-          ],
-        ),
-      )),
-    ));
+          )),
+        ));
   }
 }

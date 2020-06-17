@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'package:graphql_flutter/graphql_flutter.dart';
-
-import 'package:tryme/GraphQLConfiguration.dart';
 import 'package:tryme/Request.dart';
 
 import 'package:tryme/widgets/AppBar.dart';
@@ -10,7 +7,6 @@ import 'package:tryme/widgets/Drawer.dart';
 import 'package:tryme/widgets/Filter.dart';
 import 'package:tryme/widgets/ProductCard.dart';
 import 'package:tryme/Globals.dart';
-import 'package:tryme/Queries.dart';
 
 class HomeView extends StatefulWidget {
   @override
@@ -25,25 +21,34 @@ class _HomeViewState extends State<HomeView> {
   }
 
   void getData([String option]) async {
-    QueryResult result;
-    String query;
-    if (option == 'Nom A-Z' || option == null)
-      query = Queries.productsName(true);
-    else if (option == 'Nom Z-A')
-      query = Queries.productsName(false);
-    else if (option == 'Prix croissant')
-      query = Queries.productsPrice(true);
-    else if (option == 'Prix décroissant') query = Queries.productsPrice(false);
-    QueryOptions queryOption = QueryOptions(documentNode: gql(query));
-    graphQLConfiguration = GraphQLConfiguration();
-    result = await graphQLConfiguration.clientToQuery.query(queryOption);
-    if (this.mounted)
-      setState(() {
-        products.clear();
-        (result.data['product'] as List).forEach((element) {
-          products.add(QueryParse.getProductHome(element));
+    OrderBy orderBy;
+    bool asc;
+    if (option == 'Nom A-Z' || option == null) {
+      orderBy = OrderBy.NAME;
+      asc = true;
+    }
+    else if (option == 'Nom Z-A') {
+      orderBy = OrderBy.NAME;
+      asc = false;
+    }
+    else if (option == 'Prix croissant') {
+      orderBy = OrderBy.PRICE;
+      asc = true;
+    }
+    else if (option == 'Prix décroissant') {
+      orderBy = OrderBy.PRICE;
+      asc = false;
+    }
+    else if (option == 'Nouveautés') {
+      orderBy = OrderBy.NEW;
+      asc = false;
+    }
+    Request.getProducts(orderBy, asc).then((products) {
+      if (this.mounted)
+        setState(() {
+          this.products = products;
         });
-      });
+    });
   }
 
   @override

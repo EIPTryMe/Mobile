@@ -171,8 +171,7 @@ class _SignInViewState extends State<SignInView> {
                   Request.getShoppingCard();
                   isLoggedIn = true;
                   isACompany = false;
-                  Navigator.pushNamedAndRemoveUntil(
-                      context, 'home', ModalRoute.withName('/'));
+                  Navigator.pushNamedAndRemoveUntil(context, 'home', ModalRoute.withName('/'));
                 } else {
                   setState(() {
                     error = 'Connectez-vous en tant qu\'entreprise';
