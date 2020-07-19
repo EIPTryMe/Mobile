@@ -3,14 +3,14 @@ library my_prj.globals;
 import 'package:tryme/GraphQLConfiguration.dart';
 
 class Auth0User {
-  Auth0User({this.uid, this.accessToken, this.username, this.picture, this.email, this.isEmailVerified});
+  Auth0User({this.uid, this.username, this.picture, this.email, this.isEmailVerified});
 
   String uid;
-  String accessToken;
   String username;
   String picture;
   String email;
   bool isEmailVerified = false;
+  bool webLogged = false;
 }
 
 class Company {

@@ -13,7 +13,6 @@ class ProductCard extends StatelessWidget {
     return Stack(
       children: <Widget>[
         Container(
-          margin: EdgeInsets.only(top: 15.0),
           child: ClipRRect(
             borderRadius: BorderRadius.circular(borderRadius),
             child: (Container(

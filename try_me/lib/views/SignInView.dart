@@ -24,10 +24,8 @@ class CurvePainter extends CustomPainter {
     paint.color = Color(0xff1F2C47);
 
     path.moveTo(0, size.height * 0.02);
-    path.quadraticBezierTo(size.width * 0.08, size.height * 0.17,
-        size.width * 0.32, size.height * 0.10);
-    path.quadraticBezierTo(size.width * 0.70, size.height * 0.00,
-        size.width * 1.0, size.height * 0.05);
+    path.quadraticBezierTo(size.width * 0.08, size.height * 0.17, size.width * 0.32, size.height * 0.10);
+    path.quadraticBezierTo(size.width * 0.70, size.height * 0.00, size.width * 1.0, size.height * 0.05);
     path.lineTo(size.width, 0);
     path.lineTo(0, 0);
     canvas.drawPath(path, paint);
@@ -39,10 +37,8 @@ class CurvePainter extends CustomPainter {
     paint2.color = Color(0xff1f2c76);
 
     path2.moveTo(size.width * 0.02, size.height * 0.01);
-    path2.quadraticBezierTo(size.width * 0.08, size.height * 0.10,
-        size.width * 0.32, size.height * 0.06);
-    path2.quadraticBezierTo(size.width * 0.70, size.height * 0.00,
-        size.width * 1.0, size.height * 0.03);
+    path2.quadraticBezierTo(size.width * 0.08, size.height * 0.10, size.width * 0.32, size.height * 0.06);
+    path2.quadraticBezierTo(size.width * 0.70, size.height * 0.00, size.width * 1.0, size.height * 0.03);
     path2.lineTo(size.width, 0);
     path2.lineTo(0, 0);
 
@@ -75,11 +71,7 @@ class _SignInViewState extends State<SignInView> {
               padding: EdgeInsets.only(left: 15, top: 10, bottom: 10),
               child: Icon(Icons.keyboard_arrow_left, color: Colors.white),
             ),
-            Text('Retour',
-                style: TextStyle(
-                    fontSize: 13,
-                    fontWeight: FontWeight.w500,
-                    color: Colors.white))
+            Text('Retour', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w500, color: Colors.white))
           ],
         ),
       ),
@@ -162,8 +154,7 @@ class _SignInViewState extends State<SignInView> {
   Widget _submitButton() {
     return FlatButton(
       onPressed: () {
-        if (_formKeyEmail.currentState.validate() &&
-            _formKeyPassword.currentState.validate()) {
+        if (_formKeyEmail.currentState.validate() && _formKeyPassword.currentState.validate()) {
           Auth0API.login(_email, _password).then((isConnected) {
             if (isConnected) {
               Request.getUser().whenComplete(() {
@@ -171,8 +162,7 @@ class _SignInViewState extends State<SignInView> {
                   Request.getShoppingCard();
                   isLoggedIn = true;
                   isACompany = false;
-                  Navigator.pushNamedAndRemoveUntil(
-                      context, 'home', ModalRoute.withName('/'));
+                  Navigator.pushNamedAndRemoveUntil(context, 'home', ModalRoute.withName('/'));
                 } else {
                   setState(() {
                     error = 'Connectez-vous en tant qu\'entreprise';
@@ -193,17 +183,8 @@ class _SignInViewState extends State<SignInView> {
         alignment: Alignment.center,
         decoration: BoxDecoration(
             borderRadius: BorderRadius.all(Radius.circular(5)),
-            boxShadow: <BoxShadow>[
-              BoxShadow(
-                  color: Colors.grey.shade200,
-                  offset: Offset(2, 4),
-                  blurRadius: 5,
-                  spreadRadius: 2)
-            ],
-            gradient: LinearGradient(
-                begin: Alignment.centerLeft,
-                end: Alignment.centerRight,
-                colors: [Color(0xff1f2c76), Color(0xff1F2C47)])),
+            boxShadow: <BoxShadow>[BoxShadow(color: Colors.grey.shade200, offset: Offset(2, 4), blurRadius: 5, spreadRadius: 2)],
+            gradient: LinearGradient(begin: Alignment.centerLeft, end: Alignment.centerRight, colors: [Color(0xff1f2c76), Color(0xff1F2C47)])),
         child: Text(
           'Connexion',
           style: TextStyle(fontSize: 20, color: Colors.white),
@@ -247,7 +228,9 @@ class _SignInViewState extends State<SignInView> {
 
   Widget _facebookButton() {
     return FlatButton(
-      onPressed: () {},
+      onPressed: () {
+        Auth0API.webAuth(SocialAuth_e.FACEBOOK);
+      },
       child: Container(
         height: 50,
         margin: EdgeInsets.symmetric(vertical: 10),
@@ -261,9 +244,7 @@ class _SignInViewState extends State<SignInView> {
               child: Container(
                 decoration: BoxDecoration(
                   color: Color(0xff1959a9),
-                  borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(5),
-                      topLeft: Radius.circular(5)),
+                  borderRadius: BorderRadius.only(bottomLeft: Radius.circular(5), topLeft: Radius.circular(5)),
                 ),
                 alignment: Alignment.center,
                 child: Image(
@@ -276,16 +257,10 @@ class _SignInViewState extends State<SignInView> {
               child: Container(
                 decoration: BoxDecoration(
                   color: Color(0xff2872ba),
-                  borderRadius: BorderRadius.only(
-                      bottomRight: Radius.circular(5),
-                      topRight: Radius.circular(5)),
+                  borderRadius: BorderRadius.only(bottomRight: Radius.circular(5), topRight: Radius.circular(5)),
                 ),
                 alignment: Alignment.center,
-                child: Text('Se connecter avec Facebook',
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 18,
-                        fontWeight: FontWeight.w400)),
+                child: Text('Se connecter avec Facebook', style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.w400)),
               ),
             ),
           ],
@@ -297,7 +272,16 @@ class _SignInViewState extends State<SignInView> {
   Widget _googleButton() {
     return FlatButton(
       onPressed: () {
-        //Auth0API.webAuth().whenComplete(() => Navigator.pushNamed(context, 'home'));
+        Auth0API.webAuth(SocialAuth_e.GOOGLE).then((isConnected) {
+          if (isConnected) {
+            Request.getUser().whenComplete(() {
+              Request.getShoppingCard();
+              isLoggedIn = true;
+              isACompany = false;
+              Navigator.pushNamedAndRemoveUntil(context, 'home', ModalRoute.withName('/'));
+            });
+          }
+        });
       },
       child: Container(
         height: 50,
@@ -312,9 +296,7 @@ class _SignInViewState extends State<SignInView> {
               child: Container(
                 decoration: BoxDecoration(
                   color: Color(0xffffffff),
-                  borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(5),
-                      topLeft: Radius.circular(5)),
+                  borderRadius: BorderRadius.only(bottomLeft: Radius.circular(5), topLeft: Radius.circular(5)),
                 ),
                 alignment: Alignment.center,
                 child: Image(
@@ -327,16 +309,10 @@ class _SignInViewState extends State<SignInView> {
               child: Container(
                 decoration: BoxDecoration(
                   color: Color(0xffff3d00),
-                  borderRadius: BorderRadius.only(
-                      bottomRight: Radius.circular(5),
-                      topRight: Radius.circular(5)),
+                  borderRadius: BorderRadius.only(bottomRight: Radius.circular(5), topRight: Radius.circular(5)),
                 ),
                 alignment: Alignment.center,
-                child: Text('Se connecter avec Google',
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 18,
-                        fontWeight: FontWeight.w400)),
+                child: Text('Se connecter avec Google', style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.w400)),
               ),
             ),
           ],
@@ -362,15 +338,11 @@ class _SignInViewState extends State<SignInView> {
           InkWell(
             onTap: () {
               Navigator.pop(context);
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => SignUpView()));
+              Navigator.push(context, MaterialPageRoute(builder: (context) => SignUpView()));
             },
             child: Text(
               'Inscrivez-vous',
-              style: TextStyle(
-                  color: Color(0xff1F2C47),
-                  fontSize: 13,
-                  fontWeight: FontWeight.w600),
+              style: TextStyle(color: Color(0xff1F2C47), fontSize: 13, fontWeight: FontWeight.w600),
             ),
           )
         ],
@@ -404,67 +376,65 @@ class _SignInViewState extends State<SignInView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xffE5E5E5),
+        backgroundColor: Color(0xffE5E5E5),
         body: CustomPaint(
-      painter: CurvePainter(),
-      child: SingleChildScrollView(
-          child: Container(
-        height: MediaQuery.of(context).size.height,
-        child: Stack(
-          children: <Widget>[
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 20),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Expanded(
-                    flex: 3,
-                    child: SizedBox(),
+          painter: CurvePainter(),
+          child: SingleChildScrollView(
+              child: Container(
+            height: MediaQuery.of(context).size.height,
+            child: Stack(
+              children: <Widget>[
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: 20),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Expanded(
+                        flex: 3,
+                        child: SizedBox(),
+                      ),
+                      _title(),
+                      SizedBox(
+                        height: 50,
+                      ),
+                      _emailPasswordWidget(),
+                      Align(
+                          alignment: Alignment.centerLeft,
+                          child: Padding(
+                            padding: EdgeInsets.fromLTRB(10.0, 0.0, 0.0, 0.0),
+                            child: Text(
+                              error,
+                              style: TextStyle(color: Colors.red),
+                            ),
+                          )),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      _submitButton(),
+                      Container(
+                        padding: EdgeInsets.symmetric(vertical: 10),
+                        alignment: Alignment.centerRight,
+                        child: Text('Mot de Passe oublié ?', style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500)),
+                      ),
+                      _divider(),
+                      _facebookButton(),
+                      _googleButton(),
+                      Expanded(
+                        flex: 2,
+                        child: SizedBox(),
+                      ),
+                    ],
                   ),
-                  _title(),
-                  SizedBox(
-                    height: 50,
-                  ),
-                  _emailPasswordWidget(),
-                  Align(
-                      alignment: Alignment.centerLeft,
-                      child: Padding(
-                        padding: EdgeInsets.fromLTRB(10.0, 0.0, 0.0, 0.0),
-                        child: Text(
-                          error,
-                          style: TextStyle(color: Colors.red),
-                        ),
-                      )),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  _submitButton(),
-                  Container(
-                    padding: EdgeInsets.symmetric(vertical: 10),
-                    alignment: Alignment.centerRight,
-                    child: Text('Mot de Passe oublié ?',
-                        style: TextStyle(
-                            fontSize: 14, fontWeight: FontWeight.w500)),
-                  ),
-                  _divider(),
-                  _facebookButton(),
-                  _googleButton(),
-                  Expanded(
-                    flex: 2,
-                    child: SizedBox(),
-                  ),
-                ],
-              ),
+                ),
+                Align(
+                  alignment: Alignment.bottomCenter,
+                  child: _createAccountLabel(),
+                ),
+                Positioned(top: 40, left: 0, child: _backButton()),
+              ],
             ),
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: _createAccountLabel(),
-            ),
-            Positioned(top: 40, left: 0, child: _backButton()),
-          ],
-        ),
-      )),
-    ));
+          )),
+        ));
   }
 }

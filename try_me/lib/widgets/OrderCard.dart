@@ -50,8 +50,10 @@ class OrderCard extends StatelessWidget {
                             : Text(''),
                   ],
                 ),
-                Column(
-                    children: order.products.map((e) => ProductCard(product: e)).toList()),
+                Column(children: order.products.map((e) => Padding(
+                  padding: const EdgeInsets.all(2.0),
+                  child: ProductCard(product: e),
+                )).toList()),
                 Padding(
                   padding: const EdgeInsets.only(right: 20.0, left: 20.0),
                   child: Divider(
