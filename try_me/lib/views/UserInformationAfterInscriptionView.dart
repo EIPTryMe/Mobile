@@ -724,7 +724,7 @@ class _UserInformationAfterInscriptionViewState
                     onPressed: () {
                       setState(() {
                         if (!edit[0]) {
-                          Navigator.pushNamed(context, "home");
+                          Navigator.pop(context);
                         }
                       });
                     },
@@ -741,7 +741,7 @@ class _UserInformationAfterInscriptionViewState
                       setState(() {
                         if (!edit[0]) {
                           Request.modifyUser().whenComplete(
-                              () => Navigator.pushNamed(context, "home"));
+                              () => Navigator.pop(context));
                         }
                       });
                     },

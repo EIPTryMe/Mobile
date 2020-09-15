@@ -161,30 +161,10 @@ class Queries {
   }
   ''';
 
-  static String productsName(bool asc) =>
+  static String products(String sort) =>
       '''
   query {
-    product(order_by: {name:  ''' +
-      (asc ? 'asc' : 'desc') +
-      '''}) {
-      name
-      id
-      price_per_week
-      price_per_month
-      price_per_day
-      picture {
-        url
-      }
-    }
-  }
-  ''';
-
-  static String productsPrice(bool asc) =>
-      '''
-  query {
-    product(order_by: {price_per_month: ''' +
-      (asc ? 'asc' : 'desc') +
-      ''', name: asc}) {
+    product($sort) {
       name
       id
       price_per_week

@@ -10,14 +10,15 @@ class Filter extends StatefulWidget {
 }
 
 class _FilterState extends State<Filter> {
-  List _options = ["Nom A-Z", "Nom Z-A", "Prix croissant", "Prix décroissant"];
+  List _options = ["Nom A-Z", "Nom Z-A", "Prix croissant", "Prix décroissant", "Nouveautés"];
   List<DropdownMenuItem<String>> _dropDownMenuItems;
   String _currentOption;
 
   void changedDropDownItem(String option) {
-    setState(() {
-      _currentOption = option;
-    });
+    if (this.mounted)
+      setState(() {
+        _currentOption = option;
+      });
     widget.callback(option);
   }
 
