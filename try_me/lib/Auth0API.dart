@@ -51,8 +51,8 @@ class Auth0API {
       else if (socialAuth == SocialAuth_e.GOOGLE) connection = 'google-oauth2';
       var response = await auth0.webAuth.authorize({
         'connection': connection,
-        'audience': 'https://$domain/userinfo',
         'scope': 'openid email offline_access',
+        'prompt': 'login',
       });
       DateTime now = DateTime.now();
       print('''

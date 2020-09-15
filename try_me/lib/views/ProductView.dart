@@ -81,6 +81,7 @@ class _ProductViewState extends State<ProductView> {
   void initState() {
     super.initState();
     getData().whenComplete(() {
+      if (this.mounted)
       setState(() {
         gotData = true;
       });

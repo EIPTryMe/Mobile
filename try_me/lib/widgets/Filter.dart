@@ -15,9 +15,10 @@ class _FilterState extends State<Filter> {
   String _currentOption;
 
   void changedDropDownItem(String option) {
-    setState(() {
-      _currentOption = option;
-    });
+    if (this.mounted)
+      setState(() {
+        _currentOption = option;
+      });
     widget.callback(option);
   }
 

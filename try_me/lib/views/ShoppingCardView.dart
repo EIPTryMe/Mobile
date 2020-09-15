@@ -16,9 +16,10 @@ class _ShoppingCardViewState extends State<ShoppingCardView> {
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
 
   void callback() {
-    setState(() {
-      computeTotal();
-    });
+    if (this.mounted)
+      setState(() {
+        computeTotal();
+      });
   }
 
   void computeTotal() {
